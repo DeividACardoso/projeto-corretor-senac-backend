@@ -3,9 +3,7 @@ package br.sc.senac.tcs.entity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
-import lombok.Data;
 
-@Data
 @Entity
 @Table(name = "corretores")
 public class Corretor extends Pessoa {

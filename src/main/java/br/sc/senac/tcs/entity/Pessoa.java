@@ -34,4 +34,3 @@ public abstract class Pessoa {
     protected abstract void operation3();
 
 }
-
