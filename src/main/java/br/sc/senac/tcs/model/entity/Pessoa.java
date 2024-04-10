@@ -1,4 +1,4 @@
-package br.sc.senac.tcs.entity;
+package br.sc.senac.tcs.model.entity;
 
 import java.util.Date;
 
@@ -9,6 +9,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
 import lombok.Data;
+
 
 @Data
 @Entity

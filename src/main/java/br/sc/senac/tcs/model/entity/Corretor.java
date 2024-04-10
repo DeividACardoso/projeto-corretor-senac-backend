@@ -1,4 +1,4 @@
-package br.sc.senac.tcs.entity;
+package br.sc.senac.tcs.model.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
