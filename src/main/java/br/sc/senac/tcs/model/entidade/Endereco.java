@@ -24,9 +24,6 @@ public class Endereco {
 
 	// Falta anotação do banco de dados!
 
-	public Endereco() {
-		super();
-	}
 
 	public Endereco(Integer id, String rua, String bairro, String numero, String complemento, String uf, String cep) {
 		super();
