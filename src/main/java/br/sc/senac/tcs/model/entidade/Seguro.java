@@ -2,12 +2,25 @@ package br.sc.senac.tcs.model.entidade;
 
 import java.time.LocalDate;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import lombok.NoArgsConstructor;
+
+@Entity
+@Table
+@NoArgsConstructor
 public class Seguro {
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-//	private int seguradoraId;
-//	private int veiculoId;
-//	private int corretorId;
-//	private int clienteId;
+//	private Seguradora idSeguradora;
+	private Veiculo veiculo;
+	private Corretor corretor;
+	private Cliente cliente;
 	private double rcfDanosMateriais;
 	private double rcfDanosFisicos;
 	private LocalDate dtInicioVigencia;
@@ -17,10 +30,14 @@ public class Seguro {
 	private boolean carroReserva;
 	private String numApolice;
 	
-	public Seguro(int id, double rcfDanosMateriais, double rcfDanosFisicos, LocalDate dtInicioVigencia,
-			LocalDate dtFimVigencia, String numeroProposta, double franquia, boolean carroReserva, String numApolice) {
+	public Seguro(int id, Veiculo veiculo, Corretor corretor, Cliente cliente, double rcfDanosMateriais,
+			double rcfDanosFisicos, LocalDate dtInicioVigencia, LocalDate dtFimVigencia, String numeroProposta,
+			double franquia, boolean carroReserva, String numApolice) {
 		super();
 		this.id = id;
+		this.veiculo = veiculo;
+		this.corretor = corretor;
+		this.cliente = cliente;
 		this.rcfDanosMateriais = rcfDanosMateriais;
 		this.rcfDanosFisicos = rcfDanosFisicos;
 		this.dtInicioVigencia = dtInicioVigencia;
@@ -105,6 +122,31 @@ public class Seguro {
 	public void setNumApolice(String numApolice) {
 		this.numApolice = numApolice;
 	}
+
+	public Veiculo getVeiculo() {
+		return veiculo;
+	}
+
+	public void setVeiculo(Veiculo veiculo) {
+		this.veiculo = veiculo;
+	}
+
+	public Corretor getCorretor() {
+		return corretor;
+	}
+
+	public void setCorretor(Corretor corretor) {
+		this.corretor = corretor;
+	}
+
+	public Cliente getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
+
 	
 	
 }
