@@ -11,5 +11,5 @@ import br.sc.senac.tcs.model.entidade.Seguro;
 @Repository
 public interface SeguroRepository extends JpaRepository<Seguro, Integer> {
 	
-		List<Seguro> findAll(Specification<Seguro> specification);
+	List<Seguro> findAll(Specification<Seguro> specification);
 }
