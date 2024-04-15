@@ -1,5 +1,6 @@
 package br.sc.senac.tcs.model.entidade;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -15,7 +16,6 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Entity
 @Table
@@ -29,15 +29,15 @@ public class Cliente {
     private String nome;
     private String cpf;
     
-    @Column(name = "dt_nascimento", nullable = false, columnDefinition = "DATE")
-    private Date dtNascimento;
+    @Column(name = "dt_nascimento")
+    private LocalDate dtNascimento;
     
     private String email;
     private String cnh;
     private String ddd;
     private String telefone;
    
-    @Column(name = "estado_civil", nullable = false, columnDefinition = "VARCHAR(30)")
+    @Column(name = "estado_civil")
     private String estadoCivil;
     private String genero;
     private String rua;
@@ -49,6 +49,7 @@ public class Cliente {
     private String cep;
     
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "corretor_id", nullable = false, columnDefinition = "INT")
     private Corretor corretor;
     

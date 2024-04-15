@@ -31,7 +31,7 @@ public class Seguro {
 	private Cliente cliente;
 	
 	private double rcfDanosMateriais;
-	private double rcfDanosFisicos;
+	private double rofDanosFisicos;
 	private LocalDate dtInicioVigencia;
 	private LocalDate dtFimVigencia;
 	private String numeroProposta;
