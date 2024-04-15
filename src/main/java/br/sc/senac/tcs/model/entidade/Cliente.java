@@ -2,9 +2,6 @@ package br.sc.senac.tcs.model.entidade;
 
 import java.util.Date;
 
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -13,6 +10,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.Setter;
 
 @Getter
 @Setter
@@ -32,7 +31,7 @@ public class Cliente {
     private int cpf;
 
     @Column(nullable = false)
-    @Temporal(TemporalType.DATE)
+    @jakarta.persistence.Temporal(jakarta.persistence.TemporalType.DATE)
     private Date dtNascimento;
 
     @Column(length = 255, nullable = false)
