@@ -32,7 +32,7 @@ public class Cliente {
     private String nome;
 
     @Column(length = 11, nullable = false)
-    private int cpf;
+    private Long cpf;
 
     @Column(nullable = false)
     @Temporal(TemporalType.DATE)
@@ -65,5 +65,21 @@ public class Cliente {
     @ManyToOne
     @JoinColumn(name = "corretor_id")
     private Corretor corretor;
+
+    public Cliente(String nome, Long cpf, Date dtNascimento, String email, String cnh, String ddd, String telefone,
+            String estadoCivil, String genero, String rua, String bairro, Corretor corretor) {
+        this.nome = nome;
+        this.cpf = cpf;
+        this.dtNascimento = dtNascimento;
+        this.email = email;
+        this.cnh = cnh;
+        this.ddd = ddd;
+        this.telefone = telefone;
+        this.estadoCivil = estadoCivil;
+        this.genero = genero;
+        this.rua = rua;
+        this.bairro = bairro;
+        this.corretor = corretor;
+    }
 
 }
