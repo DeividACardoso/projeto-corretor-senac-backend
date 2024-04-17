@@ -16,10 +16,18 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Data;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table
 @Data
+@Getter
+@Setter
+@RequiredArgsConstructor
 public class Cliente {
 
     @Id
@@ -28,10 +36,11 @@ public class Cliente {
     
     private String nome;
     private String cpf;
-    
-    @Column(name = "dt_nascimento")
+    @Column(nullable = false)
+    @Temporal(TemporalType.DATE)
     private LocalDate dtNascimento;
-    
+
+    @Column(length = 255, nullable = false)
     private String email;
     private String cnh;
     private String ddd;
@@ -56,4 +65,22 @@ public class Cliente {
     @JsonBackReference
     @OneToMany(mappedBy = "cliente")
     private List<Seguro> seguros;
+
+
+    public Cliente(String nome, String cpf, LocalDate dtNascimento, String email, String cnh, String ddd, String telefone,
+            String estadoCivil, String genero, String rua, String bairro, Corretor corretor) {
+        this.nome = nome;
+        this.cpf = cpf;
+        this.dtNascimento = dtNascimento;
+        this.email = email;
+        this.cnh = cnh;
+        this.ddd = ddd;
+        this.telefone = telefone;
+        this.estadoCivil = estadoCivil;
+        this.genero = genero;
+        this.rua = rua;
+        this.bairro = bairro;
+        this.corretor = corretor;
+    }
+
 }
