@@ -10,11 +10,10 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
-@Getter
-@Setter
+@Data
+
 @Entity
 @Table(name = "clientes")
 public class Cliente {
@@ -28,7 +27,7 @@ public class Cliente {
     private String nome;
 
     @Column(length = 11, nullable = false)
-    private int cpf;
+    private Long cpf;
 
     @Column(nullable = false)
     @jakarta.persistence.Temporal(jakarta.persistence.TemporalType.DATE)
@@ -61,5 +60,127 @@ public class Cliente {
     @ManyToOne
     @JoinColumn(name = "corretor_id")
     private Corretor corretor;
+
+    public Cliente(String nome, Long cpf, Date dtNascimento, String email, String cnh, String ddd, String telefone,
+            String estadoCivil, String genero, String rua, String bairro, Corretor corretor) {
+        this.nome = nome;
+        this.cpf = cpf;
+        this.dtNascimento = dtNascimento;
+        this.email = email;
+        this.cnh = cnh;
+        this.ddd = ddd;
+        this.telefone = telefone;
+        this.estadoCivil = estadoCivil;
+        this.genero = genero;
+        this.rua = rua;
+        this.bairro = bairro;
+        this.corretor = corretor;
+    }
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public Long getCpf() {
+		return cpf;
+	}
+
+	public void setCpf(Long cpf) {
+		this.cpf = cpf;
+	}
+
+	public Date getDtNascimento() {
+		return dtNascimento;
+	}
+
+	public void setDtNascimento(Date dtNascimento) {
+		this.dtNascimento = dtNascimento;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getCnh() {
+		return cnh;
+	}
+
+	public void setCnh(String cnh) {
+		this.cnh = cnh;
+	}
+
+	public String getDdd() {
+		return ddd;
+	}
+
+	public void setDdd(String ddd) {
+		this.ddd = ddd;
+	}
+
+	public String getTelefone() {
+		return telefone;
+	}
+
+	public void setTelefone(String telefone) {
+		this.telefone = telefone;
+	}
+
+	public String getEstadoCivil() {
+		return estadoCivil;
+	}
+
+	public void setEstadoCivil(String estadoCivil) {
+		this.estadoCivil = estadoCivil;
+	}
+
+	public String getGenero() {
+		return genero;
+	}
+
+	public void setGenero(String genero) {
+		this.genero = genero;
+	}
+
+	public String getRua() {
+		return rua;
+	}
+
+	public void setRua(String rua) {
+		this.rua = rua;
+	}
+
+	public String getBairro() {
+		return bairro;
+	}
+
+	public void setBairro(String bairro) {
+		this.bairro = bairro;
+	}
+
+	public Corretor getCorretor() {
+		return corretor;
+	}
+
+	public void setCorretor(Corretor corretor) {
+		this.corretor = corretor;
+	}
+    
+    
 
 }
