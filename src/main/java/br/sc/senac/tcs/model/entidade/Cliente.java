@@ -11,6 +11,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 @Data
 
@@ -18,64 +20,64 @@ import lombok.Data;
 @Table(name = "clientes")
 public class Cliente {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
-    @Column(length = 255, nullable = false)
-    private int id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.TABLE)
+	@Column(length = 255, nullable = false)
+	private int id;
 
-    @Column(length = 255, nullable = false)
-    private String nome;
+	@Column(length = 255, nullable = false)
+	private String nome;
 
-    @Column(length = 11, nullable = false)
-    private Long cpf;
+	@Column(length = 11, nullable = false)
+	private String cpf;
 
-    @Column(nullable = false)
-    @jakarta.persistence.Temporal(jakarta.persistence.TemporalType.DATE)
-    private Date dtNascimento;
+	@Column(nullable = false)
+	@jakarta.persistence.Temporal(jakarta.persistence.TemporalType.DATE)
+	private Date dtNascimento;
 
-    @Column(length = 255, nullable = false)
-    private String email;
+	@Column(length = 255, nullable = false)
+	private String email;
 
-    @Column(length = 255, nullable = false)
-    private String cnh;
+	@Column(length = 255, nullable = false)
+	private String cnh;
 
-    @Column(length = 255, nullable = false)
-    private String ddd;
+	@Column(length = 255, nullable = false)
+	private String ddd;
 
-    @Column(length = 255, nullable = false)
-    private String telefone;
+	@Column(length = 255, nullable = false)
+	private String telefone;
 
-    @Column(length = 255, nullable = false)
-    private String estadoCivil;
+	@Column(length = 255, nullable = false)
+	private String estadoCivil;
 
-    @Column(length = 255, nullable = false)
-    private String genero;
+	@Column(length = 255, nullable = false)
+	private String genero;
 
-    @Column(length = 255, nullable = false)
-    private String rua;
+	@Column(length = 255, nullable = false)
+	private String rua;
 
-    @Column(length = 255, nullable = false)
-    private String bairro;
+	@Column(length = 255, nullable = false)
+	private String bairro;
 
-    @ManyToOne
-    @JoinColumn(name = "corretor_id")
-    private Corretor corretor;
+	@ManyToOne
+	@JoinColumn(name = "corretor_id")
+	private Corretor corretor;
 
-    public Cliente(String nome, Long cpf, Date dtNascimento, String email, String cnh, String ddd, String telefone,
-            String estadoCivil, String genero, String rua, String bairro, Corretor corretor) {
-        this.nome = nome;
-        this.cpf = cpf;
-        this.dtNascimento = dtNascimento;
-        this.email = email;
-        this.cnh = cnh;
-        this.ddd = ddd;
-        this.telefone = telefone;
-        this.estadoCivil = estadoCivil;
-        this.genero = genero;
-        this.rua = rua;
-        this.bairro = bairro;
-        this.corretor = corretor;
-    }
+	public Cliente(String nome, String cpf, Date dtNascimento, String email, String cnh, String ddd, String telefone,
+			String estadoCivil, String genero, String rua, String bairro, Corretor corretor) {
+		this.nome = nome;
+		this.cpf = cpf;
+		this.dtNascimento = dtNascimento;
+		this.email = email;
+		this.cnh = cnh;
+		this.ddd = ddd;
+		this.telefone = telefone;
+		this.estadoCivil = estadoCivil;
+		this.genero = genero;
+		this.rua = rua;
+		this.bairro = bairro;
+		this.corretor = corretor;
+	}
 
 	public int getId() {
 		return id;
@@ -93,11 +95,11 @@ public class Cliente {
 		this.nome = nome;
 	}
 
-	public Long getCpf() {
+	public String getCpf() {
 		return cpf;
 	}
 
-	public void setCpf(Long cpf) {
+	public void setCpf(String cpf) {
 		this.cpf = cpf;
 	}
 
@@ -180,7 +182,5 @@ public class Cliente {
 	public void setCorretor(Corretor corretor) {
 		this.corretor = corretor;
 	}
-    
-    
 
 }
