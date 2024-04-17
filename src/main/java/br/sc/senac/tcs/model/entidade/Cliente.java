@@ -1,7 +1,6 @@
 package br.sc.senac.tcs.model.entidade;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;

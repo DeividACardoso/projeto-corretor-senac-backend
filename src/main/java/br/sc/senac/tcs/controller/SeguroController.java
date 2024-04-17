@@ -34,7 +34,7 @@ public class SeguroController {
 		return seguroService.listarPorId(id);
 	}
 
-	@PostMapping(path = "/salvar")
+	@PostMapping
 	public Seguro salvar(@RequestBody Seguro novoSeguro) {
 		return seguroService.salvar(novoSeguro);
 	}

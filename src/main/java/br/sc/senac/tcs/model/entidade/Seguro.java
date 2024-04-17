@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -12,6 +13,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
+import net.bytebuddy.agent.builder.AgentBuilder.PoolStrategy.Eager;
 
 @Entity
 @Table
@@ -21,16 +23,18 @@ public class Seguro {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-//	private Seguradora idSeguradora;
+	// private Seguradora idSeguradora;
+	private int seguradoraId;
 	//private Veiculo veiculo;
+	private int veiculoId;
 	
 	@ManyToOne
-	@JsonBackReference("corretor")
+	// @JsonBackReference("corretor")
     @JoinColumn(name = "corretor_id")
 	private Corretor corretor;
 	
-	@ManyToOne
-	@JsonBackReference("cliente")
+	@ManyToOne()
+	// @JsonBackReference("cliente")
     @JoinColumn(name = "cliente_id")
 	private Cliente cliente;
 	
@@ -42,4 +46,5 @@ public class Seguro {
 	private double franquia;
 	private boolean carroReserva;
 	private String numApolice;
+	private String nome;
 }
