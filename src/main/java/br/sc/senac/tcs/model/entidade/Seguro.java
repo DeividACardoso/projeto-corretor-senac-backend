@@ -2,6 +2,8 @@ package br.sc.senac.tcs.model.entidade;
 
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -23,11 +25,13 @@ public class Seguro {
 	//private Veiculo veiculo;
 	
 	@ManyToOne
-    @JoinColumn(name = "corretor_id", nullable = false, columnDefinition = "INT")
+	@JsonBackReference("corretor")
+    @JoinColumn(name = "corretor_id")
 	private Corretor corretor;
 	
 	@ManyToOne
-    @JoinColumn(name = "cliente_id", nullable = false, columnDefinition = "INT")
+	@JsonBackReference("cliente")
+    @JoinColumn(name = "cliente_id")
 	private Cliente cliente;
 	
 	private double rcfDanosMateriais;
