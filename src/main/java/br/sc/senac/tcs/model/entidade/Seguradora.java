@@ -13,28 +13,33 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class Seguradora {
- 	
+
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	private String nome;
-	private String cpnj;
+	private String cnpj;
+	private String email;
 	private String ddd;
 	private String telefone;
-	private String email;
 	
-	public Seguradora(int id, String nome, String cpnj, String ddd, String telefone, String email) {
+	
+	public Seguradora() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+
+	public Seguradora(int id, String nome, String cnpj, String email, String ddd, String telefone) {
 		super();
 		this.id = id;
 		this.nome = nome;
-		this.cpnj = cpnj;
+		this.cnpj = cnpj;
+		this.email = email;
 		this.ddd = ddd;
 		this.telefone = telefone;
-		this.email = email;
 	}
-	
-	
-	
+
 	
 
 }
