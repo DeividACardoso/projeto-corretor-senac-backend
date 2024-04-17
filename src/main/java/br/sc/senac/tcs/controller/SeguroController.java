@@ -11,6 +11,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.sc.senac.tcs.model.entidade.Seguro;
 import br.sc.senac.tcs.service.SeguroService;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PostMapping;
+
+
 
 @RestController
 @RequestMapping(path = "/api/seguros")
@@ -28,5 +32,10 @@ public class SeguroController {
 	@GetMapping(path = "/{id}")
 	public Seguro listarPorId(@PathVariable Integer id) {
 		return seguroService.listarPorId(id);
+	}
+
+	@PostMapping
+	public Seguro salvar(@RequestBody Seguro novoSeguro) {
+		return seguroService.salvar(novoSeguro);
 	}
 }

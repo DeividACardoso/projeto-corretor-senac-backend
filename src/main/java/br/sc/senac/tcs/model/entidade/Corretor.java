@@ -32,8 +32,8 @@ public class Corretor {
     @OneToMany(mappedBy = "corretor")
     private List<Cliente> clientes;
     
-    @JsonBackReference
-    @OneToMany(mappedBy = "corretor")
-    private List<Seguro> seguros;
+    // @JsonBackReference
+    // @OneToMany(mappedBy = "corretor")
+    // private List<Seguro> seguros;
     
 }
