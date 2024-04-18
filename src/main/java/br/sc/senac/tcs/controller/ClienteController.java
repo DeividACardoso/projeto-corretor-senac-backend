@@ -22,7 +22,7 @@ public class ClienteController {
     @Autowired
     private ClienteRepository clienteRepository;
 
-    @GetMapping("/todos")
+    @GetMapping("/list")
     Iterable<Cliente> list() {
         return clienteRepository.findAll();
     }

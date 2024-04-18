@@ -2,10 +2,7 @@ package br.sc.senac.tcs.model.entidade;
 
 import java.time.LocalDate;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -13,7 +10,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
-import net.bytebuddy.agent.builder.AgentBuilder.PoolStrategy.Eager;
 
 @Entity
 @Table
@@ -23,19 +19,15 @@ public class Seguro {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	// private Seguradora idSeguradora;
-	private int seguradoraId;
+//	private Seguradora idSeguradora;
 	//private Veiculo veiculo;
-	private int veiculoId;
 	
 	@ManyToOne
-	// @JsonBackReference("corretor")
-    @JoinColumn(name = "corretor_id")
+    @JoinColumn(name = "corretor_id", nullable = false, columnDefinition = "INT")
 	private Corretor corretor;
 	
-	@ManyToOne()
-	// @JsonBackReference("cliente")
-    @JoinColumn(name = "cliente_id")
+	@ManyToOne
+    @JoinColumn(name = "cliente_id", nullable = false, columnDefinition = "INT")
 	private Cliente cliente;
 	
 	private double rcfDanosMateriais;
@@ -46,5 +38,4 @@ public class Seguro {
 	private double franquia;
 	private boolean carroReserva;
 	private String numApolice;
-	private String nome;
 }
