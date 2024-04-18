@@ -16,7 +16,7 @@ public class Seguradora {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private Integer id;
 	private String nome;
 	private String cnpj;
 	private String email;
@@ -30,7 +30,7 @@ public class Seguradora {
 	}
 
 
-	public Seguradora(int id, String nome, String cnpj, String email, String ddd, String telefone) {
+	public Seguradora(Integer id, String nome, String cnpj, String email, String ddd, String telefone) {
 		super();
 		this.id = id;
 		this.nome = nome;

@@ -19,7 +19,7 @@ public class Corretor {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 	private String nome;
 	private String cpf;
 	private String ddd;
@@ -28,17 +28,12 @@ public class Corretor {
 
     @OneToMany(mappedBy = "corretor")
     private List<Cliente> clientes;
-    
-    
 
 	public Corretor() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
-
-
-	public Corretor(int id, String nome, String cpf, String ddd, String telefone, String email,
+	public Corretor(Integer id, String nome, String cpf, String ddd, String telefone, String email,
 			List<Cliente> clientes) {
 		super();
 		this.id = id;
@@ -49,7 +44,6 @@ public class Corretor {
 		this.email = email;
 		this.clientes = clientes;
 	}
-    
     
 
 }

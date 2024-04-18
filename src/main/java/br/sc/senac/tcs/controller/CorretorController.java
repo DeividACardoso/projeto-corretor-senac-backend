@@ -25,8 +25,8 @@ public class CorretorController {
 		return corretorService.listarTodos();
 	}
 
-//	@GetMapping(path = "/{id}")
-//	public Corretor listarPorId(@PathVariable Integer id) {
-//		return corretorService.listarPorId(id);
-//	}
+	@GetMapping(path = "/{id}")
+	public Corretor listarPorId(@PathVariable Integer id) {
+		return corretorService.listarPorId(id);
+	}
 }
