@@ -22,13 +22,6 @@ public class Seguradora {
 	private String email;
 	private String ddd;
 	private String telefone;
-	
-	
-	public Seguradora() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-
 
 	public Seguradora(Integer id, String nome, String cnpj, String email, String ddd, String telefone) {
 		super();
@@ -39,7 +32,5 @@ public class Seguradora {
 		this.ddd = ddd;
 		this.telefone = telefone;
 	}
-
-	
 
 }

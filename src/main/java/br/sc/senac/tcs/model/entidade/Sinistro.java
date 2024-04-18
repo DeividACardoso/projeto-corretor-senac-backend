@@ -1,5 +1,9 @@
 package br.sc.senac.tcs.model.entidade;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -13,24 +17,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class Sinistro {
-	
-	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-	private String codigo;
-	private String tipo;
-	private String descricao;
-	
-	public Sinistro(Integer id, String codigo, String tipo, String descricao) {
-		super();
-		this.id = id;
-		this.codigo = codigo;
-		this.tipo = tipo;
-		this.descricao = descricao;
-	}
 
-	
-    
-	
-	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
+	private String tipo;
+	@Column(name = "DT_SINISTRO")
+	private LocalDate dtSinistro;
+	private LocalTime horario;
+	private String descricao;
+
 }
