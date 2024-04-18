@@ -29,4 +29,6 @@ public class SeguradoraController {
 	public Seguradora listarPorId(@PathVariable Integer id) {
 		return seguradoraService.listarPorId(id);
 	}
+	
+	
 }

@@ -27,4 +27,13 @@ public class Sinistro {
 	private LocalTime horario;
 	private String descricao;
 
+	public Sinistro(Integer id, String tipo, LocalDate dtSinistro, LocalTime horario, String descricao) {
+		super();
+		this.id = id;
+		this.tipo = tipo;
+		this.dtSinistro = dtSinistro;
+		this.horario = horario;
+		this.descricao = descricao;
+	}
+
 }
