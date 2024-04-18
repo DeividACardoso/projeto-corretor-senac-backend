@@ -36,11 +36,11 @@ public class SeguroService {
 	}
 
     public Seguro salvar(Seguro novoSeguro){
-		Optional<Cliente> cliente = clienteRepository.findById(novoSeguro.getCliente().getId());
-		novoSeguro.setCliente(cliente.get());
+		// Optional<Cliente> cliente = clienteRepository.findById(novoSeguro.getCliente().getId());
+		// novoSeguro.setCliente(cliente.get());
 		
-		Optional<Corretor> corretor = corretorRepository.findById(novoSeguro.getCorretor().getId());
-		novoSeguro.setCorretor(corretor.get());
+		// Optional<Corretor> corretor = corretorRepository.findById(novoSeguro.getCorretor().getId());
+		// novoSeguro.setCorretor(corretor.get());
 
 		return seguroRepository.save(novoSeguro);	
 	}	

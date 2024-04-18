@@ -2,6 +2,8 @@ package br.sc.senac.tcs.model.entidade;
 
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -19,7 +21,7 @@ public class Seguro {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-//	private Seguradora idSeguradora;
+	// private Seguradora idSeguradora;
 	//private Veiculo veiculo;
 	
 	@ManyToOne
@@ -27,6 +29,7 @@ public class Seguro {
 	private Corretor corretor;
 	
 	@ManyToOne
+	@JsonBackReference
     @JoinColumn(name = "cliente_id")
 	private Cliente cliente;
 	

@@ -28,9 +28,9 @@ public class Corretor {
     private String email;
     private String senha;
     
-    @JsonBackReference
-    @OneToMany(mappedBy = "corretor")
-    private List<Cliente> clientes;
+    // @JsonBackReference
+    // @OneToMany(mappedBy = "corretor")
+    // private List<Cliente> clientes;
     
     // @JsonBackReference
     // @OneToMany(mappedBy = "corretor")
