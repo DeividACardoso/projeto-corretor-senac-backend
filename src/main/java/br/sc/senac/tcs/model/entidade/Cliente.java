@@ -37,16 +37,12 @@ public class Cliente {
     
     private String nome;
     private String cpf;
-    @Column(nullable = false)
-    @Temporal(TemporalType.DATE)
+    @Column(name = "dt_nascimento")
     private LocalDate dtNascimento;
-
-    @Column(length = 255, nullable = false)
     private String email;
     private String cnh;
     private String ddd;
     private String telefone;
-   
     @Column(name = "estado_civil")
     private String estadoCivil;
     private String genero;
