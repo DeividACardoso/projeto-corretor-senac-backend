@@ -23,11 +23,11 @@ public class Seguro {
 	//private Veiculo veiculo;
 	
 	@ManyToOne
-    @JoinColumn(name = "corretor_id", nullable = false, columnDefinition = "INT")
+    @JoinColumn(name = "corretor_id")
 	private Corretor corretor;
 	
 	@ManyToOne
-    @JoinColumn(name = "cliente_id", nullable = false, columnDefinition = "INT")
+    @JoinColumn(name = "cliente_id")
 	private Cliente cliente;
 	
 	private double rcfDanosMateriais;

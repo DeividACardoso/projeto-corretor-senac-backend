@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.sc.senac.tcs.model.entidade.Cliente;
-import br.sc.senac.tcs.repository.ClienteRepository;
+import br.sc.senac.tcs.model.repository.ClienteRepository;
 
 @RestController
 @RequestMapping("/api/clientes")
@@ -22,7 +22,7 @@ public class ClienteController {
     @Autowired
     private ClienteRepository clienteRepository;
 
-    @GetMapping("/list")
+    @GetMapping("/todos")
     Iterable<Cliente> list() {
         return clienteRepository.findAll();
     }
