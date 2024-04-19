@@ -22,7 +22,7 @@ public class ClienteController {
 
     private final ClienteService clienteService;
 
-    @GetMapping
+    @GetMapping(path = "/todos")
     public Iterable<Cliente> list() {
         return clienteService.findAll();
     }
