@@ -22,15 +22,14 @@ public class Corretor {
     private Integer id;
     private String nome;
     private String cpf;
-    private String codigo;
     private String ddd;
     private String telefone;
     private String email;
     private String senha;
     
-    @JsonBackReference
-    @OneToMany(mappedBy = "corretor")
-    private List<Cliente> clientes;
+    // @JsonBackReference
+    // @OneToMany(mappedBy = "corretor")
+    // private List<Cliente> clientes;
     
     // @JsonBackReference
     // @OneToMany(mappedBy = "corretor")

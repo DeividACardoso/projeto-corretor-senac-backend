@@ -15,10 +15,16 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Data;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table
 @Data
+@Getter
+@Setter
+@RequiredArgsConstructor
 public class Cliente {
 
     @Id
@@ -27,15 +33,12 @@ public class Cliente {
     
     private String nome;
     private String cpf;
-    @Column(nullable = false)
+    @Column(name = "dt_nascimento")
     private LocalDate dtNascimento;
-
-    @Column(length = 255, nullable = false)
     private String email;
     private String cnh;
     private String ddd;
     private String telefone;
-   
     @Column(name = "estado_civil")
     private String estadoCivil;
     private String genero;
@@ -49,7 +52,7 @@ public class Cliente {
     
     @ManyToOne
     @JsonBackReference
-    @JoinColumn(name = "corretor_id", nullable = false, columnDefinition = "INT")
+    @JoinColumn(name = "corretor_id")
     private Corretor corretor;
     
     @JsonBackReference
@@ -72,5 +75,4 @@ public class Cliente {
 //        this.bairro = bairro;
 //        this.corretor = corretor;
 //    }
-
 }
