@@ -20,7 +20,7 @@ public class Seguro {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 //	private Seguradora idSeguradora;
-	//private Veiculo veiculo;
+//	private Veiculo veiculo;
 	
 	@ManyToOne
     @JoinColumn(name = "corretor_id", nullable = false, columnDefinition = "INT")

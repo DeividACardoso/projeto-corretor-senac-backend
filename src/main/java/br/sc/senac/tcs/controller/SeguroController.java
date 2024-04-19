@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.sc.senac.tcs.model.entidade.Cliente;
+import br.sc.senac.tcs.model.entidade.Corretor;
 import br.sc.senac.tcs.model.entidade.Seguro;
 import br.sc.senac.tcs.service.SeguroService;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -36,6 +38,16 @@ public class SeguroController {
 
 	@PostMapping
 	public Seguro salvar(@RequestBody Seguro novoSeguro) {
+		Cliente cliente = novoSeguro.getCliente();
+		Corretor corretor = novoSeguro.getCorretor();
+		if(cliente == null) {
+			cliente = new Cliente();
+			novoSeguro.setCliente(cliente);
+		}
+		if(corretor == null) {
+			corretor = new Corretor();
+			novoSeguro.setCorretor(corretor);
+		}
 		return seguroService.salvar(novoSeguro);
 	}
 }
