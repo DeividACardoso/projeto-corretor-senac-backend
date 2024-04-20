@@ -15,6 +15,7 @@ import br.sc.senac.tcs.model.entidade.Seguro;
 import br.sc.senac.tcs.service.SeguroService;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 
 
 
@@ -49,5 +50,10 @@ public class SeguroController {
 			novoSeguro.setCorretor(corretor);
 		}
 		return seguroService.salvar(novoSeguro);
+	}
+	
+	@PutMapping
+	public boolean atualizar(@RequestBody Seguro seguroPAtualizar){
+		return seguroService.atualizar(seguroPAtualizar) != null;
 	}
 }

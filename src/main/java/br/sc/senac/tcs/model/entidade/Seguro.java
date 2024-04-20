@@ -10,6 +10,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
 
@@ -21,17 +22,16 @@ public class Seguro {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-//	private Seguradora idSeguradora;
-//	private Veiculo veiculo;
-	// private Seguradora idSeguradora;
-	//private Veiculo veiculo;
-	
+//	@OneToOne
+//	@JoinColumn(name = "seguradora_id")
+//	private Seguradora seguradora_id;
+	@OneToOne
+	@JoinColumn(name = "veiculo_id")
+	private Veiculo veiculo;
 	@ManyToOne
     @JoinColumn(name = "corretor_id")
 	private Corretor corretor;
-	
 	@ManyToOne
-	@JsonBackReference
     @JoinColumn(name = "cliente_id")
 	private Cliente cliente;
 	

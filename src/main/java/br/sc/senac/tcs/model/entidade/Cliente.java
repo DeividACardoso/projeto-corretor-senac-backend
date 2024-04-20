@@ -51,28 +51,16 @@ public class Cliente {
     private String cep;
     
     @ManyToOne
-    @JsonBackReference
     @JoinColumn(name = "corretor_id")
     private Corretor corretor;
+    
+    @OneToMany
+    @JoinColumn(name = "cliente")
+    private List<Veiculo> veiculos;
     
     @JsonBackReference
     @OneToMany(mappedBy = "cliente")
     private List<Seguro> seguros;
 
-//
-//    public Cliente(String nome, String cpf, LocalDate dtNascimento, String email, String cnh, String ddd, String telefone,
-//            String estadoCivil, String genero, String rua, String bairro, Corretor corretor) {
-//        this.nome = nome;
-//        this.cpf = cpf;
-//        this.dtNascimento = dtNascimento;
-//        this.email = email;
-//        this.cnh = cnh;
-//        this.ddd = ddd;
-//        this.telefone = telefone;
-//        this.estadoCivil = estadoCivil;
-//        this.genero = genero;
-//        this.rua = rua;
-//        this.bairro = bairro;
-//        this.corretor = corretor;
-//    }
+
 }

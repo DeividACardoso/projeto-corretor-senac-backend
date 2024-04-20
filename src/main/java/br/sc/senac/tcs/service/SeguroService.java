@@ -43,6 +43,12 @@ public class SeguroService {
 		// novoSeguro.setCorretor(corretor.get());
 
 		return seguroRepository.save(novoSeguro);	
-	}	
+	}
 
+	public Object atualizar(Seguro seguroPAtualizar) {
+		return seguroRepository.save(seguroPAtualizar);
+	}
+
+
+	
 }
