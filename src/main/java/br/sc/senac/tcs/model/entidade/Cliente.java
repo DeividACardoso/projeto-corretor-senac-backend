@@ -16,15 +16,13 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
-@Entity
-@Table
-@Data
 @Getter
 @Setter
-@RequiredArgsConstructor
+@Data
+@Entity
+@Table(name = "clientes")
 public class Cliente {
 
     @Id
@@ -61,6 +59,5 @@ public class Cliente {
     @JsonBackReference
     @OneToMany(mappedBy = "cliente")
     private List<Seguro> seguros;
-
 
 }
