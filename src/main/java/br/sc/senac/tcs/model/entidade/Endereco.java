@@ -4,34 +4,20 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "veiculo")
+@Table(name = "pessoa")
 @Data
-@NoArgsConstructor
-
-public class Veiculo {
+public class Endereco {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Id
 	private Integer id;
-	private String nome;
-	private String preço;
-	private String marca;
-	private int anoModelo;
-	private String tipoCombustivel;
 	private String rua;
 	private String bairro;
+	private String numero;
 	private String complemento;
-	private int numero;
-	private String cidade;
 	private String uf;
 	private String cep;
-	@OneToMany(mappedBy = "veiculo")
-	private Integer idCliente;
-	
 }
-

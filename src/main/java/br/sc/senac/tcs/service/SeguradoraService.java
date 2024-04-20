@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import br.sc.senac.tcs.exception.CampoInvalidoException;
 import br.sc.senac.tcs.model.entidade.Seguradora;
-import br.sc.senac.tcs.repository.SeguradoraRepository;
 import jakarta.transaction.Transactional;
 
 @Service

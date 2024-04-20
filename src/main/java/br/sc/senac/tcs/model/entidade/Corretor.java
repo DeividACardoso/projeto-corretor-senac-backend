@@ -1,16 +1,24 @@
 package br.sc.senac.tcs.model.entidade;
 
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.Data;
+
 import lombok.NoArgsConstructor;
 
+
 @Entity
+
 @Table(name = "corretor")
 @NoArgsConstructor
+
 @Data
 public class Corretor {
 
@@ -33,4 +41,9 @@ public class Corretor {
 		this.email = email;
 	}
 
+    
+    // @JsonBackReference
+    // @OneToMany(mappedBy = "corretor")
+    // private List<Seguro> seguros;
+    
 }
