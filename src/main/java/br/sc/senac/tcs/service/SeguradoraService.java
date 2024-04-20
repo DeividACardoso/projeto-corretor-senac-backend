@@ -33,10 +33,10 @@ public class SeguradoraService {
 	private void validarCamposObrigatorios(Seguradora seguradora) throws CampoInvalidoException {
 		String mensagemValidacao = "";
 		mensagemValidacao += validarCampoString(seguradora.getNome(), "nome");
-		mensagemValidacao += validarCampoString(seguradora.getCnpj(), "cnpj");
-		mensagemValidacao += validarCampoString(seguradora.getDdd(), "ddd");
-		mensagemValidacao += validarCampoString(seguradora.getTelefone(), "telefone");
-		mensagemValidacao += validarCampoString(seguradora.getEmail(), "email");
+		mensagemValidacao += validarCnpj(seguradora.getCnpj(), "cnpj");
+		mensagemValidacao += validarTelefone(seguradora.getDdd(), "ddd");
+		mensagemValidacao += validarTelefone(seguradora.getTelefone(), "telefone");
+		mensagemValidacao += validarEmail(seguradora.getEmail(), "email");
 
 		if (!mensagemValidacao.isEmpty()) {
 			throw new CampoInvalidoException(mensagemValidacao);
@@ -49,9 +49,31 @@ public class SeguradoraService {
 		}
 		return "";
 	}
-	
+
 	private String validarCnpj(String valorCampo, String nomeCampo) {
 		if (valorCampo == null || valorCampo.trim().isEmpty()) {
+			valorCampo.replaceAll(".", "");
+			valorCampo.replaceAll("-", "");
+			return "Informe o " + nomeCampo + " \n";
+		}
+		return "";
+	}
+
+	private String validarEmail(String valorCampo, String nomeCampo) {
+		if (valorCampo == null || valorCampo.trim().isEmpty()) {
+			String emailArroba = "@";
+			valorCampo.contains(emailArroba);
+			return "Informe o " + nomeCampo + " \n";
+		}
+		return "";
+	}
+	
+	private String validarTelefone(String valorCampo, String nomeCampo) {
+		if (valorCampo == null || valorCampo.trim().isEmpty()) {
+			valorCampo.replaceAll("-", "");
+			valorCampo.replaceAll("(", "");
+			valorCampo.replaceAll(")", "");
+			valorCampo.replaceAll(" ", ""); 
 			return "Informe o " + nomeCampo + " \n";
 		}
 		return "";
