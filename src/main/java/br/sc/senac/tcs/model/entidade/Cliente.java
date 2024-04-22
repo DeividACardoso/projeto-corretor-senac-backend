@@ -4,6 +4,10 @@ import java.time.LocalDate;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIgnoreType;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -18,11 +22,10 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter
-@Setter
 @Data
 @Entity
-@Table(name = "clientes")
+@Table(name = "cliente")
+
 public class Cliente {
 
     @Id
@@ -47,17 +50,7 @@ public class Cliente {
     private String cidade;
     private String uf;
     private String cep;
-    
-    @ManyToOne
-    @JoinColumn(name = "corretor_id")
-    private Corretor corretor;
-    
     @OneToMany
-    @JoinColumn(name = "cliente")
-    private List<Veiculo> veiculos;
-    
-    @JsonBackReference
-    @OneToMany(mappedBy = "cliente")
+    @JoinColumn(name = "cliente_id")
     private List<Seguro> seguros;
-
 }

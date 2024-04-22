@@ -1,4 +1,4 @@
-package br.sc.senac.tcs.repository;
+package br.sc.senac.tcs.model.repository;
 
 import java.util.List;
 

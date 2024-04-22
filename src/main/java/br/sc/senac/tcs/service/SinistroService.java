@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.sc.senac.tcs.model.entidade.Sinistro;
-import br.sc.senac.tcs.repository.SinistroRepository;
+import br.sc.senac.tcs.model.repository.SinistroRepository;
 import jakarta.transaction.Transactional;
 
 @Service
