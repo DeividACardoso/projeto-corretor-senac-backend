@@ -31,9 +31,9 @@ public class Veiculo {
 	private String uf;
 	private String cep;
 	
-	@ManyToOne
-	@JoinColumn(name = "cliente_id")
-	private Cliente Cliente;
+//	@ManyToOne
+//	@JoinColumn(name = "cliente_id")
+//	private Cliente Cliente;
 	
 }
 

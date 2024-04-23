@@ -32,12 +32,13 @@ public class Seguro {
 	@OneToOne
 	@JoinColumn(name = "veiculo_id")
 	private Veiculo veiculo;
-	@ManyToOne
-    @JoinColumn(name = "corretor_id")
-	private Corretor corretor;
+	
+    @Column(name = "corretor_id")
+	private Integer idCorretor;
 	
 	@Column(name = "cliente_id")
 	private Integer idCliente;
+	
 	private double rcfDanosMateriais;
 	private double rofDanosFisicos;
 	private LocalDate dtInicioVigencia;

@@ -50,6 +50,9 @@ public class Cliente {
     private String cidade;
     private String uf;
     private String cep;
+    @Column(name = "corretor_id")
+    private Integer idCorretor;
+    
     @OneToMany
     @JoinColumn(name = "cliente_id")
     private List<Seguro> seguros;
