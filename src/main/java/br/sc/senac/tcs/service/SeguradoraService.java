@@ -3,11 +3,14 @@ package br.sc.senac.tcs.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import br.sc.senac.tcs.exception.CampoInvalidoException;
 import br.sc.senac.tcs.model.entidade.Seguradora;
 import br.sc.senac.tcs.model.repository.SeguradoraRepository;
+import br.sc.senac.tcs.model.seletor.SeguradoraSeletor;
+import br.sc.senac.tcs.model.specification.SeguradoraSpecification;
 import jakarta.transaction.Transactional;
 
 @Service
@@ -81,8 +84,27 @@ public class SeguradoraService {
 
 	public Seguradora salvar(Seguradora novaSeguradora) throws CampoInvalidoException {
 		validarCamposObrigatorios(novaSeguradora);
-		
+
 		return seguradoraRepository.save(novaSeguradora);
+	}
+
+	public List<Seguradora> listarComSeletor(SeguradoraSeletor seletor) {
+		Specification<Seguradora> specification = SeguradoraSpecification.comFiltros(seletor);
+		return seguradoraRepository.findAll(specification);
+	}
+
+	public Seguradora atualizar(Integer id, Seguradora seguradoraPAtualizar) throws CampoInvalidoException {
+		return seguradoraRepository.save(seguradoraPAtualizar);
+	
+	}
+
+	public void excluir(Integer id) {
+		if(seguradoraRepository.existsById(id)) {
+			seguradoraRepository.deleteById(id);
+		} else {
+			
+		}
+	
 	}
 
 }
