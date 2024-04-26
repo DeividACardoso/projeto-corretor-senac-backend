@@ -3,6 +3,7 @@ package br.sc.senac.tcs.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -53,8 +54,9 @@ public class SeguradoraController {
 	}
 
 	@DeleteMapping("/delete/{id}")
-	public void excluir(@PathVariable Integer id) {
-		seguradoraService.excluir(id);
+	public boolean excluir(@PathVariable Integer id) {
+		boolean excluiu = seguradoraService.excluir(id);
+		return excluiu;
 	}
 
 }

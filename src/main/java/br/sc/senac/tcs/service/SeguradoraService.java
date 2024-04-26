@@ -98,13 +98,13 @@ public class SeguradoraService {
 	
 	}
 
-	public void excluir(Integer id) {
+	public boolean excluir(Integer id) {
+		boolean excluiu = false;
 		if(seguradoraRepository.existsById(id)) {
 			seguradoraRepository.deleteById(id);
-		} else {
-			
-		}
-	
+			excluiu = true;
+		} 
+		return excluiu;
 	}
 
 }
