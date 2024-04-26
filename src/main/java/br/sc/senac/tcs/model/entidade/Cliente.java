@@ -1,5 +1,6 @@
 package br.sc.senac.tcs.model.entidade;
 
+
 import java.time.LocalDate;
 
 import jakarta.persistence.Column;
@@ -9,9 +10,12 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.Data;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
-
+@Getter
+@Setter
 @Entity
 @Table(name = "clientes")
 @Data
