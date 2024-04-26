@@ -1,6 +1,5 @@
 package br.sc.senac.tcs.controller;
 
-import org.hibernate.mapping.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.sc.senac.tcs.model.entidade.Cliente;
-import br.sc.senac.tcs.model.repository.ClienteRepository;
 import br.sc.senac.tcs.service.ClienteService;
 
 @RestController
@@ -44,8 +42,8 @@ public class ClienteController {
     @PutMapping("{id}")
     public Cliente update(@PathVariable Integer id, @RequestBody Cliente cliente) {
         Cliente clienteDb = clienteService.findById(id);
-        clienteDb.setNome(cliente.getNome());
-        clienteDb.setBairro(cliente.getBairro());
+//        clienteDb.setNome(cliente.getNome());
+//        clienteDb.setBairro(cliente.getBairro());
 
         return clienteService.save(clienteDb);
     }

@@ -6,16 +6,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.sc.senac.tcs.model.entidade.Cliente;
 import br.sc.senac.tcs.model.entidade.Corretor;
+import br.sc.senac.tcs.model.entidade.Seguradora;
 import br.sc.senac.tcs.model.entidade.Seguro;
+import br.sc.senac.tcs.model.entidade.Veiculo;
 import br.sc.senac.tcs.service.SeguroService;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 
 
 
@@ -39,16 +41,26 @@ public class SeguroController {
 
 	@PostMapping
 	public Seguro salvar(@RequestBody Seguro novoSeguro) {
-		Cliente cliente = novoSeguro.getCliente();
-		Corretor corretor = novoSeguro.getCorretor();
-		if(cliente == null) {
-			cliente = new Cliente();
-			novoSeguro.setCliente(cliente);
-		}
-		if(corretor == null) {
-			corretor = new Corretor();
-			novoSeguro.setCorretor(corretor);
-		}
+////		Cliente cliente = novoSeguro.getIdCliente();
+//		Corretor corretor = novoSeguro.getCorretor();
+//		Seguradora seguradora = novoSeguro.getSeguradora();
+//		Veiculo veiculo = novoSeguro.getVeiculo();
+////		if(cliente == null) {
+////			cliente = new Cliente();
+////			novoSeguro.setCliente(cliente);
+////		}
+//		if(corretor == null) {
+//			corretor = new Corretor();
+//			novoSeguro.setCorretor(corretor);
+//		}
+//		if(seguradora == null) {
+//			seguradora = new Seguradora();
+//			novoSeguro.setSeguradora(seguradora);
+//		}
+//		if(veiculo == null) {
+//			veiculo = new Veiculo();
+//			novoSeguro.setVeiculo(veiculo);
+//		}
 		return seguroService.salvar(novoSeguro);
 	}
 	

@@ -6,12 +6,13 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import br.sc.senac.tcs.model.entidade.Corretor;
+import br.sc.senac.tcs.model.entidade.Sinistro;
 
 @Repository
-public interface CorretorRepository extends JpaRepository<Corretor, Integer> {
-	
-	List<Corretor> findAll(Specification<Corretor> specification);
-	
-	Corretor getReferenceById(Integer id);
+public interface SinistroRepository extends JpaRepository<Sinistro, Integer> {
+
+	List<Sinistro> findAll(Specification<Sinistro> specification);
+
+	Sinistro getReferenceById(Integer id);
+
 }
