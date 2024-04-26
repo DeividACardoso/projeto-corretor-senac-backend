@@ -42,8 +42,8 @@ public class ClienteController {
     @PutMapping("{id}")
     public Cliente update(@PathVariable Integer id, @RequestBody Cliente cliente) {
         Cliente clienteDb = clienteService.findById(id);
-//        clienteDb.setNome(cliente.getNome());
-//        clienteDb.setBairro(cliente.getBairro());
+        clienteDb.setNome(cliente.getNome());
+        clienteDb.setBairro(cliente.getBairro());
 
         return clienteService.save(clienteDb);
     }

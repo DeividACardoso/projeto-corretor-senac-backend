@@ -41,26 +41,26 @@ public class SeguroController {
 
 	@PostMapping
 	public Seguro salvar(@RequestBody Seguro novoSeguro) {
-////		Cliente cliente = novoSeguro.getIdCliente();
-//		Corretor corretor = novoSeguro.getCorretor();
-//		Seguradora seguradora = novoSeguro.getSeguradora();
-//		Veiculo veiculo = novoSeguro.getVeiculo();
-////		if(cliente == null) {
-////			cliente = new Cliente();
-////			novoSeguro.setCliente(cliente);
-////		}
+//		Cliente cliente = novoSeguro.getIdCliente();
+		Integer corretor = novoSeguro.getIdCorretor();
+		Seguradora seguradora = novoSeguro.getSeguradora();
+		Veiculo veiculo = novoSeguro.getVeiculo();
+//		if(cliente == null) {
+//			cliente = new Cliente();
+//			novoSeguro.setCliente(cliente);
+//		}
 //		if(corretor == null) {
 //			corretor = new Corretor();
-//			novoSeguro.setCorretor(corretor);
+//			novoSeguro.setIdCorretor();
 //		}
-//		if(seguradora == null) {
-//			seguradora = new Seguradora();
-//			novoSeguro.setSeguradora(seguradora);
-//		}
-//		if(veiculo == null) {
-//			veiculo = new Veiculo();
-//			novoSeguro.setVeiculo(veiculo);
-//		}
+		if(seguradora == null) {
+			seguradora = new Seguradora();
+			novoSeguro.setSeguradora(seguradora);
+		}
+		if(veiculo == null) {
+			veiculo = new Veiculo();
+			novoSeguro.setVeiculo(veiculo);
+		}
 		return seguroService.salvar(novoSeguro);
 	}
 	
