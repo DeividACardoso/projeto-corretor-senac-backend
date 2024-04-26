@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.sc.senac.tcs.model.entidade.Corretor;
-import br.sc.senac.tcs.repository.CorretorRepository;
+import br.sc.senac.tcs.model.repository.CorretorRepository;
 import jakarta.transaction.Transactional;
 
 @Service
