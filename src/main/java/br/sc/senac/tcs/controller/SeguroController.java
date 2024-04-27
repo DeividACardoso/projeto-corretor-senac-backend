@@ -54,27 +54,26 @@ public class SeguroController {
 	
 	@PostMapping
 	public Seguro salvar(@RequestBody Seguro novoSeguro) {
-		Cliente cliente = clienteController.listarPorId(novoSeguro.getIdCliente());
-		Corretor corretor = corretorController.listarPorId(novoSeguro.getIdCorretor());
-//		Cliente cliente = novoSeguro.getIdCliente();
-		Seguradora seguradora = novoSeguro.getSeguradora();
-		Veiculo veiculo = novoSeguro.getVeiculo();
-		if(cliente == null) {
-			cliente = new Cliente();
-			novoSeguro.setIdCliente(cliente.getId());
-		}
-		if(corretor == null) {
-			corretor = new Corretor();
-			novoSeguro.setIdCorretor(corretor.getId());
-		}
-		if(seguradora == null) {
-			seguradora = new Seguradora();
-			novoSeguro.setSeguradora(seguradora);
-		}
-		if(veiculo == null) {
-			veiculo = new Veiculo();
-			novoSeguro.setVeiculo(veiculo);
-		}
+//		Cliente cliente = clienteController.listarPorId(novoSeguro.getIdCliente());
+//		Corretor corretor = corretorController.listarPorId(novoSeguro.getIdCorretor());
+//		Seguradora seguradora = novoSeguro.getSeguradora();
+//		Veiculo veiculo = novoSeguro.getVeiculo();
+//		if(cliente == null) {
+//			cliente = new Cliente();
+//			novoSeguro.setIdCliente(cliente.getId());
+//		}
+//		if(corretor == null) {
+//			corretor = new Corretor();
+//			novoSeguro.setIdCorretor(corretor.getId());
+//		}
+//		if(seguradora == null) {
+//			seguradora = new Seguradora();
+//			novoSeguro.setSeguradora(seguradora);
+//		}
+//		if(veiculo == null) {
+//			veiculo = new Veiculo();
+//			novoSeguro.setVeiculo(veiculo);
+//		}
 		return seguroService.salvar(novoSeguro);
 	}
 	
