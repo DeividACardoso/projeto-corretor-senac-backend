@@ -56,6 +56,7 @@ public class SeguroController {
 	public Seguro salvar(@RequestBody Seguro novoSeguro) {
 		Cliente cliente = clienteController.listarPorId(novoSeguro.getIdCliente());
 		Corretor corretor = corretorController.listarPorId(novoSeguro.getIdCorretor());
+//		Cliente cliente = novoSeguro.getIdCliente();
 		Seguradora seguradora = novoSeguro.getSeguradora();
 		Veiculo veiculo = novoSeguro.getVeiculo();
 		if(cliente == null) {
