@@ -18,16 +18,17 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@Entity
-@Table(name = "clientes")
 @Data
 @RequiredArgsConstructor
+@Entity
+@Table(name = "cliente")
 public class Cliente {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.TABLE)
 	@Column(length = 255, nullable = false)
 	private int id;
+    
     private String nome;
     private String cpf;
     @Column(name = "dt_nascimento")
