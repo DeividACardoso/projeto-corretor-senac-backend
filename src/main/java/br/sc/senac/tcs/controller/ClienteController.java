@@ -30,17 +30,17 @@ public class ClienteController {
     }
 
     @GetMapping("{id}")
-    public Cliente get(@PathVariable Integer id) {
+    public Cliente listarPorId(@PathVariable Integer id) {
         return clienteService.findById(id);
     }
 
     @PostMapping
-    public Cliente create(@RequestBody Cliente cliente) {
+    public Cliente salvar(@RequestBody Cliente cliente) {
         return clienteService.save(cliente);
     }
 
     @PutMapping("{id}")
-    public Cliente update(@PathVariable Integer id, @RequestBody Cliente cliente) {
+    public Cliente atualizar(@PathVariable Integer id, @RequestBody Cliente cliente) {
         Cliente clienteDb = clienteService.findById(id);
         clienteDb.setNome(cliente.getNome());
         clienteDb.setBairro(cliente.getBairro());
@@ -48,10 +48,9 @@ public class ClienteController {
         return clienteService.save(clienteDb);
     }
 
-    @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("{id}")
     public void delete(@PathVariable Integer id) {
-        Cliente clienteDb = clienteService.findById(id);
-        // clienteService.delete(clienteDb);
+        Cliente cliente = clienteService.findById(id);
+         clienteService.delete(cliente);
     }
 }
