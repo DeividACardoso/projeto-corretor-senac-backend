@@ -28,6 +28,10 @@ public class ClienteService {
 
     public Iterable<Cliente> listarTodos() {
         return clienteRepository.findAll();
-    }   
+    }
+
+	public void delete(Cliente cliente) {
+		
+	}   
     
 }
