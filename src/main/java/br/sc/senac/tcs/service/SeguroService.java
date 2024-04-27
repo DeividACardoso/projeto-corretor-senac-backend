@@ -1,13 +1,10 @@
 package br.sc.senac.tcs.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.sc.senac.tcs.model.entidade.Cliente;
-import br.sc.senac.tcs.model.entidade.Corretor;
 import br.sc.senac.tcs.model.entidade.Seguro;
 import br.sc.senac.tcs.model.repository.ClienteRepository;
 import br.sc.senac.tcs.model.repository.CorretorRepository;

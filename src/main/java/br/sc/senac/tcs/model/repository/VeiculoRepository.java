@@ -6,13 +6,10 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import br.sc.senac.tcs.model.entidade.Corretor;
+import br.sc.senac.tcs.model.entidade.Veiculo;
 
 @Repository
-public interface CorretorRepository extends JpaRepository<Corretor, Integer> {
-
-	List<Corretor> findAll(Specification<Corretor> specification);
-
-	Corretor getReferenceById(Integer id);
+public interface VeiculoRepository extends JpaRepository<Veiculo, Integer>{
+	List<Veiculo> findAll(Specification<Veiculo> specification);
 
 }
