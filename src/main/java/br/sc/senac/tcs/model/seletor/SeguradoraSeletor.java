@@ -1,7 +1,7 @@
 package br.sc.senac.tcs.model.seletor;
 
-public class SeguradoraSeletor extends BaseSeletor {
-
+public class SeguradoraSeletor {
+	
 	private Integer id;
 	private String nome;
 	private String cnpj;
@@ -56,5 +56,4 @@ public class SeguradoraSeletor extends BaseSeletor {
 	public void setTelefone(String telefone) {
 		this.telefone = telefone;
 	}
-
 }

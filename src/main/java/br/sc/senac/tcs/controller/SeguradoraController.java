@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import br.sc.senac.tcs.exception.CampoInvalidoException;
 import br.sc.senac.tcs.model.entidade.Seguradora;
 import br.sc.senac.tcs.model.seletor.SeguradoraSeletor;
+import br.sc.senac.tcs.model.seletor.SinistroSeletor;
 import br.sc.senac.tcs.service.SeguradoraService;
 
 @RestController

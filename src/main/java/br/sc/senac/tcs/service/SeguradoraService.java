@@ -28,11 +28,6 @@ public class SeguradoraService {
 		return seguradoraRepository.findById(id).get();
 	}
 
-	public Seguradora inserir(Seguradora novaSeguradora) throws CampoInvalidoException {
-		validarCamposObrigatorios(novaSeguradora);
-		return seguradoraRepository.save(novaSeguradora);
-	}
-
 	private void validarCamposObrigatorios(Seguradora novaSeguradora) throws CampoInvalidoException {
 		String mensagemValidacao = "";
 		mensagemValidacao += validarCampoString(novaSeguradora.getNome(), "nome");
@@ -84,7 +79,6 @@ public class SeguradoraService {
 
 	public Seguradora salvar(Seguradora novaSeguradora) throws CampoInvalidoException {
 		validarCamposObrigatorios(novaSeguradora);
-
 		return seguradoraRepository.save(novaSeguradora);
 	}
 
@@ -95,15 +89,15 @@ public class SeguradoraService {
 
 	public Seguradora atualizar(Integer id, Seguradora seguradoraPAtualizar) throws CampoInvalidoException {
 		return seguradoraRepository.save(seguradoraPAtualizar);
-	
+
 	}
 
 	public boolean excluir(Integer id) {
 		boolean excluiu = false;
-		if(seguradoraRepository.existsById(id)) {
+		if (seguradoraRepository.existsById(id)) {
 			seguradoraRepository.deleteById(id);
 			excluiu = true;
-		} 
+		}
 		return excluiu;
 	}
 
