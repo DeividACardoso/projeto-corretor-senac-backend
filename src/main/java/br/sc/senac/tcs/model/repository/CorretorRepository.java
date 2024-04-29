@@ -14,5 +14,4 @@ public interface CorretorRepository extends JpaRepository<Corretor, Integer> {
 	List<Corretor> findAll(Specification<Corretor> specification);
 
 	Corretor getReferenceById(Integer id);
-
 }

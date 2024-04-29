@@ -6,7 +6,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,8 +19,7 @@ public class Veiculo {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Id
 	private Integer id;
-	private String nome;
-	private String preço;
+	private String preco;
 	private String marca;
 	private int anoModelo;
 	private String tipoCombustivel;
@@ -32,9 +30,10 @@ public class Veiculo {
 	private String cidade;
 	private String uf;
 	private String cep;
-	@ManyToOne
-	@JoinColumn(name = "cliente_id")
-	private Cliente Cliente;
+	
+//	@ManyToOne
+//	@JoinColumn(name = "cliente_id")
+//	private Cliente Cliente;
 	
 }
 

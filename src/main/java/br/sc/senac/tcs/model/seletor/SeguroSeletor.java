@@ -5,46 +5,38 @@ import java.time.LocalDate;
 
 public class SeguroSeletor extends BaseSeletor{
 	
-	private Integer idSeguradora;
-	private Integer idVeiculo;
-	private Integer idCorretor;
-	private Integer idCliente;
+	private String nomeSeguradora;
+	private String nomeCorretor;
+	private String nomeCliente;
 	private LocalDate dtInicioComecoVigencia;
 	private LocalDate dtFimComecoVigencia;
 	private LocalDate dtInicioFimVigencia;
 	private LocalDate dtFimFimVigencia;
-	private double menorRcfDanosMateriais;
-	private double maiorRcfDanosMateriais;
-	private double menorRofDanosFisicos;
-	private double maiorRofDanosFisicos;
-	private double menorFranquia;
-	private double maiorFranquia;
-	private String assistencia;
+	private Double menorRcfDanosMateriais;
+	private Double maiorRcfDanosMateriais;
+	private Double menorRofDanosFisicos;
+	private Double maiorRofDanosFisicos;
+	private Double menorFranquia;
+	private Double maiorFranquia;
 	private String carroReserva;
 	
-	public Integer getIdSeguradora() {
-		return idSeguradora;
+	public String getNomeSeguradora() {
+		return nomeSeguradora;
 	}
-	public void setIdSeguradora(Integer idSeguradora) {
-		this.idSeguradora = idSeguradora;
+	public void setNomeSeguradora(String nomeSeguradora) {
+		this.nomeSeguradora = nomeSeguradora;
 	}
-	public Integer getIdVeiculo() {
-		return idVeiculo;
+	public String getNomeCorretor() {
+		return nomeCorretor;
 	}
-	public void setIdVeiculo(Integer idVeiculo) {
-		this.idVeiculo = idVeiculo;
+	public void setNomeCorretor(String nomeCorretor) {
+		this.nomeCorretor = nomeCorretor;
 	}
-	public Integer getIdCorretor() {
-		return idCorretor;
+	public String getNomeCliente() {
+		return nomeCliente;
 	}
-	public void setIdCorretor(Integer idCorretor) {
-		this.idCorretor = idCorretor;
-	}
-	public Integer getIdCliente() {
-		return idCliente;
-	}
-	public void setIdCliente(Integer idCliente) {
-		this.idCliente = idCliente;
+	public void setNomeCliente(String nomeCliente) {
+		this.nomeCliente = nomeCliente;
 	}
 	public LocalDate getDtInicioComecoVigencia() {
 		return dtInicioComecoVigencia;
@@ -70,11 +62,41 @@ public class SeguroSeletor extends BaseSeletor{
 	public void setDtFimFimVigencia(LocalDate dtFimFimVigencia) {
 		this.dtFimFimVigencia = dtFimFimVigencia;
 	}
-	public String getAssistencia() {
-		return assistencia;
+	public Double getMenorRcfDanosMateriais() {
+		return menorRcfDanosMateriais;
 	}
-	public void setAssistencia(String assistencia) {
-		this.assistencia = assistencia;
+	public void setMenorRcfDanosMateriais(Double menorRcfDanosMateriais) {
+		this.menorRcfDanosMateriais = menorRcfDanosMateriais;
+	}
+	public Double getMaiorRcfDanosMateriais() {
+		return maiorRcfDanosMateriais;
+	}
+	public void setMaiorRcfDanosMateriais(Double maiorRcfDanosMateriais) {
+		this.maiorRcfDanosMateriais = maiorRcfDanosMateriais;
+	}
+	public Double getMenorRofDanosFisicos() {
+		return menorRofDanosFisicos;
+	}
+	public void setMenorRofDanosFisicos(Double menorRofDanosFisicos) {
+		this.menorRofDanosFisicos = menorRofDanosFisicos;
+	}
+	public Double getMaiorRofDanosFisicos() {
+		return maiorRofDanosFisicos;
+	}
+	public void setMaiorRofDanosFisicos(Double maiorRofDanosFisicos) {
+		this.maiorRofDanosFisicos = maiorRofDanosFisicos;
+	}
+	public Double getMenorFranquia() {
+		return menorFranquia;
+	}
+	public void setMenorFranquia(Double menorFranquia) {
+		this.menorFranquia = menorFranquia;
+	}
+	public Double getMaiorFranquia() {
+		return maiorFranquia;
+	}
+	public void setMaiorFranquia(Double maiorFranquia) {
+		this.maiorFranquia = maiorFranquia;
 	}
 	public String getCarroReserva() {
 		return carroReserva;
@@ -82,42 +104,7 @@ public class SeguroSeletor extends BaseSeletor{
 	public void setCarroReserva(String carroReserva) {
 		this.carroReserva = carroReserva;
 	}
-	public double getMenorRcfDanosMateriais() {
-		return menorRcfDanosMateriais;
-	}
-	public void setMenorRcfDanosMateriais(double menorRcfDanosMateriais) {
-		this.menorRcfDanosMateriais = menorRcfDanosMateriais;
-	}
-	public double getMaiorRcfDanosMateriais() {
-		return maiorRcfDanosMateriais;
-	}
-	public void setMaiorRcfDanosMateriais(double maiorRcfDanosMateriais) {
-		this.maiorRcfDanosMateriais = maiorRcfDanosMateriais;
-	}
-	public double getMenorRofDanosFisicos() {
-		return menorRofDanosFisicos;
-	}
-	public void setMenorRofDanosFisicos(double menorRofDanosFisicos) {
-		this.menorRofDanosFisicos = menorRofDanosFisicos;
-	}
-	public double getMaiorRofDanosFisicos() {
-		return maiorRofDanosFisicos;
-	}
-	public void setMaiorRofDanosFisicos(double maiorRofDanosFisicos) {
-		this.maiorRofDanosFisicos = maiorRofDanosFisicos;
-	}
-	public double getMenorFranquia() {
-		return menorFranquia;
-	}
-	public void setMenorFranquia(double menorFranquia) {
-		this.menorFranquia = menorFranquia;
-	}
-	public double getMaiorFranquia() {
-		return maiorFranquia;
-	}
-	public void setMaiorFranquia(double maiorFranquia) {
-		this.maiorFranquia = maiorFranquia;
-	}
+	
 	
 	
 }
