@@ -10,31 +10,28 @@ import br.sc.senac.tcs.model.repository.ClienteRepository;
 public class ClienteService {
 
     @Autowired
-    private ClienteRepository clienteRepository;
+    ClienteRepository clienteRepository;
 
-    public Iterable<Cliente> findAll() {
+    public Cliente save(Cliente novoCliente) {
+        return clienteRepository.save(novoCliente);
+    }
+
+    // public boolean delete(Cliente clienteDb) {
+    // boolean seguroVigente = clienteDb.getSeguros().
+
+    // return seguroVigente;
+    // }
+
+    public Cliente findById(Integer id) {
+        return clienteRepository.findById(id).get();
+    }
+
+    public Iterable<Cliente> listarTodos() {
         return clienteRepository.findAll();
     }
 
-    public Cliente findById(Integer id) {
-        return clienteRepository.findById(id).orElse(null);
+    public void delete(Cliente cliente) {
+
     }
 
-    public Cliente create(Cliente cliente) {
-        return clienteRepository.save(cliente);
-    }
-
-    public Cliente update(Integer id, Cliente form) {
-        Cliente clienteDb = findById(id);
-
-        clienteDb.setNome(form.getNome());
-        clienteDb.setEmail(form.getEmail());
-
-        return clienteRepository.save(clienteDb);
-    }
-
-    public void delete(Integer id) {
-        Cliente clienteDb = clienteRepository.findById(id).orElse(null);
-        clienteRepository.delete(clienteDb);
-    }
 }
