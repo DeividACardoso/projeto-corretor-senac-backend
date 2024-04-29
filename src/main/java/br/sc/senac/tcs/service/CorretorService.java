@@ -9,8 +9,8 @@ import org.springframework.stereotype.Service;
 import br.sc.senac.tcs.exception.CampoInvalidoException;
 import br.sc.senac.tcs.model.entidade.Corretor;
 import br.sc.senac.tcs.model.repository.CorretorRepository;
-import br.sc.senac.tcs.model.repository.CorretorSpecification;
 import br.sc.senac.tcs.model.seletor.CorretorSeletor;
+import br.sc.senac.tcs.model.specification.CorretorSpecification;
 import jakarta.transaction.Transactional;
 
 @Service

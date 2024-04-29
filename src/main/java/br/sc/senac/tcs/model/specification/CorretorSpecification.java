@@ -1,4 +1,4 @@
-package br.sc.senac.tcs.model.repository;
+package br.sc.senac.tcs.model.specification;
 
 import org.springframework.data.jpa.domain.Specification;
 

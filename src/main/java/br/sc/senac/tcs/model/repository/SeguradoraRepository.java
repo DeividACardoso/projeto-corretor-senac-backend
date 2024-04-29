@@ -12,5 +12,7 @@ import br.sc.senac.tcs.model.entidade.Seguradora;
 public interface SeguradoraRepository extends JpaRepository<Seguradora, Integer> {
 	
 	List<Seguradora> findAll(Specification<Seguradora> specification); 
+	
+	Seguradora getReferenceById(Integer id);
 
 }
