@@ -9,6 +9,7 @@ public class CorretorSeletor {
 	private String telefone;
 	private String email;
 	private String senha;
+	
 	public Integer getId() {
 		return id;
 	}
