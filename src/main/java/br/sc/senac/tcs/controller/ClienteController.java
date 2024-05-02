@@ -1,6 +1,7 @@
 package br.sc.senac.tcs.controller;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,9 +13,11 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.sc.senac.tcs.model.entidade.Cliente;
+import br.sc.senac.tcs.service.CampoInvalidoException;
 import br.sc.senac.tcs.service.ClienteService;
 import lombok.AllArgsConstructor;
 
+@CrossOrigin(origins = { "http://localhost:4200", "http://localhost:5500" }, maxAge = 3600)
 @AllArgsConstructor
 @RestController
 @RequestMapping("/api/clientes")
@@ -32,8 +35,8 @@ public class ClienteController {
         return clienteService.findById(id);
     }
 
-    @PostMapping
-    public Cliente create(@RequestBody Cliente cliente) {
+    @PostMapping("/novo")
+    public Cliente create(@RequestBody Cliente cliente) throws CampoInvalidoException {
         return clienteService.create(cliente);
     }
 

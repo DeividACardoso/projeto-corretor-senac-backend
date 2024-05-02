@@ -10,8 +10,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
@@ -28,7 +26,7 @@ public class Cliente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    
+
     private String nome;
     private String cpf;
     @Column(nullable = false)
@@ -40,7 +38,7 @@ public class Cliente {
     private String cnh;
     private String ddd;
     private String telefone;
-   
+
     @Column(name = "estado_civil")
     private String estadoCivil;
     private String genero;
@@ -51,15 +49,9 @@ public class Cliente {
     private String cidade;
     private String uf;
     private String cep;
-    
-    @ManyToOne
-    @JsonBackReference
-    @JoinColumn(name = "corretor_id", nullable = false, columnDefinition = "INT")
-    private Corretor corretor;
-    
+
     @JsonBackReference
     @OneToMany(mappedBy = "cliente")
     private List<Seguro> seguros;
-
 
 }

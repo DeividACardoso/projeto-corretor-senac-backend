@@ -9,6 +9,4 @@ public class TcsApplication {
     public static void main(String[] args) {
         SpringApplication.run(TcsApplication.class, args);
     }
-
-
 }
