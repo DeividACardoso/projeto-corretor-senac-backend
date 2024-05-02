@@ -11,15 +11,21 @@ import br.sc.senac.tcs.model.repository.ClienteRepository;
 public class ClienteService {
 
     @Autowired
-    private ClienteRepository clienteRepository;
+    ClienteRepository clienteRepository;
 
     @GetMapping
     public Iterable<Cliente> findAll() {
         return clienteRepository.findAll();
     }
 
+    // public boolean delete(Cliente clienteDb) {
+    // boolean seguroVigente = clienteDb.getSeguros().
+
+    // return seguroVigente;
+    // }
+
     public Cliente findById(Integer id) {
-        return clienteRepository.findById(id).orElse(null);
+        return clienteRepository.findById(id).get();
     }
 
     public Cliente create(Cliente cliente) throws CampoInvalidoException {

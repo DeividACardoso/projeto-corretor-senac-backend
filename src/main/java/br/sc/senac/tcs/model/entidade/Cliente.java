@@ -12,15 +12,17 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
 import lombok.Data;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
-@Entity
-@Table
+@Getter
+@Setter
 @Data
 @RequiredArgsConstructor
+@Entity
+@Table(name = "cliente")
 public class Cliente {
 
     @Id
@@ -29,11 +31,8 @@ public class Cliente {
 
     private String nome;
     private String cpf;
-    @Column(nullable = false)
-    @Temporal(TemporalType.DATE)
+    @Column(name = "dt_nascimento")
     private LocalDate dtNascimento;
-
-    @Column(length = 255, nullable = false)
     private String email;
     private String cnh;
     private String ddd;
