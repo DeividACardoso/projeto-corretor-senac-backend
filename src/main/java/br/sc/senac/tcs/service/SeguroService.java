@@ -23,24 +23,26 @@ public class SeguroService {
 	private ClienteRepository clienteRepository;
 	@Autowired
 	private CorretorRepository corretorRepository;
-	
+
 	@Transactional
 	public List<Seguro> listarTodos() {
 		return seguroRepository.findAll();
 	}
-	
+
 	public Seguro listarPorId(Integer id) {
 		return seguroRepository.findById(id).get();
 	}
 
-    public Seguro salvar(Seguro novoSeguro){
-//		 Optional<Cliente> cliente = clienteRepository.findById(novoSeguro.getIdCliente());
-//		 novoSeguro.setIdCliente(cliente);
-//		
-//		 Optional<Corretor> corretor = corretorRepository.findById(novoSeguro.getIdCorretor());
-//		 novoSeguro.setCorretor(corretor.get());
+	public Seguro salvar(Seguro novoSeguro) {
+		// Optional<Cliente> cliente =
+		// clienteRepository.findById(novoSeguro.getIdCliente());
+		// novoSeguro.setIdCliente(cliente);
+		//
+		// Optional<Corretor> corretor =
+		// corretorRepository.findById(novoSeguro.getIdCorretor());
+		// novoSeguro.setCorretor(corretor.get());
 
-		return seguroRepository.save(novoSeguro);	
+		return seguroRepository.save(novoSeguro);
 	}
 
 	public Object atualizar(Seguro seguroPAtualizar) {
@@ -57,6 +59,4 @@ public class SeguroService {
 		return seguroRepository.findAll(specification);
 	}
 
-	
-	
 }

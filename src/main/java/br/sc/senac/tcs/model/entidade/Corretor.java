@@ -1,13 +1,9 @@
 package br.sc.senac.tcs.model.entidade;
 
-import java.util.List;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Data;
 
@@ -25,12 +21,9 @@ public class Corretor {
     private String telefone;
     private String email;
     private String senha;
-    
-    @OneToMany
-    @JoinColumn(name = "corretor_id")
-    private List<Cliente> clientes;
-    
-    @OneToMany
-    @JoinColumn(name = "corretor_id")
-    private List<Seguro> seguros;
+
+    // @JsonBackReference
+    // @OneToMany(mappedBy = "corretor")
+    // private List<Seguro> seguros;
+
 }
