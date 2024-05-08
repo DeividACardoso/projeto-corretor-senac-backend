@@ -35,7 +35,6 @@ public class Cliente {
     private LocalDate dtNascimento;
     private String email;
     private String cnh;
-    private String ddd;
     private String telefone;
 
     @Column(name = "estado_civil")
@@ -48,7 +47,9 @@ public class Cliente {
     private String cidade;
     private String uf;
     private String cep;
-
+    
+    @JsonBackReference
+    @OneToMany
     private List<Seguro> seguros;
 
 }
