@@ -7,8 +7,6 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import br.sc.senac.tcs.model.entidade.Seguro;
-import br.sc.senac.tcs.model.repository.ClienteRepository;
-import br.sc.senac.tcs.model.repository.CorretorRepository;
 import br.sc.senac.tcs.model.repository.SeguroRepository;
 import br.sc.senac.tcs.model.seletor.SeguroSeletor;
 import br.sc.senac.tcs.model.specification.SeguroSpecification;
@@ -19,10 +17,6 @@ public class SeguroService {
 
 	@Autowired
 	private SeguroRepository seguroRepository;
-	@Autowired
-	private ClienteRepository clienteRepository;
-	@Autowired
-	private CorretorRepository corretorRepository;
 
 	@Transactional
 	public List<Seguro> listarTodos() {

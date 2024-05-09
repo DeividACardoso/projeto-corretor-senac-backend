@@ -40,16 +40,27 @@ public class ClienteService {
         String mensagemValidacao = "";
         mensagemValidacao += validarCampoString(cliente.getNome(), "nome");
         mensagemValidacao += validarCampoString(cliente.getCpf(), "cpf");
+        mensagemValidacao += validarCampoString(cliente.getCnh(), "cnh");
         mensagemValidacao += validarCampoString(cliente.getTelefone(), "telefone");
+        mensagemValidacao += validarCampoString(cliente.getEmail(), "email");
+        mensagemValidacao += validarCampoString(cliente.getEstadoCivil(), "estadoCivil");
+        mensagemValidacao += validarCampoString(cliente.getGenero(), "genero");
+        mensagemValidacao += validarCampoString(cliente.getCep(), "cep");
+        mensagemValidacao += validarCampoString(cliente.getUf(), "uf");
+        mensagemValidacao += validarCampoString(cliente.getCidade(), "cidade");
+        mensagemValidacao += validarCampoString(cliente.getComplemento(), "complemento");
+        mensagemValidacao += validarCampoString(cliente.getRua(), "rua");
+        mensagemValidacao += validarCampoString(cliente.getNumero(), "numero");
 
         if (!mensagemValidacao.isEmpty()) {
-            throw new CampoInvalidoException(mensagemValidacao);
+        	String mensagemValidacaoCompleta = "Informe: " + mensagemValidacao;
+            throw new CampoInvalidoException(mensagemValidacaoCompleta);
         }
     }
 
     private String validarCampoString(String valorCampo, String nomeCampo) {
         if (valorCampo == null || valorCampo.trim().isEmpty()) {
-            return "Informe o " + nomeCampo + " \n";
+            return nomeCampo + ", \n";
         }
         return "";
     }

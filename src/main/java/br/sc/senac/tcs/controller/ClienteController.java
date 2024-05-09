@@ -29,7 +29,7 @@ public class ClienteController {
     }
 
     @GetMapping("{id}")
-    public Cliente get(@PathVariable Integer id) {
+    public Cliente listarPorId(@PathVariable Integer id) {
         return clienteService.findById(id);
     }
 
