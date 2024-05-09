@@ -61,14 +61,14 @@ public class SeguroSpecification {
 				predicates.add(cb.lessThanOrEqualTo(root.get("rofDanosFisicos"), seletor.getMaiorRofDanosFisicos()));
 			}
 			
-			if(seletor.getMenorFranquia() != null && !seletor.getMenorFranquia().toString().trim().isEmpty()
-					&& seletor.getMaiorFranquia() != null && seletor.getMaiorFranquia().toString().trim().isEmpty()) {
-				predicates.add(cb.between(root.get("franquia"), seletor.getMenorFranquia(), seletor.getMaiorFranquia()));
-			} else if(seletor.getMenorFranquia() != null && !seletor.getMenorFranquia().toString().trim().isEmpty()) {
-				predicates.add(cb.greaterThanOrEqualTo(root.get("franquia"), seletor.getMenorFranquia()));
-			} else if(seletor.getMaiorFranquia() != null && !seletor.getMaiorFranquia().toString().trim().isEmpty()) {
-				predicates.add(cb.lessThanOrEqualTo(root.get("franquia"), seletor.getMaiorFranquia()));
-			}
+//			if(seletor.getMenorFranquia() != null && !seletor.getMenorFranquia().toString().trim().isEmpty()
+//					&& seletor.getMaiorFranquia() != null && seletor.getMaiorFranquia().toString().trim().isEmpty()) {
+//				predicates.add(cb.between(root.get("franquia"), seletor.getMenorFranquia(), seletor.getMaiorFranquia()));
+//			} else if(seletor.getMenorFranquia() != null && !seletor.getMenorFranquia().toString().trim().isEmpty()) {
+//				predicates.add(cb.greaterThanOrEqualTo(root.get("franquia"), seletor.getMenorFranquia()));
+//			} else if(seletor.getMaiorFranquia() != null && !seletor.getMaiorFranquia().toString().trim().isEmpty()) {
+//				predicates.add(cb.lessThanOrEqualTo(root.get("franquia"), seletor.getMaiorFranquia()));
+//			}
 			
 			if(seletor.getCarroReserva() != null && !seletor.getCarroReserva().toString().trim().isEmpty()) {
 				predicates.add(cb.like(root.get("carroReserva"), "%" + seletor.getCarroReserva().toLowerCase()));

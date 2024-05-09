@@ -2,18 +2,12 @@ package br.sc.senac.tcs.model.entidade;
 
 import java.time.LocalDate;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonIgnoreType;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
@@ -22,7 +16,7 @@ import lombok.Data;
 @Table
 @Data
 public class Seguro {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
@@ -32,8 +26,6 @@ public class Seguro {
 	@OneToOne
 	@JoinColumn(name = "veiculo_id")
 	private Veiculo veiculo;
-    @Column(name = "corretor_id")
-	private Integer idCorretor;
 	@Column(name = "cliente_id")
 	private Integer idCliente;
 	private double rcfDanosMateriais;
