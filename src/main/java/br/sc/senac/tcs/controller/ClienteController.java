@@ -15,7 +15,6 @@ import br.sc.senac.tcs.service.CampoInvalidoException;
 import br.sc.senac.tcs.service.ClienteService;
 import lombok.AllArgsConstructor;
 
-@CrossOrigin(origins = { "http://localhost:4200", "http://localhost:5500" }, maxAge = 3600)
 @AllArgsConstructor
 @RestController
 @RequestMapping("/api/clientes")
