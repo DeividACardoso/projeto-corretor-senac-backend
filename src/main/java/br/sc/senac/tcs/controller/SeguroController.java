@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.sc.senac.tcs.model.entidade.Cliente;
 import br.sc.senac.tcs.model.entidade.Seguro;
 import br.sc.senac.tcs.model.seletor.SeguroSeletor;
+import br.sc.senac.tcs.service.ClienteService;
 import br.sc.senac.tcs.service.SeguroService;
 
 @RestController
@@ -24,6 +26,9 @@ public class SeguroController {
 
 	@Autowired
 	private SeguroService seguroService;
+
+	@Autowired
+	private ClienteController clienteController;
 	
 	@GetMapping(path = "/todos")
 	public List<Seguro> listarTodosSeguros() {
@@ -50,7 +55,7 @@ public class SeguroController {
 		return seguroService.atualizar(seguroPAtualizar) != null;
 	}
 
-	@DeleteMapping(path = "/{id}")
+	@DeleteMapping(path = "/delete-id/{id}")
 	public boolean delete(@PathVariable Integer id) {
 		return seguroService.delete(id);
 	}

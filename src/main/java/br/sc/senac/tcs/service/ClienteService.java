@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import br.sc.senac.tcs.exception.SeguroVigenteException;
 import br.sc.senac.tcs.model.entidade.Cliente;
 import br.sc.senac.tcs.model.repository.ClienteRepository;
 
@@ -43,7 +44,7 @@ public class ClienteService {
         mensagemValidacao += validarCampoString(cliente.getCnh(), "cnh");
         mensagemValidacao += validarCampoString(cliente.getTelefone(), "telefone");
         mensagemValidacao += validarCampoString(cliente.getEmail(), "email");
-        mensagemValidacao += validarCampoString(cliente.getEstadoCivil(), "estadoCivil");
+        mensagemValidacao += validarCampoString(cliente.getEstadoCivil(), "Estado Civil");
         mensagemValidacao += validarCampoString(cliente.getGenero(), "genero");
         mensagemValidacao += validarCampoString(cliente.getCep(), "cep");
         mensagemValidacao += validarCampoString(cliente.getUf(), "uf");
@@ -74,9 +75,18 @@ public class ClienteService {
         return clienteRepository.save(clienteDb);
     }
 
-    public void delete(Integer id) {
-        Cliente clienteDb = clienteRepository.findById(id).orElse(null);
-        clienteRepository.delete(clienteDb);
+    public boolean delete(Integer id) throws SeguroVigenteException {
+        boolean seguroVigente = verificarSeguroVigente();
+		if(!seguroVigente) {
+			clienteRepository.deleteById(id);
+		} else {
+            throw new SeguroVigenteException("Impossível deletar pois o cliente possui seguros vigentes.");
+        }
+		return seguroVigente;
+    }
+
+    private boolean verificarSeguroVigente() {
+        return false;
     }
 
     private void removerMascara(Cliente novoCliente) {

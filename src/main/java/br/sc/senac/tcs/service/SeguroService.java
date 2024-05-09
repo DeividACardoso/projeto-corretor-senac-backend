@@ -53,4 +53,5 @@ public class SeguroService {
 		return seguroRepository.findAll(specification);
 	}
 
+
 }
