@@ -32,12 +32,12 @@ public class VeiculoService {
 
 	private void validarCamposObrigatorios(Veiculo veiculo) throws CampoInvalidoException {
 		String mensagemValidacao = "";
-//		mensagemValidacao += validarCampoString(veiculo.get, "");
-//		mensagemValidacao += validarCampoString(veiculo.get, "");
-//		mensagemValidacao += validarCampoString(veiculo.get, "");
-//		mensagemValidacao += validarCampoString(veiculo.get, "");
-//		mensagemValidacao += validarCampoString(veiculo.get, "");
-//		mensagemValidacao += validarCampoString(veiculo.get, "");
+		// mensagemValidacao += validarCamposString(veiculo.getAnoModelo(), "");
+		mensagemValidacao += validarCamposString(veiculo.getBairro(), "");
+		mensagemValidacao += validarCamposString(veiculo.getCep(), "");
+		mensagemValidacao += validarCamposString(veiculo.getCidade(), "");
+		mensagemValidacao += validarCamposString(veiculo.getMarca(), "");
+		// mensagemValidacao += validarCampoString(veiculo.get, "");
 
 		if (!mensagemValidacao.isEmpty()) {
 			throw new CampoInvalidoException(mensagemValidacao);
