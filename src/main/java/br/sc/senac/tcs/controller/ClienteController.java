@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.sc.senac.tcs.exception.SeguroVigenteException;
 import br.sc.senac.tcs.model.entidade.Cliente;
 import br.sc.senac.tcs.service.CampoInvalidoException;
 import br.sc.senac.tcs.service.ClienteService;
@@ -39,13 +38,14 @@ public class ClienteController {
         return clienteService.create(cliente);
     }
 
-    @PutMapping("{id}")
-    public Cliente update(@PathVariable Integer id, @RequestBody Cliente form) {
-        return clienteService.update(id, form);
+    @PutMapping
+    public Cliente update(@RequestBody Cliente cliente) {
+        return clienteService.update(cliente);
     }
 
     @DeleteMapping("/delete-id/{id}")
-    public boolean delete(@PathVariable Integer id) throws SeguroVigenteException {
-        return clienteService.delete(id);
+    public boolean delete(@PathVariable Integer id) throws CampoInvalidoException{
+        clienteService.delete(id);
+        return true;
     }
 }

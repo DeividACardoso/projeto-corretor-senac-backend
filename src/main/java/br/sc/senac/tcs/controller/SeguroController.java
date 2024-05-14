@@ -13,10 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.sc.senac.tcs.model.entidade.Cliente;
 import br.sc.senac.tcs.model.entidade.Seguro;
 import br.sc.senac.tcs.model.seletor.SeguroSeletor;
-import br.sc.senac.tcs.service.ClienteService;
 import br.sc.senac.tcs.service.SeguroService;
 
 @RestController
@@ -25,11 +23,8 @@ import br.sc.senac.tcs.service.SeguroService;
 public class SeguroController {
 
 	@Autowired
-	private SeguroService seguroService;
+	private SeguroService seguroService = new SeguroService();
 
-	@Autowired
-	private ClienteController clienteController;
-	
 	@GetMapping(path = "/todos")
 	public List<Seguro> listarTodosSeguros() {
 		return seguroService.listarTodos();
