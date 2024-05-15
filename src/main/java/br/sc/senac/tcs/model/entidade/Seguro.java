@@ -28,12 +28,12 @@ public class Seguro {
 	private Veiculo veiculo;
 	@Column(name = "cliente_id")
 	private Integer idCliente;
+	private String numeroProposta;
+	private String numApolice;
 	private double rcfDanosMateriais;
 	private double rofDanosFisicos;
 	private LocalDate dtInicioVigencia;
 	private LocalDate dtFimVigencia;
-	private String numeroProposta;
 	private double franquia;
 	private boolean carroReserva;
-	private String numApolice;
 }

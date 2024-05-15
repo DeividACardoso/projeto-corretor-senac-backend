@@ -1,11 +1,16 @@
 package br.sc.senac.tcs.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import br.sc.senac.tcs.controller.SeguroController;
 import br.sc.senac.tcs.model.entidade.Cliente;
+import br.sc.senac.tcs.model.entidade.Seguro;
 import br.sc.senac.tcs.model.repository.ClienteRepository;
+import br.sc.senac.tcs.model.seletor.SeguroSeletor;
 
 @Service
 public class ClienteService {
@@ -13,16 +18,14 @@ public class ClienteService {
     @Autowired
     ClienteRepository clienteRepository;
 
+    @Autowired
+	SeguroController seguroController = new SeguroController();
+	SeguroSeletor seguroSeletor = new SeguroSeletor();
+
     @GetMapping
     public Iterable<Cliente> findAll() {
         return clienteRepository.findAll();
     }
-
-    // public boolean delete(Cliente clienteDb) {
-    // boolean seguroVigente = clienteDb.getSeguros().
-
-    // return seguroVigente;
-    // }
 
     public Cliente findById(Integer id) {
         return clienteRepository.findById(id).get();
@@ -43,7 +46,7 @@ public class ClienteService {
         mensagemValidacao += validarCampoString(cliente.getCnh(), "cnh");
         mensagemValidacao += validarCampoString(cliente.getTelefone(), "telefone");
         mensagemValidacao += validarCampoString(cliente.getEmail(), "email");
-        mensagemValidacao += validarCampoString(cliente.getEstadoCivil(), "estadoCivil");
+        mensagemValidacao += validarCampoString(cliente.getEstadoCivil(), "Estado Civil");
         mensagemValidacao += validarCampoString(cliente.getGenero(), "genero");
         mensagemValidacao += validarCampoString(cliente.getCep(), "cep");
         mensagemValidacao += validarCampoString(cliente.getUf(), "uf");
@@ -65,19 +68,24 @@ public class ClienteService {
         return "";
     }
 
-    public Cliente update(Integer id, Cliente form) {
-        Cliente clienteDb = findById(id);
-
-        clienteDb.setNome(form.getNome());
-        clienteDb.setEmail(form.getEmail());
-
-        return clienteRepository.save(clienteDb);
+    public Cliente update(Cliente cliente) {
+        return clienteRepository.save(cliente);
     }
 
-    public void delete(Integer id) {
-        Cliente clienteDb = clienteRepository.findById(id).orElse(null);
-        clienteRepository.delete(clienteDb);
-    }
+    public boolean delete(Integer id) throws CampoInvalidoException {
+		boolean retorno = false;
+        seguroSeletor = new SeguroSeletor();
+		seguroSeletor.setIdCliente(id);
+		List<Seguro> listaPChecar = seguroController.listarComSeletor(seguroSeletor);
+		if(listaPChecar.isEmpty()){
+			clienteRepository.deleteById(id);
+			retorno = true;
+		} else {
+			retorno = false;
+			throw new CampoInvalidoException("Erro ao deletar cliente.");
+		}
+        return retorno;
+    }   
 
     private void removerMascara(Cliente novoCliente) {
         String regex = "[\\s.\\-\\(\\)]+";

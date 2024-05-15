@@ -7,7 +7,7 @@ public class SeguroSeletor extends BaseSeletor{
 	
 	private String nomeSeguradora;
 	private String nomeCorretor;
-	private String nomeCliente;
+	private Integer idCliente;
 	private LocalDate dtInicioComecoVigencia;
 	private LocalDate dtFimComecoVigencia;
 	private LocalDate dtInicioFimVigencia;
@@ -31,12 +31,6 @@ public class SeguroSeletor extends BaseSeletor{
 	}
 	public void setNomeCorretor(String nomeCorretor) {
 		this.nomeCorretor = nomeCorretor;
-	}
-	public String getNomeCliente() {
-		return nomeCliente;
-	}
-	public void setNomeCliente(String nomeCliente) {
-		this.nomeCliente = nomeCliente;
 	}
 	public LocalDate getDtInicioComecoVigencia() {
 		return dtInicioComecoVigencia;
@@ -104,7 +98,10 @@ public class SeguroSeletor extends BaseSeletor{
 	public void setCarroReserva(String carroReserva) {
 		this.carroReserva = carroReserva;
 	}
-	
-	
-	
+	public Integer getIdCliente() {
+		return idCliente;
+	}
+	public void setIdCliente(Integer idCliente) {
+		this.idCliente = idCliente;
+	}
 }
