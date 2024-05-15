@@ -16,13 +16,13 @@ public class SeguroSpecification {
 			List<Predicate> predicates = new ArrayList<>();
 			
 			if(seletor.getNomeSeguradora() != null && !seletor.getNomeSeguradora().trim().isEmpty()) {
-				predicates.add(cb.like(root.join("seguradora").get("nome"), "%" + seletor.getNomeSeguradora().toLowerCase()));
+				predicates.add(cb.like(root.join("seguradora").get("nome"), "%" + seletor.getNomeSeguradora().toLowerCase() + "%"));
 			}
-			if(seletor.getIdCliente() != null && !seletor.getIdCliente().toString().trim().isEmpty()) {
-				predicates.add(cb.equal(root.join("cliente").get("id"), "%" + seletor.getIdCliente()));
+			if(seletor.getNomeCliente() != null && !seletor.getNomeCliente().toString().trim().isEmpty()) {
+				predicates.add(cb.like(root.join("cliente").get("nome"), "%" + seletor.getNomeCliente().toLowerCase() + "%"));
 			}
 			if(seletor.getNomeCorretor() != null && !seletor.getNomeCorretor().trim().isEmpty()) {
-				predicates.add(cb.like(root.join("corretor").get("nome"), "%" + seletor.getNomeCorretor().toLowerCase()));
+				predicates.add(cb.like(root.join("corretor").get("nome"), "%" + seletor.getNomeCorretor().toLowerCase() + "%"));
 			}
 			//Filtros de inicio da vigência
 			if(seletor.getDtInicioComecoVigencia() != null && !seletor.getDtInicioComecoVigencia().toString().trim().isEmpty() 

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.sc.senac.tcs.model.dto.SeguroDTO;
 import br.sc.senac.tcs.model.entidade.Seguro;
 import br.sc.senac.tcs.model.seletor.SeguroSeletor;
 import br.sc.senac.tcs.service.SeguroService;
@@ -29,6 +30,11 @@ public class SeguroController {
 	public List<Seguro> listarTodosSeguros() {
 		return seguroService.listarTodos();
 	}
+
+	// @PostMapping(path = "/dto")
+	// public List<SeguroDTO> pesquisarDTO(@RequestBody SeguroSeletor seletor) {
+	// 	return seguroService.pesquisarDTO(seletor);
+	// }
 
 	@GetMapping(path = "/{id}")
 	public Seguro listarPorId(@PathVariable Integer id) {

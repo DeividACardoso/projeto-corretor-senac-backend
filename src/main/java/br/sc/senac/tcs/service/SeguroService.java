@@ -23,6 +23,11 @@ public class SeguroService {
 		return seguroRepository.findAll();
 	}
 
+	// public List<SeguroDTO> pesquisarDTO(SeguroSeletor seletor) {
+	// 	Specification<Seguro> specification = SeguroSpecification.comFiltros(seletor);
+	// 	return null; //seguroRepository.findAllBySpecification(specification); 
+	// }
+
 	public Seguro listarPorId(Integer id) {
 		return seguroRepository.findById(id).get();
 	}

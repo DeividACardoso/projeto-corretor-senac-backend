@@ -10,6 +10,7 @@ import br.sc.senac.tcs.controller.SeguroController;
 import br.sc.senac.tcs.model.entidade.Cliente;
 import br.sc.senac.tcs.model.entidade.Seguro;
 import br.sc.senac.tcs.model.repository.ClienteRepository;
+import br.sc.senac.tcs.model.repository.SeguroRepository;
 import br.sc.senac.tcs.model.seletor.SeguroSeletor;
 
 @Service
@@ -19,7 +20,11 @@ public class ClienteService {
     ClienteRepository clienteRepository;
 
     @Autowired
-	SeguroController seguroController = new SeguroController();
+	SeguroController seguroController;
+
+    @Autowired
+    SeguroRepository seguroRepo;
+
 	SeguroSeletor seguroSeletor = new SeguroSeletor();
 
     @GetMapping
@@ -72,18 +77,15 @@ public class ClienteService {
         return clienteRepository.save(cliente);
     }
 
-    public boolean delete(Integer id) throws CampoInvalidoException {
-		boolean retorno = false;
-        seguroSeletor = new SeguroSeletor();
-		seguroSeletor.setIdCliente(id);
-		List<Seguro> listaPChecar = seguroController.listarComSeletor(seguroSeletor);
-		if(listaPChecar.isEmpty()){
-			clienteRepository.deleteById(id);
-			retorno = true;
-		} else {
-			retorno = false;
-			throw new CampoInvalidoException("Erro ao deletar cliente.");
-		}
+    public boolean delete(Integer idCliente) throws CampoInvalidoException {
+        boolean retorno = false;
+        Cliente c = clienteRepository.getById(idCliente);
+        List<Seguro> segurosDoCliente = seguroRepo.findByCliente(c);
+        if(segurosDoCliente.isEmpty()){
+            clienteRepository.deleteById(idCliente);
+        } else {
+            throw new CampoInvalidoException("O cliente selecionado possui seguros associados, logo não pode ser excluído.");
+        }
         return retorno;
     }   
 

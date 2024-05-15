@@ -2,7 +2,6 @@ package br.sc.senac.tcs.model.entidade;
 
 import java.time.LocalDate;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -20,14 +19,19 @@ public class Seguro {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
+
 	@OneToOne
 	@JoinColumn(name = "seguradora_id")
 	private Seguradora seguradora;
+
 	@OneToOne
 	@JoinColumn(name = "veiculo_id")
 	private Veiculo veiculo;
-	@Column(name = "cliente_id")
-	private Integer idCliente;
+
+	@OneToOne
+	@JoinColumn(name = "cliente_id")
+	private Cliente cliente;
+
 	private String numeroProposta;
 	private String numApolice;
 	private double rcfDanosMateriais;
