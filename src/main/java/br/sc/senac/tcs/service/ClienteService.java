@@ -73,18 +73,8 @@ public class ClienteService {
     }
 
     public boolean delete(Integer id) throws CampoInvalidoException {
-		boolean retorno = false;
-        seguroSeletor = new SeguroSeletor();
-		seguroSeletor.setIdCliente(id);
-		List<Seguro> listaPChecar = seguroController.listarComSeletor(seguroSeletor);
-		if(listaPChecar.isEmpty()){
-			clienteRepository.deleteById(id);
-			retorno = true;
-		} else {
-			retorno = false;
-			throw new CampoInvalidoException("Erro ao deletar cliente.");
-		}
-        return retorno;
+		clienteRepository.deleteById(id);
+        return true;
     }   
 
     private void removerMascara(Cliente novoCliente) {
