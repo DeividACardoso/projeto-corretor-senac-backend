@@ -3,11 +3,14 @@ package br.sc.senac.tcs.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import br.sc.senac.tcs.exception.CampoInvalidoException;
 import br.sc.senac.tcs.model.entidade.Seguradora;
 import br.sc.senac.tcs.model.repository.SeguradoraRepository;
+import br.sc.senac.tcs.model.seletor.SeguradoraSeletor;
+import br.sc.senac.tcs.model.specification.SeguradoraSpecification;
 import jakarta.transaction.Transactional;
 
 @Service
@@ -25,18 +28,13 @@ public class SeguradoraService {
 		return seguradoraRepository.findById(id).get();
 	}
 
-	public Seguradora inserir(Seguradora novaSeguradora) throws CampoInvalidoException {
-		validarCamposObrigatorios(novaSeguradora);
-		return seguradoraRepository.save(novaSeguradora);
-	}
-
-	private void validarCamposObrigatorios(Seguradora seguradora) throws CampoInvalidoException {
+	private void validarCamposObrigatorios(Seguradora novaSeguradora) throws CampoInvalidoException {
 		String mensagemValidacao = "";
-		mensagemValidacao += validarCampoString(seguradora.getNome(), "nome");
-		mensagemValidacao += validarCampoString(seguradora.getCnpj(), "cnpj");
-		mensagemValidacao += validarCampoString(seguradora.getDdd(), "ddd");
-		mensagemValidacao += validarCampoString(seguradora.getTelefone(), "telefone");
-		mensagemValidacao += validarCampoString(seguradora.getEmail(), "email");
+		mensagemValidacao += validarCampoString(novaSeguradora.getNome(), "nome");
+		mensagemValidacao += validarCnpj(novaSeguradora.getCnpj(), "cnpj");
+		mensagemValidacao += validarTelefone(novaSeguradora.getDdd(), "ddd");
+		mensagemValidacao += validarTelefone(novaSeguradora.getTelefone(), "telefone");
+		mensagemValidacao += validarEmail(novaSeguradora.getEmail(), "email");
 
 		if (!mensagemValidacao.isEmpty()) {
 			throw new CampoInvalidoException(mensagemValidacao);
@@ -48,6 +46,59 @@ public class SeguradoraService {
 			return "Informe o " + nomeCampo + " \n";
 		}
 		return "";
+	}
+
+	private String validarCnpj(String valorCampo, String nomeCampo) {
+		if (valorCampo == null || valorCampo.trim().isEmpty()) {
+			valorCampo.replaceAll(".", "");
+			valorCampo.replaceAll("-", "");
+			return "Informe o " + nomeCampo + " \n";
+		}
+		return "";
+	}
+
+	private String validarEmail(String valorCampo, String nomeCampo) {
+		if (valorCampo == null || valorCampo.trim().isEmpty()) {
+			String emailArroba = "@";
+			valorCampo.contains(emailArroba);
+			return "Informe o " + nomeCampo + " \n";
+		}
+		return "";
+	}
+
+	private String validarTelefone(String valorCampo, String nomeCampo) {
+		if (valorCampo == null || valorCampo.trim().isEmpty()) {
+			valorCampo.replaceAll("-", "");
+			valorCampo.replaceAll("(", "");
+			valorCampo.replaceAll(")", "");
+			valorCampo.replaceAll(" ", "");
+			return "Informe o " + nomeCampo + " \n";
+		}
+		return "";
+	}
+
+	public Seguradora salvar(Seguradora novaSeguradora) throws CampoInvalidoException {
+		validarCamposObrigatorios(novaSeguradora);
+		return seguradoraRepository.save(novaSeguradora);
+	}
+
+	public List<Seguradora> listarComSeletor(SeguradoraSeletor seletor) {
+		Specification<Seguradora> specification = SeguradoraSpecification.comFiltros(seletor);
+		return seguradoraRepository.findAll(specification);
+	}
+
+	public Seguradora atualizar(Integer id, Seguradora seguradoraPAtualizar) throws CampoInvalidoException {
+		return seguradoraRepository.save(seguradoraPAtualizar);
+
+	}
+
+	public boolean excluir(Integer id) {
+		boolean excluiu = false;
+		if (seguradoraRepository.existsById(id)) {
+			seguradoraRepository.deleteById(id);
+			excluiu = true;
+		}
+		return excluiu;
 	}
 
 }
