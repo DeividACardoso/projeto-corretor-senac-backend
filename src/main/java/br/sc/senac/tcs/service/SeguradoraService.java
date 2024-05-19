@@ -32,7 +32,6 @@ public class SeguradoraService {
 		String mensagemValidacao = "";
 		mensagemValidacao += validarCampoString(novaSeguradora.getNome(), "nome");
 		mensagemValidacao += validarCnpj(novaSeguradora.getCnpj(), "cnpj");
-		mensagemValidacao += validarTelefone(novaSeguradora.getDdd(), "ddd");
 		mensagemValidacao += validarTelefone(novaSeguradora.getTelefone(), "telefone");
 		mensagemValidacao += validarEmail(novaSeguradora.getEmail(), "email");
 
