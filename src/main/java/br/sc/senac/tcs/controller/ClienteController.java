@@ -48,4 +48,9 @@ public class ClienteController {
         clienteService.delete(id);
         return true;
     }
+
+    @GetMapping("/verificar-seg/{idCliente}")
+    public boolean verificarSeguros(@PathVariable Integer idCliente){
+        return clienteService.verificarSeguros(idCliente);
+    }
 }

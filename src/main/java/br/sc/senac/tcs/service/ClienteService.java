@@ -87,7 +87,18 @@ public class ClienteService {
             throw new CampoInvalidoException("O cliente selecionado possui seguros associados, logo não pode ser excluído.");
         }
         return retorno;
-    }   
+    }
+
+    public boolean verificarSeguros(Integer idCliente){
+        boolean retorno = false;
+        Cliente cliente = clienteRepository.getById(idCliente);
+        List<Seguro> segurosDOCliente = seguroRepo.findByCliente(cliente);
+        if(!segurosDOCliente.isEmpty()){
+            retorno = true;
+        }
+        
+        return retorno;
+    }
 
     private void removerMascara(Cliente novoCliente) {
         String regex = "[\\s.\\-\\(\\)]+";
