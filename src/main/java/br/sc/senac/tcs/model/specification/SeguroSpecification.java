@@ -18,8 +18,8 @@ public class SeguroSpecification {
 			if(seletor.getNomeSeguradora() != null && !seletor.getNomeSeguradora().trim().isEmpty()) {
 				predicates.add(cb.like(root.join("seguradora").get("nome"), "%" + seletor.getNomeSeguradora().toLowerCase()));
 			}
-			if(seletor.getNomeCliente() != null && !seletor.getNomeCliente().trim().isEmpty()) {
-				predicates.add(cb.like(root.join("cliente").get("nome"), "%" + seletor.getNomeCliente().toLowerCase()));
+			if(seletor.getIdCliente() != null && !seletor.getIdCliente().toString().trim().isEmpty()) {
+				predicates.add(cb.equal(root.join("cliente").get("id"), "%" + seletor.getIdCliente()));
 			}
 			if(seletor.getNomeCorretor() != null && !seletor.getNomeCorretor().trim().isEmpty()) {
 				predicates.add(cb.like(root.join("corretor").get("nome"), "%" + seletor.getNomeCorretor().toLowerCase()));

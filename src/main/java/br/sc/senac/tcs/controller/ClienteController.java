@@ -1,5 +1,6 @@
 package br.sc.senac.tcs.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,15 +14,14 @@ import org.springframework.web.bind.annotation.RestController;
 import br.sc.senac.tcs.model.entidade.Cliente;
 import br.sc.senac.tcs.service.CampoInvalidoException;
 import br.sc.senac.tcs.service.ClienteService;
-import lombok.AllArgsConstructor;
 
-@AllArgsConstructor
 @RestController
 @RequestMapping("/api/clientes")
 @CrossOrigin(origins = { "http://localhost:4200", "http://localhost:5500" }, maxAge = 3600)
 public class ClienteController {
 
-    private final ClienteService clienteService;
+    @Autowired
+    private ClienteService clienteService;
 
     @GetMapping(path = "/todos")
     public Iterable<Cliente> list() {
@@ -38,13 +38,14 @@ public class ClienteController {
         return clienteService.create(cliente);
     }
 
-    @PutMapping("{id}")
-    public Cliente update(@PathVariable Integer id, @RequestBody Cliente form) {
-        return clienteService.update(id, form);
+    @PutMapping
+    public Cliente update(@RequestBody Cliente cliente) {
+        return clienteService.update(cliente);
     }
 
-    @DeleteMapping("{id}")
-    public void delete(@PathVariable Integer id) {
+    @DeleteMapping("/delete-id/{id}")
+    public boolean delete(@PathVariable Integer id) throws CampoInvalidoException{
         clienteService.delete(id);
+        return true;
     }
 }
