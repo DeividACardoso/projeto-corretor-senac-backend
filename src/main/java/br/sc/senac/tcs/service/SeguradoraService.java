@@ -28,15 +28,24 @@ public class SeguradoraService {
 		return seguradoraRepository.findById(id).get();
 	}
 
+	public Seguradora salvar(Seguradora novaSeguradora) throws CampoInvalidoException {
+		validarCamposObrigatorios(novaSeguradora);
+		if (novaSeguradora.getCnpj() != null) {
+			validarCnpj(novaSeguradora);
+			validarTelefone(novaSeguradora);
+		}
+		return seguradoraRepository.save(novaSeguradora);
+	}
+
 	private void validarCamposObrigatorios(Seguradora novaSeguradora) throws CampoInvalidoException {
 		String mensagemValidacao = "";
 		mensagemValidacao += validarCampoString(novaSeguradora.getNome(), "nome");
 		mensagemValidacao += validarCampoString(novaSeguradora.getCnpj(), "cnpj");
-		mensagemValidacao += validarTelefone(novaSeguradora.getTelefone(), "telefone");
+		mensagemValidacao += validarCampoString(novaSeguradora.getTelefone(), "telefone");
 		mensagemValidacao += validarCampoString(novaSeguradora.getEmail(), "email");
 
 		if (!mensagemValidacao.isEmpty()) {
-            throw new CampoInvalidoException(mensagemValidacao);
+			throw new CampoInvalidoException(mensagemValidacao);
 		}
 	}
 
@@ -47,11 +56,13 @@ public class SeguradoraService {
 		return "";
 	}
 
-	private String validarCnpj(String valorCampo, String nomeCampo) {
-		if (valorCampo == null || valorCampo.trim().isEmpty()) {
-			return "Informe o " + nomeCampo + " \n";
+	private String validarCnpj(Seguradora novaSeguradora) {
+		if (novaSeguradora == null || novaSeguradora.getCnpj().trim().isEmpty()) {
+			return "Informe o " + novaSeguradora.getCnpj() + " \n";
 		}
-		String cnpjSemMascara = valorCampo.replaceAll("[./-]", "");
+		String regex = "[\\s.\\-\\(\\)\\/]+";
+		String cnpjSemMascara = novaSeguradora.getCnpj().replaceAll(regex, "");
+		novaSeguradora.setCnpj(cnpjSemMascara);
 		return cnpjSemMascara;
 	}
 
@@ -64,24 +75,14 @@ public class SeguradoraService {
 //		return "";
 //	}
 //
-	private String validarTelefone(String valorCampo, String nomeCampo) {
-		if (valorCampo == null || valorCampo.trim().isEmpty()) {
-			return "Informe o " + nomeCampo + " \n";
+	private String validarTelefone(Seguradora novaSeguradora) {
+		if (novaSeguradora == null || novaSeguradora.getTelefone().trim().isEmpty()) {
+			return "Informe o " + novaSeguradora.getTelefone() + " \n";
 		}
 		String regex = "[\\s.\\-\\(\\)]+";
-		String telefoneSemMascara = valorCampo.replaceAll(regex, "");
-		 
-//		String telefoneSemMascara = valorCampo.replaceAll("[./-]", "");
-//		valorCampo.replaceAll(" ", "");
+		String telefoneSemMascara = novaSeguradora.getTelefone().replaceAll(regex, "");
+		novaSeguradora.setTelefone(telefoneSemMascara);
 		return telefoneSemMascara;
-	}
-
-	public Seguradora salvar(Seguradora novaSeguradora) throws CampoInvalidoException {
-		validarCamposObrigatorios(novaSeguradora);
-		  if (novaSeguradora.getCnpj() != null) {
-	            validarCnpj(novaSeguradora.getCnpj(), "cnpj");
-	        }
-		return seguradoraRepository.save(novaSeguradora);
 	}
 
 	public List<Seguradora> listarComSeletor(SeguradoraSeletor seletor) {
