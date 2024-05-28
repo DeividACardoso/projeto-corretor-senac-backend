@@ -21,7 +21,7 @@ public class Seguradora {
 	private String email;
 	private String telefone;
 
-	public Seguradora(Integer id, String nome, String cnpj, String email, String ddd, String telefone) {
+	public Seguradora(Integer id, String nome, String cnpj, String email, String telefone) {
 		super();
 		this.id = id;
 		this.nome = nome;
