@@ -21,7 +21,7 @@ import br.sc.senac.tcs.model.seletor.SinistroSeletor;
 import br.sc.senac.tcs.service.SeguradoraService;
 
 @RestController
-@RequestMapping(path = "/api/seguradora")
+@RequestMapping("/api/seguradora")
 @CrossOrigin(origins = { "http://localhost:4200", "http://localhost:5500" }, maxAge = 3600)
 public class SeguradoraController {
 
@@ -47,7 +47,8 @@ public class SeguradoraController {
 	public List<Seguradora> listarComSeletor(@RequestBody SeguradoraSeletor seletor) {
 		return seguradoraService.listarComSeletor(seletor);
 	}
-
+	
+	@CrossOrigin("http://localhost:4200/api/seguradora/atualizar/{id}")
 	@PutMapping(path = "/atualizar/{id}")
 	public Seguradora atualizar(@PathVariable Integer id, @RequestBody Seguradora seguradoraPAtualizar)
 			throws CampoInvalidoException {
