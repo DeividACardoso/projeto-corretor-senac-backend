@@ -7,6 +7,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import br.sc.senac.tcs.exception.CampoInvalidoException;
+import br.sc.senac.tcs.model.entidade.Cliente;
 import br.sc.senac.tcs.model.entidade.Seguradora;
 import br.sc.senac.tcs.model.repository.SeguradoraRepository;
 import br.sc.senac.tcs.model.seletor.SeguradoraSeletor;
@@ -91,9 +92,19 @@ public class SeguradoraService {
 	}
 
 	public Seguradora atualizar(Integer id, Seguradora seguradoraPAtualizar) throws CampoInvalidoException {
+		 Seguradora seguradoraAtualizada = findById(id);
+		 seguradoraAtualizada.setNome(seguradoraPAtualizar.getNome());
+		 seguradoraAtualizada.setEmail(seguradoraPAtualizar.getEmail());
+		 seguradoraAtualizada.setCnpj(seguradoraPAtualizar.getCnpj());
+		 seguradoraAtualizada.setTelefone(seguradoraPAtualizar.getTelefone());
+		 
 		return seguradoraRepository.save(seguradoraPAtualizar);
 
 	}
+	
+	public Seguradora findById(Integer id) {
+        return seguradoraRepository.findById(id).get();
+    }
 
 	public boolean excluir(Integer id) {
 		boolean excluiu = false;
