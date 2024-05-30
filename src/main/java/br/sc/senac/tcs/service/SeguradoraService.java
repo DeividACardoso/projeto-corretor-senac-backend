@@ -31,9 +31,9 @@ public class SeguradoraService {
 	private void validarCamposObrigatorios(Seguradora novaSeguradora) throws CampoInvalidoException {
 		String mensagemValidacao = "";
 		mensagemValidacao += validarCampoString(novaSeguradora.getNome(), "nome");
-		mensagemValidacao += validarCnpj(novaSeguradora.getCnpj(), "cnpj");
-		mensagemValidacao += validarTelefone(novaSeguradora.getTelefone(), "telefone");
-		mensagemValidacao += validarEmail(novaSeguradora.getEmail(), "email");
+		mensagemValidacao += validarCampoString(novaSeguradora.getCnpj(), "cnpj");
+		mensagemValidacao += validarCampoString(novaSeguradora.getTelefone(), "telefone");
+		mensagemValidacao += validarCampoString(novaSeguradora.getEmail(), "email");
 
 		if (!mensagemValidacao.isEmpty()) {
 			throw new CampoInvalidoException(mensagemValidacao);
