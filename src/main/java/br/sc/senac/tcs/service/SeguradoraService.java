@@ -92,19 +92,17 @@ public class SeguradoraService {
 	}
 
 	public Seguradora atualizar(Integer id, Seguradora seguradoraPAtualizar) throws CampoInvalidoException {
-		 Seguradora seguradoraAtualizada = findById(id);
-		 seguradoraAtualizada.setNome(seguradoraPAtualizar.getNome());
-		 seguradoraAtualizada.setEmail(seguradoraPAtualizar.getEmail());
-		 seguradoraAtualizada.setCnpj(seguradoraPAtualizar.getCnpj());
-		 seguradoraAtualizada.setTelefone(seguradoraPAtualizar.getTelefone());
-		 
+		Seguradora seguradoraAtualizada = findById(id);
+		seguradoraAtualizada.setNome(seguradoraPAtualizar.getNome());
+		seguradoraAtualizada.setEmail(seguradoraPAtualizar.getEmail());
+		seguradoraAtualizada.setCnpj(seguradoraPAtualizar.getCnpj());
+		seguradoraAtualizada.setTelefone(seguradoraPAtualizar.getTelefone());
 		return seguradoraRepository.save(seguradoraPAtualizar);
-
 	}
-	
+
 	public Seguradora findById(Integer id) {
-        return seguradoraRepository.findById(id).get();
-    }
+		return seguradoraRepository.findById(id).get();
+	}
 
 	public boolean excluir(Integer id) {
 		boolean excluiu = false;

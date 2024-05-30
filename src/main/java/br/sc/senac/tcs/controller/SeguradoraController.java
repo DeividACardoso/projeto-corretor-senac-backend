@@ -36,7 +36,7 @@ public class SeguradoraController {
 		return seguradoraService.listarPorId(id);
 	}
 
-	@PostMapping
+	@PostMapping(path = "/novo")
 	public Seguradora salvarSeguradora(@RequestBody Seguradora novaSeguradora) throws CampoInvalidoException {
 		return seguradoraService.salvar(novaSeguradora);
 	}
@@ -46,8 +46,7 @@ public class SeguradoraController {
 		return seguradoraService.listarComSeletor(seletor);
 	}
 	
-//	@Cross'Origin("http://localhost:4200/api/seguradora/atualizar/{id}")
-	@PutMapping(path = "/{id}")
+	@PutMapping(path = "/atualizar/{id}")
 	public Seguradora atualizar(@PathVariable Integer id, @RequestBody Seguradora seguradoraPAtualizar)
 			throws CampoInvalidoException {
 		return seguradoraService.atualizar(id, seguradoraPAtualizar);
