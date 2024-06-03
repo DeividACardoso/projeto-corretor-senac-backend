@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import br.sc.senac.tcs.controller.SeguroController;
+import br.sc.senac.tcs.exception.CampoInvalidoException;
 import br.sc.senac.tcs.model.entidade.Cliente;
 import br.sc.senac.tcs.model.entidade.Seguro;
 import br.sc.senac.tcs.model.repository.ClienteRepository;
@@ -20,12 +21,12 @@ public class ClienteService {
     ClienteRepository clienteRepository;
 
     @Autowired
-	SeguroController seguroController;
+    SeguroController seguroController;
 
     @Autowired
     SeguroRepository seguroRepo;
 
-	SeguroSeletor seguroSeletor = new SeguroSeletor();
+    SeguroSeletor seguroSeletor = new SeguroSeletor();
 
     @GetMapping
     public Iterable<Cliente> findAll() {
@@ -61,7 +62,7 @@ public class ClienteService {
         mensagemValidacao += validarCampoString(cliente.getNumero(), "numero");
 
         if (!mensagemValidacao.isEmpty()) {
-        	String mensagemValidacaoCompleta = "Informe: " + mensagemValidacao;
+            String mensagemValidacaoCompleta = "Informe: " + mensagemValidacao;
             throw new CampoInvalidoException(mensagemValidacaoCompleta);
         }
     }
@@ -81,22 +82,23 @@ public class ClienteService {
         boolean retorno = false;
         Cliente c = clienteRepository.getById(idCliente);
         List<Seguro> segurosDoCliente = seguroRepo.findByCliente(c);
-        if(segurosDoCliente.isEmpty()){
+        if (segurosDoCliente.isEmpty()) {
             clienteRepository.deleteById(idCliente);
         } else {
-            throw new CampoInvalidoException("O cliente selecionado possui seguros associados, logo não pode ser excluído.");
+            throw new CampoInvalidoException(
+                    "O cliente selecionado possui seguros associados, logo não pode ser excluído.");
         }
         return retorno;
     }
 
-    public boolean verificarSeguros(Integer idCliente){
+    public boolean verificarSeguros(Integer idCliente) {
         boolean retorno = false;
         Cliente cliente = clienteRepository.getById(idCliente);
         List<Seguro> segurosDOCliente = seguroRepo.findByCliente(cliente);
-        if(!segurosDOCliente.isEmpty()){
+        if (!segurosDOCliente.isEmpty()) {
             retorno = true;
         }
-        
+
         return retorno;
     }
 
@@ -108,5 +110,9 @@ public class ClienteService {
         novoCliente.setCpf(cpfSemMascara);
         novoCliente.setTelefone(telefoneSemMascara);
         System.out.println("Sem Mascara: " + novoCliente.getCpf() + " " + novoCliente.getTelefone());
+    }
+
+    public void importarPlanilha(){
+        
     }
 }

@@ -3,10 +3,12 @@ package br.sc.senac.tcs.model.seletor;
 import java.time.LocalDate;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
-public class SeguroSeletor extends BaseSeletor{
-	
+@EqualsAndHashCode(callSuper = false)
+public class SeguroSeletor extends BaseSeletor {
+
 	private String nomeSeguradora;
 	private String nomeCorretor;
 	private String nomeCliente;
@@ -21,5 +23,5 @@ public class SeguroSeletor extends BaseSeletor{
 	private Double menorFranquia;
 	private Double maiorFranquia;
 	private String carroReserva;
-	
+
 }

@@ -32,7 +32,7 @@ public class SeguroController {
 
 	// @PostMapping(path = "/dto")
 	// public List<SeguroDTO> pesquisarDTO(@RequestBody SeguroSeletor seletor) {
-	// 	return seguroService.pesquisarDTO(seletor);
+	// return seguroService.pesquisarDTO(seletor);
 	// }
 
 	@GetMapping(path = "/{id}")
