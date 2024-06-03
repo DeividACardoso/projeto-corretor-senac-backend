@@ -10,7 +10,6 @@ import lombok.EqualsAndHashCode;
 public class SeguroSeletor extends BaseSeletor {
 
 	private String nomeSeguradora;
-	private String nomeCorretor;
 	private String nomeCliente;
 	private LocalDate dtInicioComecoVigencia;
 	private LocalDate dtFimComecoVigencia;
