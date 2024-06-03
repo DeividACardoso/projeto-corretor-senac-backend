@@ -37,12 +37,12 @@ public class SinistroController {
 		return sinistroService.listarPorId(id);
 	}
 
-	@PostMapping
+	@PostMapping(path = "/novo")
 	public Sinistro salvarSinistro(@RequestBody Sinistro novoSinistro) throws CampoInvalidoException {
 		return sinistroService.salvar(novoSinistro);
 	}
 
-	@PostMapping("/filtro")
+	@PostMapping(path = "/filtro")
 	public List<Sinistro> listarComSeletor(@RequestBody SinistroSeletor seletor) {
 		return sinistroService.listarComSeletor(seletor);
 	}

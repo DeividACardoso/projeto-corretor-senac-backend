@@ -19,7 +19,7 @@ import br.sc.senac.tcs.model.seletor.SeguradoraSeletor;
 import br.sc.senac.tcs.service.SeguradoraService;
 
 @RestController
-@RequestMapping("/api/seguradora")
+@RequestMapping(path = "/api/seguradora")
 @CrossOrigin(origins = { "http://localhost:4200", "http://localhost:5500" }, maxAge = 3600)
 public class SeguradoraController {
 
