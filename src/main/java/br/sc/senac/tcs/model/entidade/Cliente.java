@@ -31,6 +31,7 @@ public class Cliente {
 
     private String nome;
     private String cpf;
+    
     @Column(name = "dt_nascimento")
     private LocalDate dtNascimento;
     private String email;
@@ -49,7 +50,7 @@ public class Cliente {
     private String cep;
     
     @JsonBackReference
-    @OneToMany
+    @OneToMany(mappedBy = "id")
     private List<Seguro> seguros;
 
 }
