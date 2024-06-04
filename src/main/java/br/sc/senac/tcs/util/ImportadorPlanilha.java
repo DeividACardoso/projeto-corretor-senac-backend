@@ -15,29 +15,28 @@ import br.sc.senac.tcs.exception.CampoInvalidoException;
 import br.sc.senac.tcs.model.entidade.Cliente;
 import br.sc.senac.tcs.service.ClienteService;
 
-
 @Service
 public class ImportadorPlanilha {
 
 	public void importar(InputStream fis) throws CampoInvalidoException {
 		try {
-			HSSFWorkbook planilha = new HSSFWorkbook(fis);
+			try (HSSFWorkbook planilha = new HSSFWorkbook(fis)) {
+				HSSFSheet abaPlanilha = planilha.getSheetAt(0);
 
-			HSSFSheet abaPlanilha = planilha.getSheetAt(0);
+				Iterator<Row> iteradorLinha = abaPlanilha.iterator();
 
-			Iterator<Row> iteradorLinha = abaPlanilha.iterator();
+				iteradorLinha.next();
 
-			iteradorLinha.next();
+				while (iteradorLinha.hasNext()) {
+					Row linhaAtual = iteradorLinha.next();
 
-			while (iteradorLinha.hasNext()) {
-				Row linhaAtual = iteradorLinha.next();
+					Cliente cliente = criarCliente(linhaAtual);
 
-				Cliente cliente = criarCliente(linhaAtual);
+					if (cliente != null) {
 
-				if (cliente != null) {
-
-					ClienteService clienteService = new ClienteService();
-					clienteService.create(cliente);
+						ClienteService clienteService = new ClienteService();
+						clienteService.create(cliente);
+					}
 				}
 			}
 		} catch (FileNotFoundException e) {
@@ -54,12 +53,17 @@ public class ImportadorPlanilha {
 		if (linhaAtual.getCell(0) != null && linhaAtual.getCell(1) != null) {
 			Cell celulaNome = linhaAtual.getCell(0);
 			Cell celulaCpf = linhaAtual.getCell(1);
+			Cell celulaEmail = linhaAtual.getCell(1);
 
 			c = new Cliente();
 			c.setNome(celulaNome.toString());
 			c.setCpf(celulaCpf.toString());
+			c.setEmail(celulaEmail.toString());
+
 		}
 
 		return c;
+
 	}
+
 }
