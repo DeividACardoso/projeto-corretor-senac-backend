@@ -27,7 +27,7 @@ public class Cliente {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Integer id; 
 
     private String nome;
     private String cpf;
@@ -47,7 +47,7 @@ public class Cliente {
     private String cidade;
     private String uf;
     private String cep;
-    
+
     @JsonBackReference
     @OneToMany
     private List<Seguro> seguros;
