@@ -14,8 +14,6 @@ public class SinistroSeletor extends BaseSeletor {
 	@Column(name = "DT_HORA")
 	private LocalDateTime dataFinal;
 	@Column(name = "DT_HORA")
-	private LocalDateTime horario;
-	@Column(name = "DT_HORA")
 	private LocalDateTime horarioInicial;
 	@Column(name = "DT_HORA")
 	private LocalDateTime horarioFinal;
@@ -45,12 +43,7 @@ public class SinistroSeletor extends BaseSeletor {
 	public void setDataFinal(LocalDateTime dataFinal) {
 		this.dataFinal = dataFinal;
 	}
-	public LocalDateTime getHorario() {
-		return horario;
-	}
-	public void setHorario(LocalDateTime horario) {
-		this.horario = horario;
-	}
+	
 	public LocalDateTime getHorarioInicial() {
 		return horarioInicial;
 	}
