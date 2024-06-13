@@ -27,10 +27,11 @@ public class Cliente {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Integer id; 
 
     private String nome;
     private String cpf;
+    
     @Column(name = "dt_nascimento")
     private LocalDate dtNascimento;
     private String email;
@@ -47,9 +48,9 @@ public class Cliente {
     private String cidade;
     private String uf;
     private String cep;
-    
+
     @JsonBackReference
-    @OneToMany
+    @OneToMany(mappedBy = "id")
     private List<Seguro> seguros;
 
 }
