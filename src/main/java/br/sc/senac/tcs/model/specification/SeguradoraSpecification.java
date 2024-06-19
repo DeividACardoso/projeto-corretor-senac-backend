@@ -16,15 +16,13 @@ public class SeguradoraSpecification {
 			List<Predicate> predicates = new ArrayList<>();
 
 			if (seletor.getNome() != null && !seletor.getNome().toString().trim().isEmpty()) {
-				predicates.add(cb.like(root.get("nome"), "%" + seletor.getNome().toLowerCase()));
+				String nome = seletor.getNome().trim().toLowerCase();
+				predicates.add(cb.or(cb.like(cb.lower(root.get("nome")), "%" + nome + "%"),
+						cb.equal(cb.lower(root.get("nome")), nome)));
 			}
 
 			if (seletor.getCnpj() != null && !seletor.getCnpj().toString().trim().isEmpty()) {
 				predicates.add(cb.like(root.get("cnpj"), "%" + seletor.getCnpj().toLowerCase()));
-			}
-
-			if (seletor.getDdd() != null && !seletor.getDdd().toString().trim().isEmpty()) {
-				predicates.add(cb.like(root.get("ddd"), "%" + seletor.getDdd().toLowerCase()));
 			}
 
 			if (seletor.getTelefone() != null && !seletor.getTelefone().toString().trim().isEmpty()) {
@@ -32,7 +30,9 @@ public class SeguradoraSpecification {
 			}
 
 			if (seletor.getEmail() != null && !seletor.getEmail().toString().trim().isEmpty()) {
-				predicates.add(cb.like(root.get("email"), "%" + seletor.getEmail().toLowerCase()));
+				String email = seletor.getEmail().trim().toLowerCase();
+				predicates.add(cb.or(cb.like(cb.lower(root.get("email")), "%" + email + "%"),
+						cb.equal(cb.lower(root.get("email")), email)));
 			}
 
 			return cb.and(predicates.toArray(new Predicate[0]));
