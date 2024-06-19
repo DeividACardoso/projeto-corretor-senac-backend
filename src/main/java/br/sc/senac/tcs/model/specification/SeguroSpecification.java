@@ -68,7 +68,7 @@ public class SeguroSpecification {
 			}
 			
 			if(seletor.getCarroReserva() != null && !seletor.getCarroReserva().toString().trim().isEmpty()) {
-				predicates.add(cb.like(root.get("carroReserva"), "%" + seletor.getCarroReserva().toLowerCase()));
+				predicates.add(cb.equal(root.get("carroReserva"), seletor.getCarroReserva()));
 			}
 			
 		return cb.and(predicates.toArray(new Predicate[0]));

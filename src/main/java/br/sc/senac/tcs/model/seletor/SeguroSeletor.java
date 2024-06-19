@@ -21,6 +21,6 @@ public class SeguroSeletor extends BaseSeletor {
 	private Double maiorRofDanosFisicos;
 	private Double menorFranquia;
 	private Double maiorFranquia;
-	private String carroReserva;
+	private Boolean carroReserva;
 
 }
