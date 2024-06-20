@@ -21,7 +21,6 @@ public class TokenService {
     String secret;
 
     public String GenerateToken(Corretor corretor) {
-        System.out.println("Oi TokenService");
         try {
             Algorithm algorithm = Algorithm.HMAC256(secret);
             String token = JWT.create()
@@ -36,6 +35,7 @@ public class TokenService {
     }
 
     public String validateToken(String token) {
+        System.out.println("Token: " + token);
         try {
             Algorithm algorithm = Algorithm.HMAC256(secret);
             return JWT.require(algorithm)

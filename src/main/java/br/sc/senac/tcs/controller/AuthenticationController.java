@@ -54,19 +54,12 @@ public class AuthenticationController {
     @SuppressWarnings("rawtypes")
     @PostMapping("/register")
     public ResponseEntity register(@RequestBody @Valid RegisterDTO data) {
-        System.out.println(ResponseEntity.badRequest().body("Login já utilizado."));
-
         if (this.corretorRepository.findByEmail(data.email()) != null)
             return ResponseEntity.badRequest().body("Login já utilizado.");
 
         String encryptedPassword = new BCryptPasswordEncoder().encode(data.senha());
 
-        Corretor corretor = new Corretor(
-                data.nome(),
-                data.email(),
-                encryptedPassword,
-                data.telefone(),
-                data.cpf());
+        Corretor corretor = new Corretor(data.email(), data.nome(), encryptedPassword, data.telefone(), data.cpf());
 
         this.corretorRepository.save(corretor);
 

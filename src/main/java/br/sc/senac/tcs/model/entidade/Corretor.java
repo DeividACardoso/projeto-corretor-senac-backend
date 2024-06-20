@@ -24,11 +24,11 @@ import lombok.NoArgsConstructor;
 public class Corretor implements UserDetails {
     
     public Corretor(String email, String nome, String senha, String telefone, String cpf) {
-        this.nome = nome;
-        this.cpf = cpf;
-        this.telefone = telefone;
         this.email = email;
+        this.nome = nome;
         this.senha = senha;
+        this.telefone = telefone;
+        this.cpf = cpf;
     }
 
     @Id
