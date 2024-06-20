@@ -1,8 +1,10 @@
 package br.sc.senac.tcs.model.entidade;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import jakarta.persistence.Entity;
@@ -22,7 +24,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
 public class Corretor implements UserDetails {
-    
+
     public Corretor(String email, String nome, String senha, String telefone, String cpf) {
         this.email = email;
         this.nome = nome;
@@ -39,41 +41,23 @@ public class Corretor implements UserDetails {
     private String telefone;
     private String email;
     private String senha;
+    private UserRole role;
 
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        if (this.role == UserRole.ADMIN)
+            return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), (new SimpleGrantedAuthority("ROLE_USER")));
+        else
+            return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+    }
 
-        @Override
-        public Collection<? extends GrantedAuthority> getAuthorities() {
-            return null;
-        }
+    @Override
+    public String getUsername() {
+        return email;
+    }
 
-        @Override
-        public String getPassword() {
-            return this.senha;
-        }
-
-        @Override
-        public String getUsername() {
-            return this.email;
-        }
-
-        @Override
-        public boolean isAccountNonExpired() {
-            return true;
-        }
-
-        @Override
-        public boolean isAccountNonLocked() {
-            return true;
-        }
-
-        @Override
-        public boolean isCredentialsNonExpired() {
-            return true;
-        }
-
-        @Override
-        public boolean isEnabled() {
-            return true;
-        }
-
+    @Override
+    public String getPassword() {
+        return senha;
+    }
 }
