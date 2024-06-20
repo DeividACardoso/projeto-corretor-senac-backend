@@ -1,9 +1,5 @@
 package br.sc.senac.tcs.model.infra.security;
 
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -26,7 +22,6 @@ public class TokenService {
             String token = JWT.create()
                     .withIssuer("auth-api")
                     .withSubject(corretor.getEmail())
-                    .withExpiresAt(generateExpirationDate())
                     .sign(algorithm);
             return token;
         } catch (JWTCreationException e) {
@@ -44,11 +39,7 @@ public class TokenService {
                     .verify(token)
                     .getSubject();
         } catch (JWTVerificationException e) {
-            return "";
+            return "" + e.getMessage();
         }
-    }
-
-    private Instant generateExpirationDate() {
-        return LocalDateTime.now().plusHours(2).toInstant(ZoneOffset.of("-03:00"));
     }
 }

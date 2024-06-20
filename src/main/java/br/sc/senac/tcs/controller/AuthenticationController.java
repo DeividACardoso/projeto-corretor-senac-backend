@@ -21,7 +21,7 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/auth")
-@CrossOrigin(origins = { "http://localhost:8081", "exp://10.10.101.170:8081", "http://localhost:9000" }, maxAge = 3600)
+@CrossOrigin(origins = { "http://localhost:4200", "http://localhost:5500" }, maxAge = 3600)
 public class AuthenticationController {
 
     @Autowired

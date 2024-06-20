@@ -29,7 +29,6 @@ public class SecurityConfigurations {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
-        System.out.println("Oi SecurityConfigurations");
         return httpSecurity
                 .cors(Customizer.withDefaults())
                 .csrf(csrf -> csrf.disable())
@@ -37,7 +36,7 @@ public class SecurityConfigurations {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(HttpMethod.POST, "/api/auth/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/auth/register").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/**").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/api/*").authenticated()
                         .anyRequest().authenticated())
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();   
