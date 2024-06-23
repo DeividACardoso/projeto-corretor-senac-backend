@@ -3,6 +3,8 @@ package br.sc.senac.tcs.util;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Iterator;
 
 import org.apache.poi.hssf.usermodel.HSSFSheet;
@@ -52,21 +54,62 @@ public class ImportadorPlanilha {
 
 	private Cliente criarCliente(Row linhaAtual) {
 		Cliente c = null;
-
+		
 		if (linhaAtual.getCell(0) != null && linhaAtual.getCell(1) != null) {
+			//NOME
 			Cell celulaNome = linhaAtual.getCell(0);
+			//CPF
 			Cell celulaCpf = linhaAtual.getCell(1);
-			Cell celulaEmail = linhaAtual.getCell(2);
+			//DT_NASCIMENTO
+			Cell celulaDtNascimento = linhaAtual.getCell(2);
+			//E-MAIL
+			Cell celulaEmail = linhaAtual.getCell(3);
+			//TELEFONE
+			Cell celulaTelefone = linhaAtual.getCell(4);
+			//CNH
+			Cell celulaCnh = linhaAtual.getCell(5);
+			//ESTADO_CIVIL
+			Cell celulaEstadoCivil = linhaAtual.getCell(6);
+			//GENERO
+			Cell celulaGenero = linhaAtual.getCell(7);
+			//CEP
+			Cell celulaCep = linhaAtual.getCell(7);
+			//RUA
+			Cell celulaRua = linhaAtual.getCell(8);
+			//BAIRRO
+			Cell celulaBairro = linhaAtual.getCell(9);
+			//NUMERO
+			Cell celulaNumero = linhaAtual.getCell(10);
+			//COMPLEMENTO
+			Cell celulaComplemento = linhaAtual.getCell(11);
+			//CIDADE
+			Cell celulaCidade = linhaAtual.getCell(12);
+			//UF
+			Cell celulaUf = linhaAtual.getCell(13);
+
+			System.out.println(celulaDtNascimento);
+
+			// LocalDate dtNascimento = LocalDate.parse(celulaDtNascimento.toString(),
+			// DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 
 			c = new Cliente();
 			c.setNome(celulaNome.toString());
 			c.setCpf(celulaCpf.toString());
+			// c.setDtNascimento(celulaDtNascimento);
 			c.setEmail(celulaEmail.toString());
-
+			c.setTelefone(celulaTelefone.toString());
+			c.setCep(celulaCep.toString());
+			c.setRua(celulaRua.toString());
+			c.setBairro(celulaBairro.toString());
+			c.setNumero(celulaNumero.toString());
+			c.setComplemento(celulaComplemento.toString());
+			c.setCidade(celulaCidade.toString());
+			c.setUf(celulaUf.toString());
+			c.setCnh(celulaCnh.toString());
+			c.setEstadoCivil(celulaEstadoCivil.toString());
+			c.setGenero(celulaGenero.toString());
 		}
-
 		return c;
-
 	}
 
 }
