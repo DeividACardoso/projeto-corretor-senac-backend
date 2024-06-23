@@ -44,12 +44,8 @@ public class Cliente {
     private String uf;
     private String cep;
     
-    // @JsonBackReference
-    // @OneToMany(mappedBy = "seguro")
-    // private List<Seguro> seguros;
-
     @JsonBackReference
-    @OneToMany(mappedBy = "id")
+    @OneToMany(mappedBy = "cliente")
     private List<Seguro> seguros;
 
 }
