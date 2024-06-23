@@ -9,6 +9,7 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.sc.senac.tcs.exception.CampoInvalidoException;
@@ -17,6 +18,9 @@ import br.sc.senac.tcs.service.ClienteService;
 
 @Service
 public class ImportadorPlanilha {
+
+	@Autowired
+	ClienteService clienteService = new ClienteService();
 
 	public void importar(InputStream fis) throws CampoInvalidoException {
 		try {
@@ -34,7 +38,6 @@ public class ImportadorPlanilha {
 
 					if (cliente != null) {
 
-						ClienteService clienteService = new ClienteService();
 						clienteService.create(cliente);
 					}
 				}
@@ -53,7 +56,7 @@ public class ImportadorPlanilha {
 		if (linhaAtual.getCell(0) != null && linhaAtual.getCell(1) != null) {
 			Cell celulaNome = linhaAtual.getCell(0);
 			Cell celulaCpf = linhaAtual.getCell(1);
-			Cell celulaEmail = linhaAtual.getCell(1);
+			Cell celulaEmail = linhaAtual.getCell(2);
 
 			c = new Cliente();
 			c.setNome(celulaNome.toString());

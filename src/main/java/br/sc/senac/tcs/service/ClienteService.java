@@ -1,5 +1,6 @@
 package br.sc.senac.tcs.service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,6 +79,7 @@ public class ClienteService {
         return clienteRepository.save(cliente);
     }
 
+    @SuppressWarnings("deprecation")
     public boolean delete(Integer idCliente) throws CampoInvalidoException {
         boolean retorno = false;
         Cliente c = clienteRepository.getById(idCliente);
@@ -91,12 +93,19 @@ public class ClienteService {
         return retorno;
     }
 
+    @SuppressWarnings("deprecation")
     public boolean verificarSeguros(Integer idCliente) {
         boolean retorno = false;
         Cliente cliente = clienteRepository.getById(idCliente);
         List<Seguro> segurosDOCliente = seguroRepo.findByCliente(cliente);
         if (!segurosDOCliente.isEmpty()) {
-            retorno = true;
+            for (Seguro seguro : segurosDOCliente) {
+                if (seguro.getDtInicioVigencia().isBefore(LocalDate.now())
+                        && seguro.getDtFimVigencia().isAfter(LocalDate.now())) {
+                    retorno = true;
+                    break;
+                }
+            }
         }
 
         return retorno;
@@ -112,7 +121,7 @@ public class ClienteService {
         System.out.println("Sem Mascara: " + novoCliente.getCpf() + " " + novoCliente.getTelefone());
     }
 
-    public void importarPlanilha(){
-        
+    public void importarPlanilha() {
+
     }
 }
