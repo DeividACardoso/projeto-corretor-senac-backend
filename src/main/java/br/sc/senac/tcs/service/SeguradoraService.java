@@ -7,7 +7,6 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import br.sc.senac.tcs.exception.CampoInvalidoException;
-import br.sc.senac.tcs.model.entidade.Cliente;
 import br.sc.senac.tcs.model.entidade.Seguradora;
 import br.sc.senac.tcs.model.repository.SeguradoraRepository;
 import br.sc.senac.tcs.model.seletor.SeguradoraSeletor;
@@ -112,5 +111,5 @@ public class SeguradoraService {
 		}
 		return excluiu;
 	}
-
+	
 }
