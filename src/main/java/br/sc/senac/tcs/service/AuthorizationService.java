@@ -6,6 +6,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import br.sc.senac.tcs.exception.CampoInvalidoException;
+import br.sc.senac.tcs.model.entidade.Corretor;
 import br.sc.senac.tcs.model.repository.CorretorRepository;
 
 
@@ -19,5 +21,11 @@ public class AuthorizationService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return usuarioRepository.findByEmail(username);
     }
+    
+    public UserDetails atualizarSenha(Integer id, Corretor corretorAtualizar) throws CampoInvalidoException {
+    	usuarioRepository.existsById(id);
+    	corretorAtualizar.setSenha(corretorAtualizar.getSenha());
+		return usuarioRepository.saveAndFlush(corretorAtualizar);
+	}
     
 }

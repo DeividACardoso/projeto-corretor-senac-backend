@@ -4,19 +4,25 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.sc.senac.tcs.exception.CampoInvalidoException;
 import br.sc.senac.tcs.model.entidade.AuthenticationDTO;
 import br.sc.senac.tcs.model.entidade.Corretor;
 import br.sc.senac.tcs.model.entidade.LoginResponseDTO;
 import br.sc.senac.tcs.model.entidade.RegisterDTO;
+import br.sc.senac.tcs.model.entidade.Seguradora;
 import br.sc.senac.tcs.model.infra.security.TokenService;
 import br.sc.senac.tcs.model.repository.CorretorRepository;
+import br.sc.senac.tcs.service.AuthorizationService;
 import jakarta.validation.Valid;
 
 @RestController
@@ -32,6 +38,9 @@ public class AuthenticationController {
 
     @Autowired
     private TokenService tokenService;
+    
+    @Autowired
+    private AuthorizationService authService;
 
     @SuppressWarnings("rawtypes")
     @PostMapping("/login")
@@ -65,5 +74,11 @@ public class AuthenticationController {
 
         return ResponseEntity.ok().build();
     }
+    
+    @PutMapping(path = "/atualizar/{id}")
+	public UserDetails atualizarSenha(@PathVariable Integer id, @RequestBody Corretor corretorAtualizar)
+			throws CampoInvalidoException {
+		return authService.atualizarSenha(id, corretorAtualizar);
+	}
 
 }
