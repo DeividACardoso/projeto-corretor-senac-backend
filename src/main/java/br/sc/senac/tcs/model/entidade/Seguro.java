@@ -8,6 +8,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
@@ -30,6 +31,8 @@ public class Seguro {
 	private Integer idCliente;
 	private String numeroProposta;
 	private String numApolice;
+	@ManyToOne
+	private Cliente cliente;
 	private double rcfDanosMateriais;
 	private double rofDanosFisicos;
 	private LocalDate dtInicioVigencia;
