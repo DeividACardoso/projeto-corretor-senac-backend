@@ -1,5 +1,6 @@
 package br.sc.senac.tcs.service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,9 +8,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import br.sc.senac.tcs.controller.SeguroController;
+import br.sc.senac.tcs.exception.CampoInvalidoException;
 import br.sc.senac.tcs.model.entidade.Cliente;
 import br.sc.senac.tcs.model.entidade.Seguro;
 import br.sc.senac.tcs.model.repository.ClienteRepository;
+import br.sc.senac.tcs.model.repository.SeguroRepository;
 import br.sc.senac.tcs.model.seletor.SeguroSeletor;
 
 @Service
@@ -19,8 +22,12 @@ public class ClienteService {
     ClienteRepository clienteRepository;
 
     @Autowired
-	SeguroController seguroController = new SeguroController();
-	SeguroSeletor seguroSeletor = new SeguroSeletor();
+    SeguroController seguroController;
+
+    @Autowired
+    SeguroRepository seguroRepo;
+
+    SeguroSeletor seguroSeletor = new SeguroSeletor();
 
     @GetMapping
     public Iterable<Cliente> findAll() {
@@ -56,7 +63,7 @@ public class ClienteService {
         mensagemValidacao += validarCampoString(cliente.getNumero(), "numero");
 
         if (!mensagemValidacao.isEmpty()) {
-        	String mensagemValidacaoCompleta = "Informe: " + mensagemValidacao;
+            String mensagemValidacaoCompleta = "Informe: " + mensagemValidacao;
             throw new CampoInvalidoException(mensagemValidacaoCompleta);
         }
     }
@@ -72,10 +79,37 @@ public class ClienteService {
         return clienteRepository.save(cliente);
     }
 
-    public boolean delete(Integer id) throws CampoInvalidoException {
-		clienteRepository.deleteById(id);
-        return true;
-    }   
+    @SuppressWarnings("deprecation")
+    public boolean delete(Integer idCliente) throws CampoInvalidoException {
+        boolean retorno = false;
+        Cliente c = clienteRepository.getById(idCliente);
+        List<Seguro> segurosDoCliente = seguroRepo.findByCliente(c);
+        if (segurosDoCliente.isEmpty()) {
+            clienteRepository.deleteById(idCliente);
+        } else {
+            throw new CampoInvalidoException(
+                    "O cliente selecionado possui seguros associados, logo não pode ser excluído.");
+        }
+        return retorno;
+    }
+
+    @SuppressWarnings("deprecation")
+    public boolean verificarSeguros(Integer idCliente) {
+        boolean retorno = false;
+        Cliente cliente = clienteRepository.getById(idCliente);
+        List<Seguro> segurosDOCliente = seguroRepo.findByCliente(cliente);
+        if (!segurosDOCliente.isEmpty()) {
+            for (Seguro seguro : segurosDOCliente) {
+                if (seguro.getDtInicioVigencia().isBefore(LocalDate.now())
+                        && seguro.getDtFimVigencia().isAfter(LocalDate.now())) {
+                    retorno = true;
+                    break;
+                }
+            }
+        }
+
+        return retorno;
+    }
 
     private void removerMascara(Cliente novoCliente) {
         String regex = "[\\s.\\-\\(\\)]+";
@@ -85,5 +119,9 @@ public class ClienteService {
         novoCliente.setCpf(cpfSemMascara);
         novoCliente.setTelefone(telefoneSemMascara);
         System.out.println("Sem Mascara: " + novoCliente.getCpf() + " " + novoCliente.getTelefone());
+    }
+
+    public void importarPlanilha() {
+
     }
 }

@@ -50,5 +50,9 @@ public class VeiculoService {
 		}
 		return "";
 	}
+
+    // public List<Veiculo> listarPorCliente(Integer idCliente) {
+	// 	return veiculoRepository.findByClienteId(idCliente);
+    // }
 	
 }
