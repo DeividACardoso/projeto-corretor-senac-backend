@@ -1,6 +1,8 @@
 package br.sc.senac.tcs.model.entidade;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -22,15 +24,28 @@ public class Sinistro {
 	private Integer id;
 	private String tipo;
 	@Column(name = "DT_HORA")
-	private LocalDateTime dataHora;
+//	private LocalDateTime dataHora;
+	private LocalDate data;
+	private LocalTime horario;
 	private String descricao;
-
-	public Sinistro(Integer id, String tipo, LocalDateTime dataHora, String descricao) {
+	
+	public Sinistro(Integer id, String tipo, LocalDate data, LocalTime horario, String descricao) {
 		super();
 		this.id = id;
 		this.tipo = tipo;
-		this.dataHora = dataHora;
+		this.data = data;
+		this.horario = horario;
 		this.descricao = descricao;
 	}
+
+//	public Sinistro(Integer id, String tipo, LocalDateTime dataHora, String descricao) {
+//		super();
+//		this.id = id;
+//		this.tipo = tipo;
+////		this.dataHora = dataHora;
+//		this.descricao = descricao;
+//	}
+	
+	
 
 }

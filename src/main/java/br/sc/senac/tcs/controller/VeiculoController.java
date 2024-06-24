@@ -34,7 +34,7 @@ public class VeiculoController {
 			return veiculoService.listarPorId(id);
 		}
 		
-		@PostMapping
+		@PostMapping(path = "/novo")
 		public Veiculo salvar(@RequestBody Veiculo novoVeiculo) throws CampoInvalidoException {
 			return veiculoService.salvar(novoVeiculo);
 		}

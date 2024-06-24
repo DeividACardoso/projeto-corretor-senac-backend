@@ -13,7 +13,7 @@
 	<artifactId>tcs</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>tcs</name>
-	<description>Sistema de corretoria sob-demanda</description>
+	<description>Sistema de corretor de Seguros sob-demanda</description>
 	<properties>
 		<java.version>17</java.version>
 	</properties>
