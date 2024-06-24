@@ -98,8 +98,13 @@ public class ClienteService {
         boolean retorno = false;
         Cliente cliente = clienteRepository.getById(idCliente);
         List<Seguro> segurosDOCliente = seguroRepo.findByCliente(cliente);
+        System.out.println("Seguros do Cliente: " + segurosDOCliente.isEmpty());
         if (!segurosDOCliente.isEmpty()) {
             for (Seguro seguro : segurosDOCliente) {
+                System.out.println("Seguro: Inicio: " + seguro.getDtInicioVigencia() + " | Fim: " + seguro.getDtFimVigencia());
+                System.out.println("Data Atual: " + LocalDate.now()
+                                + " | Antes: " + seguro.getDtInicioVigencia().isBefore(LocalDate.now())
+                        + " | Depois: " + seguro.getDtFimVigencia().isAfter(LocalDate.now()));
                 if (seguro.getDtInicioVigencia().isBefore(LocalDate.now())
                         && seguro.getDtFimVigencia().isAfter(LocalDate.now())) {
                     retorno = true;
