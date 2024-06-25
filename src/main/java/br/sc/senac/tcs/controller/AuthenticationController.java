@@ -44,6 +44,7 @@ public class AuthenticationController {
 
         var auth = this.authenticationManager.authenticate(usernamePassword);
 
+        System.out.println("Login para token: " + data.login());
         var corretor = corretorRepository.getByEmail(data.login());
 
         var token = tokenService.GenerateToken((Corretor) auth.getPrincipal());
@@ -54,6 +55,7 @@ public class AuthenticationController {
     @SuppressWarnings("rawtypes")
     @PostMapping("/register")
     public ResponseEntity register(@RequestBody @Valid RegisterDTO data) {
+        System.out.println("login: " + data.email() + " | Senha: " + data.senha());
         if (this.corretorRepository.findByEmail(data.email()) != null)
             return ResponseEntity.badRequest().body("Login já utilizado.");
 
