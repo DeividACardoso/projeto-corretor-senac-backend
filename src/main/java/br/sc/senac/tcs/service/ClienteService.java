@@ -1,11 +1,19 @@
 package br.sc.senac.tcs.service;
 
+import java.time.LocalDate;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import br.sc.senac.tcs.controller.SeguroController;
+import br.sc.senac.tcs.exception.CampoInvalidoException;
 import br.sc.senac.tcs.model.entidade.Cliente;
+import br.sc.senac.tcs.model.entidade.Seguro;
 import br.sc.senac.tcs.model.repository.ClienteRepository;
+import br.sc.senac.tcs.model.repository.SeguroRepository;
+import br.sc.senac.tcs.model.seletor.SeguroSeletor;
 
 @Service
 public class ClienteService {
@@ -13,16 +21,18 @@ public class ClienteService {
     @Autowired
     ClienteRepository clienteRepository;
 
+    @Autowired
+    SeguroController seguroController;
+
+    @Autowired
+    SeguroRepository seguroRepo;
+
+    SeguroSeletor seguroSeletor = new SeguroSeletor();
+
     @GetMapping
     public Iterable<Cliente> findAll() {
         return clienteRepository.findAll();
     }
-
-    // public boolean delete(Cliente clienteDb) {
-    // boolean seguroVigente = clienteDb.getSeguros().
-
-    // return seguroVigente;
-    // }
 
     public Cliente findById(Integer id) {
         return clienteRepository.findById(id).get();
@@ -43,7 +53,7 @@ public class ClienteService {
         mensagemValidacao += validarCampoString(cliente.getCnh(), "cnh");
         mensagemValidacao += validarCampoString(cliente.getTelefone(), "telefone");
         mensagemValidacao += validarCampoString(cliente.getEmail(), "email");
-        mensagemValidacao += validarCampoString(cliente.getEstadoCivil(), "estadoCivil");
+        mensagemValidacao += validarCampoString(cliente.getEstadoCivil(), "Estado Civil");
         mensagemValidacao += validarCampoString(cliente.getGenero(), "genero");
         mensagemValidacao += validarCampoString(cliente.getCep(), "cep");
         mensagemValidacao += validarCampoString(cliente.getUf(), "uf");
@@ -53,7 +63,7 @@ public class ClienteService {
         mensagemValidacao += validarCampoString(cliente.getNumero(), "numero");
 
         if (!mensagemValidacao.isEmpty()) {
-        	String mensagemValidacaoCompleta = "Informe: " + mensagemValidacao;
+            String mensagemValidacaoCompleta = "Informe: " + mensagemValidacao;
             throw new CampoInvalidoException(mensagemValidacaoCompleta);
         }
     }
@@ -65,18 +75,40 @@ public class ClienteService {
         return "";
     }
 
-    public Cliente update(Integer id, Cliente form) {
-        Cliente clienteDb = findById(id);
-
-        clienteDb.setNome(form.getNome());
-        clienteDb.setEmail(form.getEmail());
-
-        return clienteRepository.save(clienteDb);
+    public Cliente update(Cliente cliente) {
+        return clienteRepository.save(cliente);
     }
 
-    public void delete(Integer id) {
-        Cliente clienteDb = clienteRepository.findById(id).orElse(null);
-        clienteRepository.delete(clienteDb);
+    @SuppressWarnings("deprecation")
+    public boolean delete(Integer idCliente) throws CampoInvalidoException {
+        boolean retorno = false;
+        Cliente c = clienteRepository.getById(idCliente);
+        List<Seguro> segurosDoCliente = seguroRepo.findByCliente(c);
+        if (segurosDoCliente.isEmpty()) {
+            clienteRepository.deleteById(idCliente);
+        } else {
+            throw new CampoInvalidoException(
+                    "O cliente selecionado possui seguros associados, logo não pode ser excluído.");
+        }
+        return retorno;
+    }
+
+    @SuppressWarnings("deprecation")
+    public boolean verificarSeguros(Integer idCliente) {
+        boolean retorno = false;
+        Cliente cliente = clienteRepository.getById(idCliente);
+        List<Seguro> segurosDOCliente = seguroRepo.findByCliente(cliente);
+        if (!segurosDOCliente.isEmpty()) {
+            for (Seguro seguro : segurosDOCliente) {
+                if (seguro.getDtInicioVigencia().isBefore(LocalDate.now())
+                        && seguro.getDtFimVigencia().isAfter(LocalDate.now())) {
+                    retorno = true;
+                    break;
+                }
+            }
+        }
+
+        return retorno;
     }
 
     private void removerMascara(Cliente novoCliente) {
@@ -87,5 +119,9 @@ public class ClienteService {
         novoCliente.setCpf(cpfSemMascara);
         novoCliente.setTelefone(telefoneSemMascara);
         System.out.println("Sem Mascara: " + novoCliente.getCpf() + " " + novoCliente.getTelefone());
+    }
+
+    public void importarPlanilha() {
+
     }
 }

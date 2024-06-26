@@ -34,7 +34,7 @@ public class VeiculoService {
 		String mensagemValidacao = "";
 		// mensagemValidacao += validarCamposString(veiculo.getAnoModelo(), "");
 		mensagemValidacao += validarCamposString(veiculo.getBairro(), "");
-		mensagemValidacao += validarCamposString(veiculo.getCep(), "");
+		mensagemValidacao += validarCamposString(veiculo.getCepDePernoite(), "");
 		mensagemValidacao += validarCamposString(veiculo.getCidade(), "");
 		mensagemValidacao += validarCamposString(veiculo.getMarca(), "");
 		// mensagemValidacao += validarCampoString(veiculo.get, "");
@@ -50,5 +50,9 @@ public class VeiculoService {
 		}
 		return "";
 	}
+
+    // public List<Veiculo> listarPorCliente(Integer idCliente) {
+	// 	return veiculoRepository.findByClienteId(idCliente);
+    // }
 	
 }

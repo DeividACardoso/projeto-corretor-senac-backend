@@ -23,12 +23,17 @@ import br.sc.senac.tcs.service.SeguroService;
 public class SeguroController {
 
 	@Autowired
-	private SeguroService seguroService;
-	
+	private SeguroService seguroService = new SeguroService();
+
 	@GetMapping(path = "/todos")
 	public List<Seguro> listarTodosSeguros() {
 		return seguroService.listarTodos();
 	}
+
+	// @PostMapping(path = "/dto")
+	// public List<SeguroDTO> pesquisarDTO(@RequestBody SeguroSeletor seletor) {
+	// return seguroService.pesquisarDTO(seletor);
+	// }
 
 	@GetMapping(path = "/{id}")
 	public Seguro listarPorId(@PathVariable Integer id) {
@@ -50,7 +55,7 @@ public class SeguroController {
 		return seguroService.atualizar(seguroPAtualizar) != null;
 	}
 
-	@DeleteMapping(path = "/{id}")
+	@DeleteMapping(path = "/delete-id/{id}")
 	public boolean delete(@PathVariable Integer id) {
 		return seguroService.delete(id);
 	}

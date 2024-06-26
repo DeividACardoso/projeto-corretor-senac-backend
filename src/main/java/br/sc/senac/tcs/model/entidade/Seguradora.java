@@ -19,7 +19,6 @@ public class Seguradora {
 	private String nome;
 	private String cnpj;
 	private String email;
-	private String ddd;
 	private String telefone;
 
 	public Seguradora(Integer id, String nome, String cnpj, String email, String ddd, String telefone) {
@@ -28,7 +27,6 @@ public class Seguradora {
 		this.nome = nome;
 		this.cnpj = cnpj;
 		this.email = email;
-		this.ddd = ddd;
 		this.telefone = telefone;
 	}
 
