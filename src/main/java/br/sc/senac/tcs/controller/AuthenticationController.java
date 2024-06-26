@@ -76,9 +76,9 @@ public class AuthenticationController {
     }
     
     @PutMapping(path = "/atualizar/{id}")
-	public UserDetails atualizarSenha(@PathVariable Integer id, @RequestBody Corretor corretorAtualizar)
+	public UserDetails enviarEmail(@PathVariable Integer id, @RequestBody Corretor corretorAtualizar)
 			throws CampoInvalidoException {
-		return authService.atualizarSenha(id, corretorAtualizar);
+		return authService.enviarEmail(id, corretorAtualizar);
 	}
 
 }
