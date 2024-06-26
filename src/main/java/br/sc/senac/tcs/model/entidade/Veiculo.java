@@ -33,7 +33,7 @@ public class Veiculo {
 	
 	@ManyToOne
 	@JoinColumn(name = "cliente_id")
-	private Cliente Cliente;
+	private Cliente cliente;
 	
 }
 

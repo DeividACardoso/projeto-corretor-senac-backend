@@ -16,62 +16,26 @@ public class ClienteSpecification {
             List<Predicate> predicates = new ArrayList<>();
 
             if (seletor.getNomeCliente() != null && !seletor.getNomeCliente().trim().isEmpty()) {
-                predicates.add(cb.like(root.join("cliente").get("nome"), "%" + seletor.getNomeCliente().toLowerCase()));
+                predicates.add(cb.like(root.get("nome"), "%" + seletor.getNomeCliente().toLowerCase() + "%"));
             }
-            if (seletor.getNrCpf() != null && !seletor.getNrCpf().trim().isEmpty()) {
-                predicates.add(cb.like(root.join("cpf").get("nome"), "%" + seletor.getNrCpf()));
+            if (seletor.getCpf() != null && !seletor.getCpf().trim().isEmpty()) {
+                predicates.add(cb.like(root.get("cpf"), "%" + seletor.getCpf() + "%"));
             }
-            if (seletor.getDtNascimento() != null && !seletor.getDtNascimento().toString().trim().isEmpty()) {
-                predicates.add(cb.equal(root.get("dtNascimento"), seletor.getDtNascimento()));
-                predicates.add(cb.lessThanOrEqualTo(root.get("dtNascimento"), seletor.getDtNascimento()));
-            }
+			if(seletor.getDtNascimentoInicio() != null && !seletor.getDtNascimentoInicio().toString().trim().isEmpty() 
+					&& seletor.getDtNascimentoFim() != null && !seletor.getDtNascimentoFim().toString().trim().isEmpty()) { //Filtro para periodo de data de Inicio vigência
+				predicates.add(cb.between(root.get("dtNascimento"), seletor.getDtNascimentoInicio(), seletor.getDtNascimentoFim()));
+			} else if(seletor.getDtNascimentoInicio() != null && !seletor.getDtNascimentoInicio().toString().trim().isEmpty()){ //Filtro para data inicio de vigência maior que data inserida(se maior, ainda não vigente)
+				predicates.add(cb.greaterThanOrEqualTo(root.get("dtNascimento"), seletor.getDtNascimentoInicio()));
+			} else if(seletor.getDtNascimentoFim() != null && !seletor.getDtNascimentoFim().toString().trim().isEmpty()) { //Filtro para data inicio de vigência menor que a data inserida(se menor, vigente) 
+				predicates.add(cb.lessThanOrEqualTo(root.get("dtNascimento"), seletor.getDtNascimentoFim()));
+			}
 
             if (seletor.getEnderecoEmail() != null && !seletor.getEnderecoEmail().trim().isEmpty()) {
                 predicates.add(
-                        cb.like(root.join("enderecoEmail").get("nome"), "%" + seletor.getNomeCliente().toLowerCase()));
+                        cb.like(root.get("email"), "%" + seletor.getEnderecoEmail().toLowerCase() + "%"));
             }
-            if (seletor.getNrCnh() != null && !seletor.getNrCnh().trim().isEmpty()) {
-                predicates.add(cb.like(root.join("nrCnh").get("nome"), "%" + seletor.getNomeCliente().toLowerCase()));
-            }
-            if (seletor.getNrTelefone() != null && !seletor.getNrTelefone().trim().isEmpty()) {
-                predicates.add(
-                        cb.like(root.join("nrTelefone").get("nome"), "%" + seletor.getNomeCliente().toLowerCase()));
-            }
-            if (seletor.getSituacaoEstadoCivil() != null && !seletor.getSituacaoEstadoCivil().trim().isEmpty()) {
-                predicates.add(cb.like(root.join("situacaoEstadoCivil").get("nome"),
-                        "%" + seletor.getNomeCliente().toLowerCase()));
-            }
-            if (seletor.getNomeGenero() != null && !seletor.getNomeGenero().trim().isEmpty()) {
-                predicates.add(cb.like(root.join("nomeGenero").get("nome"),
-                        "%" + seletor.getNomeCliente().toLowerCase()));
-            }
-            if (seletor.getEnderecoRua() != null && !seletor.getEnderecoRua().trim().isEmpty()) {
-                predicates.add(cb.like(root.join("enderecoRua").get("nome"),
-                        "%" + seletor.getNomeCliente().toLowerCase()));
-            }
-            if (seletor.getEnderecoBairro() != null && !seletor.getEnderecoBairro().trim().isEmpty()) {
-                predicates.add(cb.like(root.join("enderecoBairro").get("nome"),
-                        "%" + seletor.getNomeCliente().toLowerCase()));
-            }
-            if (seletor.getEnderecoNr() != null && !seletor.getEnderecoNr().trim().isEmpty()) {
-                predicates.add(cb.like(root.join("enderecoNr").get("nome"),
-                        "%" + seletor.getNomeCliente().toLowerCase()));
-            }
-            if (seletor.getEnderecoComplemento() != null && !seletor.getEnderecoComplemento().trim().isEmpty()) {
-                predicates.add(cb.like(root.join("enderecoComplemento").get("nome"),
-                        "%" + seletor.getNomeCliente().toLowerCase()));
-            }
-            if (seletor.getEnderecoCidade() != null && !seletor.getEnderecoCidade().trim().isEmpty()) {
-                predicates.add(cb.like(root.join("enderecoCidade").get("nome"),
-                        "%" + seletor.getNomeCliente().toLowerCase()));
-            }
-            if (seletor.getEnderecoUf() != null && !seletor.getEnderecoUf().trim().isEmpty()) {
-                predicates.add(cb.like(root.join("enderecoUf").get("nome"),
-                        "%" + seletor.getNomeCliente().toLowerCase()));
-            }
-            if (seletor.getCep() != null && !seletor.getCep().trim().isEmpty()) {
-                predicates.add(cb.like(root.join("cep").get("nome"),
-                        "%" + seletor.getNomeCliente().toLowerCase()));
+            if (seletor.getCnh() != null && !seletor.getCnh().trim().isEmpty()) {
+                predicates.add(cb.like(root.get("cnh"), "%" + seletor.getCnh() + "%"));
             }
 
             return cb.and(predicates.toArray(new Predicate[0]));
