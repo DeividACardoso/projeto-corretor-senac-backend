@@ -29,7 +29,8 @@ public class Veiculo {
 	private int numero;
 	private String cidade;
 	private String uf;
-	private String cepDePernoite;
+	private String cep;
+	private String placa;
 	
 	@ManyToOne
 	@JoinColumn(name = "cliente_id")
