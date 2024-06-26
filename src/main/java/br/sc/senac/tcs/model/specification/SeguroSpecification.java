@@ -16,13 +16,10 @@ public class SeguroSpecification {
 			List<Predicate> predicates = new ArrayList<>();
 			
 			if(seletor.getNomeSeguradora() != null && !seletor.getNomeSeguradora().trim().isEmpty()) {
-				predicates.add(cb.like(root.join("seguradora").get("nome"), "%" + seletor.getNomeSeguradora().toLowerCase()));
+				predicates.add(cb.like(root.join("seguradora").get("nome"), "%" + seletor.getNomeSeguradora().toLowerCase() + "%"));
 			}
-			if(seletor.getNomeCliente() != null && !seletor.getNomeCliente().trim().isEmpty()) {
-				predicates.add(cb.like(root.join("cliente").get("nome"), "%" + seletor.getNomeCliente().toLowerCase()));
-			}
-			if(seletor.getNomeCorretor() != null && !seletor.getNomeCorretor().trim().isEmpty()) {
-				predicates.add(cb.like(root.join("corretor").get("nome"), "%" + seletor.getNomeCorretor().toLowerCase()));
+			if(seletor.getNomeCliente() != null && !seletor.getNomeCliente().toString().trim().isEmpty()) {
+				predicates.add(cb.like(root.join("cliente").get("nome"), "%" + seletor.getNomeCliente().toLowerCase() + "%"));
 			}
 			//Filtros de inicio da vigência
 			if(seletor.getDtInicioComecoVigencia() != null && !seletor.getDtInicioComecoVigencia().toString().trim().isEmpty() 
@@ -61,17 +58,17 @@ public class SeguroSpecification {
 				predicates.add(cb.lessThanOrEqualTo(root.get("rofDanosFisicos"), seletor.getMaiorRofDanosFisicos()));
 			}
 			
-//			if(seletor.getMenorFranquia() != null && !seletor.getMenorFranquia().toString().trim().isEmpty()
-//					&& seletor.getMaiorFranquia() != null && seletor.getMaiorFranquia().toString().trim().isEmpty()) {
-//				predicates.add(cb.between(root.get("franquia"), seletor.getMenorFranquia(), seletor.getMaiorFranquia()));
-//			} else if(seletor.getMenorFranquia() != null && !seletor.getMenorFranquia().toString().trim().isEmpty()) {
-//				predicates.add(cb.greaterThanOrEqualTo(root.get("franquia"), seletor.getMenorFranquia()));
-//			} else if(seletor.getMaiorFranquia() != null && !seletor.getMaiorFranquia().toString().trim().isEmpty()) {
-//				predicates.add(cb.lessThanOrEqualTo(root.get("franquia"), seletor.getMaiorFranquia()));
-//			}
+			if(seletor.getMenorFranquia() != null && !seletor.getMenorFranquia().toString().trim().isEmpty()
+					&& seletor.getMaiorFranquia() != null && seletor.getMaiorFranquia().toString().trim().isEmpty()) {
+				predicates.add(cb.between(root.get("franquia"), seletor.getMenorFranquia(), seletor.getMaiorFranquia()));
+			} else if(seletor.getMenorFranquia() != null && !seletor.getMenorFranquia().toString().trim().isEmpty()) {
+				predicates.add(cb.greaterThanOrEqualTo(root.get("franquia"), seletor.getMenorFranquia()));
+			} else if(seletor.getMaiorFranquia() != null && !seletor.getMaiorFranquia().toString().trim().isEmpty()) {
+				predicates.add(cb.lessThanOrEqualTo(root.get("franquia"), seletor.getMaiorFranquia()));
+			}
 			
 			if(seletor.getCarroReserva() != null && !seletor.getCarroReserva().toString().trim().isEmpty()) {
-				predicates.add(cb.like(root.get("carroReserva"), "%" + seletor.getCarroReserva().toLowerCase()));
+				predicates.add(cb.equal(root.get("carroReserva"), seletor.getCarroReserva()));
 			}
 			
 		return cb.and(predicates.toArray(new Predicate[0]));

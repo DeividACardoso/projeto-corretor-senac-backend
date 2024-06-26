@@ -13,16 +13,12 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Data;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.NoArgsConstructor;
 
-@Getter
-@Setter
-@Data
-@RequiredArgsConstructor
 @Entity
-@Table(name = "cliente")
+@Table
+@Data
+@NoArgsConstructor
 public class Cliente {
 
     @Id
@@ -37,7 +33,6 @@ public class Cliente {
     private String email;
     private String cnh;
     private String telefone;
-
     @Column(name = "estado_civil")
     private String estadoCivil;
     private String genero;
@@ -48,9 +43,9 @@ public class Cliente {
     private String cidade;
     private String uf;
     private String cep;
-
+    
     @JsonBackReference
-    @OneToMany(mappedBy = "id")
+    @OneToMany(mappedBy = "cliente")
     private List<Seguro> seguros;
 
 }

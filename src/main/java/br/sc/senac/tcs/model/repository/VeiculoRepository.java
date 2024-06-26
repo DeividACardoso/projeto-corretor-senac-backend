@@ -10,6 +10,9 @@ import br.sc.senac.tcs.model.entidade.Veiculo;
 
 @Repository
 public interface VeiculoRepository extends JpaRepository<Veiculo, Integer>{
+    
 	List<Veiculo> findAll(Specification<Veiculo> specification);
+
+    // List<Veiculo> findByClienteId(Integer idCliente);
 
 }

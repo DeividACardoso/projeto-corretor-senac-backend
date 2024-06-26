@@ -45,7 +45,7 @@ public class SeguradoraController {
 	public List<Seguradora> listarComSeletor(@RequestBody SeguradoraSeletor seletor) {
 		return seguradoraService.listarComSeletor(seletor);
 	}
-	
+
 	@PutMapping(path = "/atualizar/{id}")
 	public Seguradora atualizar(@PathVariable Integer id, @RequestBody Seguradora seguradoraPAtualizar)
 			throws CampoInvalidoException {

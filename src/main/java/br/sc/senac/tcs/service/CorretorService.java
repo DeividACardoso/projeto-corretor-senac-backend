@@ -57,7 +57,7 @@ public class CorretorService {
 		mensagemValidacao += validarCampoString(novoCorretor.getCpf(), "cnpj");
 		mensagemValidacao += validarCampoString(novoCorretor.getTelefone(), "telefone");
 		mensagemValidacao += validarCampoString(novoCorretor.getEmail(), "email");
-		mensagemValidacao += validarCampoString(novoCorretor.getSenha(), "senha");
+		mensagemValidacao += validarCampoString(novoCorretor.getSenha(), "email");
 
 		if (!mensagemValidacao.isEmpty()) {
 			throw new CampoInvalidoException(mensagemValidacao);

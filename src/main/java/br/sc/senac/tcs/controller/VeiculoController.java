@@ -18,7 +18,6 @@ import br.sc.senac.tcs.service.VeiculoService;
 @RestController
 @RequestMapping(path = "/api/veiculo")
 @CrossOrigin(origins = {"http://localhost:4200","http://localhost:5500"}, maxAge = 3600)
-
 public class VeiculoController {
 		
 		@Autowired
@@ -38,5 +37,10 @@ public class VeiculoController {
 		public Veiculo salvar(@RequestBody Veiculo novoVeiculo) throws CampoInvalidoException {
 			return veiculoService.salvar(novoVeiculo);
 		}
+
+		// @GetMapping(path = "/por-cliente/{idCliente}")
+		// public List<Veiculo> listarPorCliente(@PathVariable Integer idCliente) {
+		// 	return veiculoService.listarPorCliente(idCliente);
+		// }
 	
 }
