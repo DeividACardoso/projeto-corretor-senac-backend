@@ -100,11 +100,7 @@ public class ClienteService {
         List<Seguro> segurosDOCliente = seguroRepo.findByCliente(cliente);
         if (!segurosDOCliente.isEmpty()) {
             for (Seguro seguro : segurosDOCliente) {
-                if (seguro.getDtInicioVigencia().isBefore(LocalDate.now())
-                        && seguro.getDtFimVigencia().isAfter(LocalDate.now())) {
-                    retorno = true;
-                    break;
-                }
+                retorno = seguro.isAtivo();
             }
         }
 
@@ -113,12 +109,10 @@ public class ClienteService {
 
     private void removerMascara(Cliente novoCliente) {
         String regex = "[\\s.\\-\\(\\)]+";
-        System.out.println("Sem tirar Mascara: " + novoCliente.getCpf() + " " + novoCliente.getTelefone());
         String cpfSemMascara = novoCliente.getCpf().replaceAll(regex, "");
         String telefoneSemMascara = novoCliente.getTelefone().replaceAll(regex, "");
         novoCliente.setCpf(cpfSemMascara);
         novoCliente.setTelefone(telefoneSemMascara);
-        System.out.println("Sem Mascara: " + novoCliente.getCpf() + " " + novoCliente.getTelefone());
     }
 
     public void importarPlanilha() {

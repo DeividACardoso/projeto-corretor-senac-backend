@@ -33,14 +33,14 @@ public class VeiculoController {
 			return veiculoService.listarPorId(id);
 		}
 		
-		@PostMapping
+		@PostMapping(path = "/novo")
 		public Veiculo salvar(@RequestBody Veiculo novoVeiculo) throws CampoInvalidoException {
 			return veiculoService.salvar(novoVeiculo);
 		}
 
-		// @GetMapping(path = "/por-cliente/{idCliente}")
-		// public List<Veiculo> listarPorCliente(@PathVariable Integer idCliente) {
-		// 	return veiculoService.listarPorCliente(idCliente);
-		// }
+		@GetMapping(path = "/cliente/{idCliente}")
+		public List<Veiculo> listarPorCliente(@PathVariable Integer idCliente) {
+			return veiculoService.listarPorCliente(idCliente);
+		}
 	
 }
