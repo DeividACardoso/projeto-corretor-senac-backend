@@ -1,6 +1,7 @@
 package br.sc.senac.tcs.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
@@ -23,24 +24,11 @@ public class SeguroService {
 		return seguroRepository.findAll();
 	}
 
-	// public List<SeguroDTO> pesquisarDTO(SeguroSeletor seletor) {
-	// 	Specification<Seguro> specification = SeguroSpecification.comFiltros(seletor);
-	// 	return null; //seguroRepository.findAllBySpecification(specification); 
-	// }
-
 	public Seguro listarPorId(Integer id) {
 		return seguroRepository.findById(id).get();
 	}
 
 	public Seguro salvar(Seguro novoSeguro) {
-		// Optional<Cliente> cliente =
-		// clienteRepository.findById(novoSeguro.getIdCliente());
-		// novoSeguro.setIdCliente(cliente);
-		//
-		// Optional<Corretor> corretor =
-		// corretorRepository.findById(novoSeguro.getIdCorretor());
-		// novoSeguro.setCorretor(corretor.get());
-
 		return seguroRepository.save(novoSeguro);
 	}
 
@@ -49,11 +37,16 @@ public class SeguroService {
 	}
 
 	public boolean delete(Integer id) {
-		seguroRepository.deleteById(id);
-		return true;
+		Optional<Seguro> seguroOptional = seguroRepository.findById(id);
+		if (seguroOptional.isPresent()) {
+			seguroRepository.deleteById(id);
+			return true;
+		} else {
+			throw new IllegalArgumentException("Seguro with ID " + id + " does not exist.");
+		}
 	}
 
-	public List<Seguro> listarComSeletor(SeguroSeletor seletor) {
+	public List<Seguro> comFiltros(SeguroSeletor seletor) {
 		Specification<Seguro> specification = SeguroSpecification.comFiltros(seletor);
 		return seguroRepository.findAll(specification);
 	}

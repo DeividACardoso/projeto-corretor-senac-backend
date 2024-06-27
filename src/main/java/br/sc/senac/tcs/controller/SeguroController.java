@@ -37,7 +37,7 @@ public class SeguroController {
 
 	@PostMapping("/filtro")
 	public List<Seguro> listarComSeletor(@RequestBody SeguroSeletor seletor) {
-		return seguroService.listarComSeletor(seletor);
+		return seguroService.comFiltros(seletor);
 	}
 
 	@PostMapping
