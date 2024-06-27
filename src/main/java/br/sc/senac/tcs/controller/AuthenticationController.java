@@ -75,10 +75,10 @@ public class AuthenticationController {
         return ResponseEntity.ok().build();
     }
     
-    @PutMapping(path = "/atualizar/{id}")
-	public UserDetails enviarEmail(@PathVariable Integer id, @RequestBody Corretor corretorAtualizar)
+    @PostMapping(path = "/enviar-email")	
+	public UserDetails enviarEmail(@RequestBody Corretor corretorAtualizar)
 			throws CampoInvalidoException {
-		return authService.enviarEmail(id, corretorAtualizar);
+		return authService.enviarEmail(corretorAtualizar);
 	}
 
 }

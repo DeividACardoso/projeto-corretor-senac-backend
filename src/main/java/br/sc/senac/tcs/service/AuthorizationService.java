@@ -1,6 +1,5 @@
 package br.sc.senac.tcs.service;
 
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -24,27 +23,30 @@ public class AuthorizationService implements UserDetailsService {
         return usuarioRepository.findByEmail(username);
     }
     
-//    public UserDetails recuperarSenha(Integer id, Corretor corretorAtualizar) throws CampoInvalidoException {
-//    	usuarioRepository.existsById(id);
-//    	if(corretorAtualizar.getEmail() != null) {
-//    		
-//    	}
-//    	corretorAtualizar.setSenha(corretorAtualizar.getSenha());
-//		return usuarioRepository.saveAndFlush(corretorAtualizar);
-//	}
-    
-    public UserDetails enviarEmail(Integer id, Corretor corretorAtualizar) throws CampoInvalidoException {
-        if (!usuarioRepository.existsById(id)) {
+    public UserDetails enviarEmail(Corretor corretorAtualizar) throws CampoInvalidoException {
+        if (!usuarioRepository.existsById(corretorAtualizar.getId())) {
             throw new CampoInvalidoException("Usuário não encontrado");
         }
 
         Corretor corretorExistente = usuarioRepository.findByEmail(corretorAtualizar.getEmail());
-        if (corretorExistente != null && !corretorExistente.getId().equals(id)) {
+        if (corretorExistente != null && !corretorExistente.getId().equals(corretorAtualizar.getId())) {
             throw new CampoInvalidoException("Email já cadastrado no sistema");
         }
-
-        corretorAtualizar.setSenha(corretorAtualizar.getSenha());
+        
+//        enviarEmailCorretor(corretorAtualizar);
+        
         return usuarioRepository.save(corretorAtualizar);
     }
+    
+//    private void enviarEmailCorretor(Corretor corretor) {
+//        // Lógica para enviar o email
+//        String destinatario = corretor.getEmail();
+//        String assunto = "Atualização de Senha";
+//        String mensagem = "Olá " + corretor.getNome() + ",\n\nSeus dados foram atualizados com sucesso.\n\nAtenciosamente,\nEquipe";
+//        
+//		// Você pode usar uma biblioteca como JavaMail para enviar o email
+//        emailService.enviarEmail(destinatario, assunto, mensagem);
+//    
+//    }
     
 }
