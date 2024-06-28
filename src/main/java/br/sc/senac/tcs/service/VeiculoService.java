@@ -39,7 +39,7 @@ public class VeiculoService {
 		String mensagemValidacao = "";
 		// mensagemValidacao += validarCamposString(veiculo.getAnoModelo(), "");
 		mensagemValidacao += validarCamposString(veiculo.getBairro(), "");
-		mensagemValidacao += validarCamposString(veiculo.getCepDePernoite(), "");
+		mensagemValidacao += validarCamposString(veiculo.getCep(), "");
 		mensagemValidacao += validarCamposString(veiculo.getCidade(), "");
 		mensagemValidacao += validarCamposString(veiculo.getMarca(), "");
 		// mensagemValidacao += validarCampoString(veiculo.get, "");
@@ -50,7 +50,7 @@ public class VeiculoService {
 	}
 
 	private String validarCamposString(String valorCampo, String nomeCampo) {
-		if (valorCampo == null || valorCampo.trim().isEmpty()) {
+		if (valorCampo != null && valorCampo.isEmpty()) {
 			return "Informe o " + nomeCampo + " \n";
 		}
 		return "";
