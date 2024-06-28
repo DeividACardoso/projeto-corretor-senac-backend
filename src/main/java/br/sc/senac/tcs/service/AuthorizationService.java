@@ -65,7 +65,7 @@ public class AuthorizationService implements UserDetailsService {
 //    }
 //	private String remetente;
 	private static final String USERNAME = "vitorgarciabackup@gmail.com";
-	private static final String PASSWORD = "ktdo oqnq rtyq fhmb";
+	private static final String PASSWORD = "password";
 
 	private Session getSession() {
 		Properties prop = new Properties();
