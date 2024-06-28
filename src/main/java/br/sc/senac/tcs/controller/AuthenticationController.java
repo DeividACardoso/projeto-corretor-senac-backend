@@ -24,61 +24,76 @@ import br.sc.senac.tcs.model.infra.security.TokenService;
 import br.sc.senac.tcs.model.repository.CorretorRepository;
 import br.sc.senac.tcs.service.AuthorizationService;
 import jakarta.validation.Valid;
+import lombok.Data;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/auth")
 @CrossOrigin(origins = { "http://localhost:4200", "http://localhost:5500" }, maxAge = 3600)
 public class AuthenticationController {
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
+	@Autowired
+	private AuthenticationManager authenticationManager;
 
-    @Autowired
-    private CorretorRepository corretorRepository;
+	@Autowired
+	private CorretorRepository corretorRepository;
 
-    @Autowired
-    private TokenService tokenService;
-    
-    @Autowired
-    private AuthorizationService authService;
+	@Autowired
+	private TokenService tokenService;
 
-    @SuppressWarnings("rawtypes")
-    @PostMapping("/login")
-    public ResponseEntity login(@RequestBody @Valid AuthenticationDTO data) {
-        if (this.corretorRepository.findByEmail(data.login()) == null) {
-            return ResponseEntity.badRequest().body("Login não encontrado.");
-        }
+	@Autowired
+	private AuthorizationService authService;
 
-        var usernamePassword = new UsernamePasswordAuthenticationToken(data.login(), data.password());
+	@SuppressWarnings("rawtypes")
+	@PostMapping("/login")
+	public ResponseEntity login(@RequestBody @Valid AuthenticationDTO data) {
+		if (this.corretorRepository.findByEmail(data.login()) == null) {
+			return ResponseEntity.badRequest().body("Login não encontrado.");
+		}
 
-        var auth = this.authenticationManager.authenticate(usernamePassword);
+		var usernamePassword = new UsernamePasswordAuthenticationToken(data.login(), data.password());
 
-        var corretor = corretorRepository.getByEmail(data.login());
+		var auth = this.authenticationManager.authenticate(usernamePassword);
 
-        var token = tokenService.GenerateToken((Corretor) auth.getPrincipal());
+		var corretor = corretorRepository.getByEmail(data.login());
 
-        return ResponseEntity.ok(new LoginResponseDTO(token, corretor.getEmail(), corretor.getCpf()));
-    }
+		var token = tokenService.GenerateToken((Corretor) auth.getPrincipal());
 
-    @SuppressWarnings("rawtypes")
-    @PostMapping("/register")
-    public ResponseEntity register(@RequestBody @Valid RegisterDTO data) {
-        if (this.corretorRepository.findByEmail(data.email()) != null)
-            return ResponseEntity.badRequest().body("Login já utilizado.");
-
-        String encryptedPassword = new BCryptPasswordEncoder().encode(data.senha());
-
-        Corretor corretor = new Corretor(data.email(), data.nome(), encryptedPassword, data.telefone(), data.cpf());
-
-        this.corretorRepository.save(corretor);
-
-        return ResponseEntity.ok().build();
-    }
-    
-    @PostMapping(path = "/enviar-email")	
-	public UserDetails enviarEmail(@RequestBody Corretor corretorAtualizar)
-			throws CampoInvalidoException {
-		return authService.enviarEmail(corretorAtualizar);
+		return ResponseEntity.ok(new LoginResponseDTO(token, corretor.getEmail(), corretor.getCpf()));
 	}
 
+	@SuppressWarnings("rawtypes")
+	@PostMapping("/register")
+	public ResponseEntity register(@RequestBody @Valid RegisterDTO data) {
+		if (this.corretorRepository.findByEmail(data.email()) != null)
+			return ResponseEntity.badRequest().body("Login já utilizado.");
+
+		String encryptedPassword = new BCryptPasswordEncoder().encode(data.senha());
+
+		Corretor corretor = new Corretor(data.email(), data.nome(), encryptedPassword, data.telefone(), data.cpf());
+
+		this.corretorRepository.save(corretor);
+
+		return ResponseEntity.ok().build();
+	}
+
+//    @PostMapping(path = "/enviar-email")	
+//	public UserDetails enviarEmail(@RequestBody Corretor corretorAtualizar)
+//			throws CampoInvalidoException {
+//		return authService.enviarEmail(corretorAtualizar);
+//	}
+
+	@PostMapping(path = "/enviar-email")
+	public String sendEmail(@RequestBody EmailRequest emailRequest) {
+		authService.sendEmail(emailRequest.getRecipients(), emailRequest.getSubject(), emailRequest.getMessageBody());
+		return "Emails enviados com sucesso!";
+	}
+	@Data
+	class EmailRequest {
+		private List<String> recipients;
+		private String subject;
+		private String messageBody;
+
+	}
 }
