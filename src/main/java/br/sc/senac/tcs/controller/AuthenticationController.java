@@ -49,7 +49,7 @@ public class AuthenticationController {
 
         var token = tokenService.GenerateToken((Corretor) auth.getPrincipal());
 
-        return ResponseEntity.ok(new LoginResponseDTO(token, corretor.getEmail(), corretor.getCpf()));
+        return ResponseEntity.ok(new LoginResponseDTO(token, corretor.getEmail(), corretor.getCpf(), corretor.getRole()));
     }
 
     @SuppressWarnings("rawtypes")

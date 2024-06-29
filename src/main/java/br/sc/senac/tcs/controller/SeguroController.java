@@ -54,4 +54,9 @@ public class SeguroController {
 	public boolean delete(@PathVariable Integer id) {
 		return seguroService.delete(id);
 	}
+
+	@GetMapping("/seg-cliente/{idCliente}")
+    public Iterable<Seguro> segurosCliente(@PathVariable Integer idCliente) {
+        return seguroService.segurosCliente(idCliente);
+    }
 }

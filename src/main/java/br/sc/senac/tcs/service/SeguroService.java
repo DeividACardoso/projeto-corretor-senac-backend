@@ -1,5 +1,6 @@
 package br.sc.senac.tcs.service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,7 +30,17 @@ public class SeguroService {
 	}
 
 	public Seguro salvar(Seguro novoSeguro) {
+		validarData(novoSeguro);
 		return seguroRepository.save(novoSeguro);
+	}
+
+	public void validarData(Seguro seguro){
+		LocalDate dataAtual = LocalDate.now();
+		if(seguro.getDtInicioVigencia().isAfter(dataAtual) || seguro.getDtFimVigencia().isBefore(dataAtual)){
+			seguro.setAtivo(false);
+		} else if(seguro.getDtInicioVigencia().isBefore(dataAtual) && seguro.getDtFimVigencia().isAfter(dataAtual)){
+			seguro.setAtivo(true);
+		}
 	}
 
 	public Object atualizar(Seguro seguroPAtualizar) {
@@ -50,6 +61,10 @@ public class SeguroService {
 		Specification<Seguro> specification = SeguroSpecification.comFiltros(seletor);
 		return seguroRepository.findAll(specification);
 	}
+
+    public Iterable<Seguro> segurosCliente(Integer idCliente) {
+		return seguroRepository.findAllByClienteId(idCliente);
+    }
 
 
 }
