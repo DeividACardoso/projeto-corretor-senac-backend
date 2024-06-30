@@ -1,16 +1,17 @@
 package br.sc.senac.tcs.util;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.Iterator;
 
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,33 +25,30 @@ public class ImportadorPlanilha {
 	@Autowired
 	ClienteService clienteService = new ClienteService();
 
-	public void importar(InputStream fis) throws CampoInvalidoException {
-		try {
-			try (HSSFWorkbook planilha = new HSSFWorkbook(fis)) {
-				HSSFSheet abaPlanilha = planilha.getSheetAt(0);
-
-				Iterator<Row> iteradorLinha = abaPlanilha.iterator();
-
-				iteradorLinha.next();
-
-				while (iteradorLinha.hasNext()) {
-					Row linhaAtual = iteradorLinha.next();
-
-					Cliente cliente = criarCliente(linhaAtual);
-
-					if (cliente != null) {
-
-						clienteService.create(cliente);
-					}
-				}
-			}
-		} catch (FileNotFoundException e) {
-			throw new CampoInvalidoException("Arquivo não encontrado ou sem permissão de acesso.");
-		} catch (IOException e) {
-			throw new CampoInvalidoException("Erro ao fazer upload de arquivo.");
-		}
-
-	}
+public void importar(InputStream fis) throws CampoInvalidoException, IOException {
+    try {
+        Workbook workbook = WorkbookFactory.create(fis);
+        
+        Sheet sheet = workbook.getSheetAt(0);
+        Iterator<Row> iteradorLinha = sheet.iterator();
+        
+        iteradorLinha.next(); // Skip header row
+        
+        while (iteradorLinha.hasNext()) {
+            Row linhaAtual = iteradorLinha.next();
+            
+            Cliente cliente = criarCliente(linhaAtual);
+            
+            if (cliente != null) {
+                clienteService.create(cliente);
+            }
+        }
+        
+        workbook.close(); // Close the workbook
+    } catch (IOException e) {
+        throw new IOException(e.getMessage());
+    }
+}
 
 	private Cliente criarCliente(Row linhaAtual) {
 		Cliente c = null;
@@ -64,38 +62,36 @@ public class ImportadorPlanilha {
 			Cell celulaDtNascimento = linhaAtual.getCell(2);
 			//E-MAIL
 			Cell celulaEmail = linhaAtual.getCell(3);
-			//TELEFONE
+			// //TELEFONE
 			Cell celulaTelefone = linhaAtual.getCell(4);
-			//CNH
+			// //CNH
 			Cell celulaCnh = linhaAtual.getCell(5);
-			//ESTADO_CIVIL
+			// //ESTADO_CIVIL
 			Cell celulaEstadoCivil = linhaAtual.getCell(6);
-			//GENERO
+			// //GENERO
 			Cell celulaGenero = linhaAtual.getCell(7);
-			//CEP
+			// //CEP
 			Cell celulaCep = linhaAtual.getCell(7);
-			//RUA
+			// //RUA
 			Cell celulaRua = linhaAtual.getCell(8);
-			//BAIRRO
+			// //BAIRRO
 			Cell celulaBairro = linhaAtual.getCell(9);
-			//NUMERO
+			// //NUMERO
 			Cell celulaNumero = linhaAtual.getCell(10);
-			//COMPLEMENTO
+			// //COMPLEMENTO
 			Cell celulaComplemento = linhaAtual.getCell(11);
-			//CIDADE
+			// //CIDADE
 			Cell celulaCidade = linhaAtual.getCell(12);
-			//UF
+			// //UF
 			Cell celulaUf = linhaAtual.getCell(13);
 
-			System.out.println(celulaDtNascimento);
-
-			// LocalDate dtNascimento = LocalDate.parse(celulaDtNascimento.toString(),
-			// DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+			Date date = celulaDtNascimento.getDateCellValue();
+			LocalDate dateString = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 
 			c = new Cliente();
 			c.setNome(celulaNome.toString());
 			c.setCpf(celulaCpf.toString());
-			// c.setDtNascimento(celulaDtNascimento);
+			c.setDtNascimento(dateString);
 			c.setEmail(celulaEmail.toString());
 			c.setTelefone(celulaTelefone.toString());
 			c.setCep(celulaCep.toString());

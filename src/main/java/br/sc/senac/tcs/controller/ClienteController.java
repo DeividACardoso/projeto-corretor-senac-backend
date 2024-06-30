@@ -1,6 +1,8 @@
 package br.sc.senac.tcs.controller;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -63,16 +65,21 @@ public class ClienteController {
     }
 
     @PostMapping("/importar")
-    public void importarPlanilha(@RequestParam("file") MultipartFile planilha) throws CampoInvalidoException {
-        System.out.println(planilha);
-        try {
-            importadorPlanilha.importar(planilha.getInputStream());
-        } catch (CampoInvalidoException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+    public void importarPlanilha(@RequestParam("file") MultipartFile file) throws IOException {
+        if (!file.isEmpty()) {
+            try (InputStream fis = file.getInputStream()) {
+                importadorPlanilha.importar(fis);
+            } catch (IOException | CampoInvalidoException e) {
+                throw new IOException("Falha ao importar arquivo: " + e.getMessage());
+            }
+        } else {
+            throw new IOException("Falha ao importar arquivo: Arquivo vazio");
         }
     }
 
+    @GetMapping("/email/{email}")
+    public Optional<Cliente> listarPorEmail(@PathVariable String email) {
+        return clienteService.listarPorEmail(email);
+    }
 
 }

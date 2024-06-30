@@ -1,7 +1,7 @@
 package br.sc.senac.tcs.service;
 
-import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -116,6 +116,10 @@ public class ClienteService {
     }
 
     public void importarPlanilha() {
+        
+    }
 
+    public Optional<Cliente> listarPorEmail(String email) {
+        return clienteRepository.findByEmail(email);
     }
 }
