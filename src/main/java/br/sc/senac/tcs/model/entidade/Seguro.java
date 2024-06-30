@@ -2,6 +2,7 @@ package br.sc.senac.tcs.model.entidade;
 
 import java.time.LocalDate;
 
+import br.sc.senac.tcs.model.dto.SeguroDTO;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -42,4 +43,6 @@ public class Seguro {
 	private boolean carroReserva;
 	private boolean ativo;
 	
+	public Seguro(SeguroDTO data) {
+	}
 }
