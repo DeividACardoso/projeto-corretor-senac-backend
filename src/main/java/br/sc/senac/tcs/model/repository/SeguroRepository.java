@@ -18,4 +18,6 @@ public interface SeguroRepository extends JpaRepository<Seguro, Integer> {
 
 	Iterable<Seguro> findAllByClienteId(Integer idCliente);
 
+    Iterable<Seguro> findAllByVeiculoId(Integer idVeiculo);
+
 }

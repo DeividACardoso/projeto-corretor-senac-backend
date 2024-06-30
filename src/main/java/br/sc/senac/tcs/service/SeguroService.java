@@ -44,6 +44,12 @@ public class SeguroService {
 	}
 
 	public Object atualizar(Seguro seguroPAtualizar) {
+		LocalDate dataAtual = LocalDate.now();
+		if(seguroPAtualizar.getDtInicioVigencia().isAfter(dataAtual) || seguroPAtualizar.getDtFimVigencia().isBefore(dataAtual)){
+			seguroPAtualizar.setAtivo(false);
+		} else if(seguroPAtualizar.getDtInicioVigencia().isBefore(dataAtual) && seguroPAtualizar.getDtFimVigencia().isAfter(dataAtual)){
+			seguroPAtualizar.setAtivo(true);
+		}
 		return seguroRepository.save(seguroPAtualizar);
 	}
 
@@ -64,6 +70,10 @@ public class SeguroService {
 
     public Iterable<Seguro> segurosCliente(Integer idCliente) {
 		return seguroRepository.findAllByClienteId(idCliente);
+    }
+
+    public Iterable<Seguro> segurosVeiculo(Integer idVeiculo) {
+		return seguroRepository.findAllByVeiculoId(idVeiculo);
     }
 
 
