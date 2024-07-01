@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -48,22 +47,16 @@ public class ClienteService {
         return clienteRepository.save(cliente);
     }
 
-    private ResponseEntity<?> validarCamposRepetidos(Cliente cliente) throws CampoInvalidoException {
-        ResponseEntity<?> re = null;
+    private void validarCamposRepetidos(Cliente cliente) throws CampoInvalidoException {
         List<Cliente> clientes = clienteRepository.findAll();
         for (Cliente c : clientes) {
             if (c.getCpf().equals(cliente.getCpf())) {
-                System.out.println("CPF cadastrado: " + c.getCpf() + " CPF informado: " + cliente.getCpf());
-                re = ResponseEntity.badRequest().body("CPF já cadastrado.");
+                throw new CampoInvalidoException("CPF já cadastrado.");
             }
             if (c.getEmail().equals(cliente.getEmail())) {
-                re = ResponseEntity.badRequest().body("Email já cadastrado.");
-            }
-            if(!c.getEmail().equals(cliente.getEmail()) && !c.getCpf().equals(cliente.getCpf())) {
-                re = ResponseEntity.ok().build();
+                throw new CampoInvalidoException("Email já cadastrado.");
             }
         }
-        return re;
     }
 
     private void validarCamposObrigatorios(Cliente cliente) throws CampoInvalidoException {
