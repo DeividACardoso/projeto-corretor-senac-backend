@@ -40,4 +40,5 @@ public class Seguro {
 	private LocalDate dtFimVigencia;
 	private double franquia;
 	private boolean carroReserva;
+	private boolean ativo;
 }
