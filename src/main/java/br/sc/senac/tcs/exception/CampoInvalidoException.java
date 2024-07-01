@@ -10,4 +10,9 @@ public class CampoInvalidoException extends Exception {
 		super(mensagem);
 	}
 
+	@Override
+	public String getMessage() {
+		return "Campo inválido: " + super.getMessage();
+	}
+
 }

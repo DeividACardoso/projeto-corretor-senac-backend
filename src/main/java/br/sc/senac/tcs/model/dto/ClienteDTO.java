@@ -2,7 +2,6 @@ package br.sc.senac.tcs.model.dto;
 
 import java.time.LocalDate;
 
-import jakarta.persistence.Column;
 
 public record ClienteDTO(
         String nome,

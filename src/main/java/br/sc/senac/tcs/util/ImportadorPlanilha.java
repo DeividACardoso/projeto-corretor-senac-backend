@@ -4,10 +4,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.Iterator;
 
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -23,7 +25,7 @@ import br.sc.senac.tcs.service.ClienteService;
 public class ImportadorPlanilha {
 
 	@Autowired
-	ClienteService clienteService = new ClienteService();
+	ClienteService clienteService;
 
 public void importar(InputStream fis) throws CampoInvalidoException, IOException {
     try {
@@ -32,7 +34,7 @@ public void importar(InputStream fis) throws CampoInvalidoException, IOException
         Sheet sheet = workbook.getSheetAt(0);
         Iterator<Row> iteradorLinha = sheet.iterator();
         
-        iteradorLinha.next(); // Skip header row
+        iteradorLinha.next();
         
         while (iteradorLinha.hasNext()) {
             Row linhaAtual = iteradorLinha.next();
@@ -44,13 +46,13 @@ public void importar(InputStream fis) throws CampoInvalidoException, IOException
             }
         }
         
-        workbook.close(); // Close the workbook
+        workbook.close();
     } catch (IOException e) {
         throw new IOException(e.getMessage());
     }
 }
 
-	private Cliente criarCliente(Row linhaAtual) {
+	private Cliente criarCliente(Row linhaAtual) throws CampoInvalidoException {
 		Cliente c = null;
 		
 		if (linhaAtual.getCell(0) != null && linhaAtual.getCell(1) != null) {
@@ -71,39 +73,59 @@ public void importar(InputStream fis) throws CampoInvalidoException, IOException
 			// //GENERO
 			Cell celulaGenero = linhaAtual.getCell(7);
 			// //CEP
-			Cell celulaCep = linhaAtual.getCell(7);
+			Cell celulaCep = linhaAtual.getCell(8);
 			// //RUA
-			Cell celulaRua = linhaAtual.getCell(8);
+			Cell celulaRua = linhaAtual.getCell(9);
 			// //BAIRRO
-			Cell celulaBairro = linhaAtual.getCell(9);
+			Cell celulaBairro = linhaAtual.getCell(10);
 			// //NUMERO
-			Cell celulaNumero = linhaAtual.getCell(10);
+			Cell celulaNumero = linhaAtual.getCell(11);
 			// //COMPLEMENTO
-			Cell celulaComplemento = linhaAtual.getCell(11);
+			Cell celulaComplemento = linhaAtual.getCell(12);
 			// //CIDADE
-			Cell celulaCidade = linhaAtual.getCell(12);
+			Cell celulaCidade = linhaAtual.getCell(13);
 			// //UF
-			Cell celulaUf = linhaAtual.getCell(13);
+			Cell celulaUf = linhaAtual.getCell(14);
 
-			Date date = celulaDtNascimento.getDateCellValue();
+			Date date;
+			if (celulaDtNascimento.getCellType() == CellType.NUMERIC) {
+				date = celulaDtNascimento.getDateCellValue();
+			} else {
+				String dateString = celulaDtNascimento.getStringCellValue();
+				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+				LocalDate localDate = LocalDate.parse(dateString, formatter);
+				date = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+			}
 			LocalDate dateString = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 
+			String telefoneSemMascara = celulaTelefone.toString().replaceAll("[^0-9]", "");
+			String cepSemMascara = celulaCep.toString().replaceAll("[^0-9]", "");
+			
+			
 			c = new Cliente();
-			c.setNome(celulaNome.toString());
-			c.setCpf(celulaCpf.toString());
-			c.setDtNascimento(dateString);
-			c.setEmail(celulaEmail.toString());
-			c.setTelefone(celulaTelefone.toString());
-			c.setCep(celulaCep.toString());
-			c.setRua(celulaRua.toString());
-			c.setBairro(celulaBairro.toString());
-			c.setNumero(celulaNumero.toString());
-			c.setComplemento(celulaComplemento.toString());
-			c.setCidade(celulaCidade.toString());
-			c.setUf(celulaUf.toString());
-			c.setCnh(celulaCnh.toString());
-			c.setEstadoCivil(celulaEstadoCivil.toString());
-			c.setGenero(celulaGenero.toString());
+			try{
+				c.setNome(celulaNome.getStringCellValue());
+				c.setCpf(celulaCpf.getStringCellValue());
+				c.setDtNascimento(dateString);
+				c.setEmail(celulaEmail.getStringCellValue());
+				c.setTelefone(telefoneSemMascara);
+				c.setCep(cepSemMascara);
+				c.setRua(celulaRua.getStringCellValue());
+				c.setBairro(celulaBairro.getStringCellValue());
+				c.setNumero(celulaNumero.getStringCellValue());
+				if(celulaComplemento != null){
+					c.setComplemento(celulaComplemento.getStringCellValue());
+				} else {
+					c.setComplemento("");
+				}
+				c.setCidade(celulaCidade.getStringCellValue());
+				c.setUf(celulaUf.getStringCellValue());
+				c.setCnh(celulaCnh.getStringCellValue());
+				c.setEstadoCivil(celulaEstadoCivil.getStringCellValue());
+				c.setGenero(celulaGenero.getStringCellValue());
+			} catch (Exception e) {
+				throw new CampoInvalidoException("Campo inválido");
+			}
 		}
 		return c;
 	}

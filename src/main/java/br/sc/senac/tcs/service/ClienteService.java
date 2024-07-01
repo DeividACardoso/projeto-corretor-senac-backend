@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -39,11 +40,30 @@ public class ClienteService {
     }
 
     public Cliente create(Cliente cliente) throws CampoInvalidoException {
-        validarCamposObrigatorios(cliente);
         if (cliente.getCpf() != null) {
             removerMascara(cliente);
         }
+        validarCamposObrigatorios(cliente);
+        validarCamposRepetidos(cliente);
         return clienteRepository.save(cliente);
+    }
+
+    private ResponseEntity<?> validarCamposRepetidos(Cliente cliente) throws CampoInvalidoException {
+        ResponseEntity<?> re = null;
+        List<Cliente> clientes = clienteRepository.findAll();
+        for (Cliente c : clientes) {
+            if (c.getCpf().equals(cliente.getCpf())) {
+                System.out.println("CPF cadastrado: " + c.getCpf() + " CPF informado: " + cliente.getCpf());
+                re = ResponseEntity.badRequest().body("CPF já cadastrado.");
+            }
+            if (c.getEmail().equals(cliente.getEmail())) {
+                re = ResponseEntity.badRequest().body("Email já cadastrado.");
+            }
+            if(!c.getEmail().equals(cliente.getEmail()) && !c.getCpf().equals(cliente.getCpf())) {
+                re = ResponseEntity.ok().build();
+            }
+        }
+        return re;
     }
 
     private void validarCamposObrigatorios(Cliente cliente) throws CampoInvalidoException {
@@ -58,7 +78,6 @@ public class ClienteService {
         mensagemValidacao += validarCampoString(cliente.getCep(), "cep");
         mensagemValidacao += validarCampoString(cliente.getUf(), "uf");
         mensagemValidacao += validarCampoString(cliente.getCidade(), "cidade");
-        mensagemValidacao += validarCampoString(cliente.getComplemento(), "complemento");
         mensagemValidacao += validarCampoString(cliente.getRua(), "rua");
         mensagemValidacao += validarCampoString(cliente.getNumero(), "numero");
 
