@@ -31,7 +31,6 @@ public class Veiculo {
 	private String uf;
 	private String cep;
 	private String placa;
-	private String ativo;	
 	
 	@ManyToOne
 	@JoinColumn(name = "cliente_id")

@@ -5,16 +5,21 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.sc.senac.tcs.controller.ClienteController;
 import br.sc.senac.tcs.exception.CampoInvalidoException;
 import br.sc.senac.tcs.model.entidade.Veiculo;
 import br.sc.senac.tcs.model.repository.VeiculoRepository;
 import jakarta.transaction.Transactional;
+import br.sc.senac.tcs.model.entidade.Cliente;
 
 @Service
 public class VeiculoService {
 
 	@Autowired
 	private VeiculoRepository veiculoRepository;
+
+	@Autowired
+	private ClienteController clienteController;
 
 	@Transactional
 	public List<Veiculo> listarTodos() {
@@ -45,14 +50,14 @@ public class VeiculoService {
 	}
 
 	private String validarCamposString(String valorCampo, String nomeCampo) {
-		if (valorCampo == null || valorCampo.trim().isEmpty()) {
+		if (valorCampo != null && valorCampo.isEmpty()) {
 			return "Informe o " + nomeCampo + " \n";
 		}
 		return "";
 	}
-
-     public List<Veiculo> listarPorCliente(Integer idCliente) {
-	 	return veiculoRepository.findByClienteId(idCliente);
-     }
+    public List<Veiculo> listarPorCliente(Integer idCliente) {
+		Cliente cliente = clienteController.listarPorId(idCliente);
+		return veiculoRepository.findByCliente(cliente);
+    }
 	
 }
