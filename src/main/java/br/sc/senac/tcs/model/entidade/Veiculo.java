@@ -37,4 +37,3 @@ public class Veiculo {
 	private Cliente cliente;
 	
 }
-

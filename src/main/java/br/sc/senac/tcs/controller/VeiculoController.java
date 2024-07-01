@@ -38,9 +38,9 @@ public class VeiculoController {
 			return veiculoService.salvar(novoVeiculo);
 		}
 
-		@GetMapping(path = "/cliente/{idCliente}")
-		public List<Veiculo> listarPorCliente(@PathVariable Integer idCliente) {
-			return veiculoService.listarPorCliente(idCliente);
-		}
+		 @GetMapping(path = "/cliente/{idCliente}")
+		 public List<Veiculo> listarPorCliente(@PathVariable Integer idCliente) {
+		 	return veiculoService.listarPorCliente(idCliente);
+		 }
 	
 }

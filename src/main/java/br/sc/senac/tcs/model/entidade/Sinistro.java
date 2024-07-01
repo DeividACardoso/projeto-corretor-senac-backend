@@ -1,12 +1,14 @@
 package br.sc.senac.tcs.model.entidade;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,16 +23,24 @@ public class Sinistro {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String tipo;
-	@Column(name = "DT_HORA")
-	private LocalDateTime dataHora;
+	private LocalDate data;
+	private LocalTime horario;
 	private String descricao;
+	
+	@ManyToOne
+    @JoinColumn(name = "seguro_id", nullable = false)
+    private Seguro seguro;
 
-	public Sinistro(Integer id, String tipo, LocalDateTime dataHora, String descricao) {
+	public Sinistro(Integer id, String tipo, LocalDate data, LocalTime horario, String descricao, Seguro seguro) {
 		super();
 		this.id = id;
 		this.tipo = tipo;
-		this.dataHora = dataHora;
+		this.data = data;
+		this.horario = horario;
 		this.descricao = descricao;
+		this.seguro = seguro;
 	}
-
+	
+	
+	
 }

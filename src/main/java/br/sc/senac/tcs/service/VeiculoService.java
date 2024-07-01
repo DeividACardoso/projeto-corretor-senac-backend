@@ -55,7 +55,6 @@ public class VeiculoService {
 		}
 		return "";
 	}
-
     public List<Veiculo> listarPorCliente(Integer idCliente) {
 		Cliente cliente = clienteController.listarPorId(idCliente);
 		return veiculoRepository.findByCliente(cliente);
