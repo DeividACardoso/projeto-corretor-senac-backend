@@ -4,29 +4,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.sc.senac.tcs.exception.CampoInvalidoException;
 import br.sc.senac.tcs.model.entidade.AuthenticationDTO;
 import br.sc.senac.tcs.model.entidade.Corretor;
 import br.sc.senac.tcs.model.entidade.LoginResponseDTO;
 import br.sc.senac.tcs.model.entidade.RegisterDTO;
-import br.sc.senac.tcs.model.entidade.Seguradora;
 import br.sc.senac.tcs.model.infra.security.TokenService;
 import br.sc.senac.tcs.model.repository.CorretorRepository;
 import br.sc.senac.tcs.service.AuthorizationService;
 import jakarta.validation.Valid;
-import lombok.Data;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -56,49 +49,43 @@ public class AuthenticationController {
 
 		var auth = this.authenticationManager.authenticate(usernamePassword);
 
+		System.out.println("Login para token: " + data.login());
 		var corretor = corretorRepository.getByEmail(data.login());
 
 		var token = tokenService.GenerateToken((Corretor) auth.getPrincipal());
 
-		return ResponseEntity.ok(new LoginResponseDTO(token, corretor.getEmail(), corretor.getCpf()));
+		return ResponseEntity
+				.ok(new LoginResponseDTO(token, corretor.getEmail(), corretor.getCpf(), corretor.getRole()));
 	}
 
 	@SuppressWarnings("rawtypes")
 	@PostMapping("/register")
 	public ResponseEntity register(@RequestBody @Valid RegisterDTO data) {
+		System.out.println("login: " + data.email() + " | Senha: " + data.senha());
 		if (this.corretorRepository.findByEmail(data.email()) != null)
 			return ResponseEntity.badRequest().body("Login já utilizado.");
 
 		String encryptedPassword = new BCryptPasswordEncoder().encode(data.senha());
 
-    @SuppressWarnings("rawtypes")
-    @PostMapping("/register")
-    public ResponseEntity register(@RequestBody @Valid RegisterDTO data) {
-        System.out.println("login: " + data.email() + " | Senha: " + data.senha());
-        if (this.corretorRepository.findByEmail(data.email()) != null)
-            return ResponseEntity.badRequest().body("Login já utilizado.");
+		Corretor corretor = new Corretor(data.email(), data.nome(), encryptedPassword, data.telefone(), data.cpf());
 
 		this.corretorRepository.save(corretor);
 
 		return ResponseEntity.ok().build();
 	}
 
-//    @PostMapping(path = "/enviar-email")	
-//	public UserDetails enviarEmail(@RequestBody Corretor corretorAtualizar)
-//			throws CampoInvalidoException {
-//		return authService.enviarEmail(corretorAtualizar);
-//	}
+	@PostMapping("/enviar-email")
+	public String recuperarSenha(@RequestParam String email)	 {
+		boolean sucesso = authService.solicitarRecuperacaoSenha(email);
 
-	@PostMapping(path = "/enviar-email")
-	public String sendEmail(@RequestBody EmailRequest emailRequest) {
-		authService.sendEmail(emailRequest.getRecipients(), emailRequest.getSubject(), emailRequest.getMessageBody());
-		return "Emails enviados com sucesso!";
-	}
-	@Data
-	class EmailRequest {
-		private List<String> recipients;
-		private String subject;
-		private String messageBody;
+		if (sucesso) {
+			return "Email de recuperação enviado com sucesso.";
+		} else {
+			return "Corretor não encontrado com o email: " + email;
 
+			
+			
+		}
 	}
+
 }
