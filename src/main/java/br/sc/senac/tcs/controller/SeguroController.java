@@ -56,12 +56,12 @@ public class SeguroController {
 	}
 
 	@GetMapping("/seg-cliente/{idCliente}")
-    public Iterable<Seguro> segurosCliente(@PathVariable Integer idCliente) {
+    public List<Seguro> segurosCliente(@PathVariable Integer idCliente) {
         return seguroService.segurosCliente(idCliente);
     }
 
-	@GetMapping("/seg-veiculo/{idCliente}")
-    public Iterable<Seguro> segurosVeiculo(@PathVariable Integer idVeiculo) {
+	@GetMapping("/seg-veiculo/{idVeiculo}")
+    public List<Seguro> segurosVeiculo(@PathVariable Integer idVeiculo) {
         return seguroService.segurosVeiculo(idVeiculo);
     }
 }

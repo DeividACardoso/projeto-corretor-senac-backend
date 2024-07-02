@@ -68,11 +68,11 @@ public class SeguroService {
 		return seguroRepository.findAll(specification);
 	}
 
-    public Iterable<Seguro> segurosCliente(Integer idCliente) {
+    public List<Seguro> segurosCliente(Integer idCliente) {
 		return seguroRepository.findAllByClienteId(idCliente);
     }
 
-    public Iterable<Seguro> segurosVeiculo(Integer idVeiculo) {
+    public List<Seguro> segurosVeiculo(Integer idVeiculo) {
 		return seguroRepository.findAllByVeiculoId(idVeiculo);
     }
 
