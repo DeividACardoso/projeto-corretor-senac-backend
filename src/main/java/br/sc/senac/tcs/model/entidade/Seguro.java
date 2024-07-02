@@ -46,7 +46,12 @@ public class Seguro {
 	private double franquia;
 	private boolean carroReserva;
 	private boolean ativo;
-	
+
 	public Seguro(SeguroDTO data) {
+	}
+
+	public Seguro(Seguradora seguradora, Veiculo veiculo, Cliente cliente, String numeroProposta,
+			String numApolice, double rcfDanosMateriais, double rofDanosFisicos, LocalDate dtInicioVigencia,
+			LocalDate dtFimVigencia, double franquia, boolean carroReserva, boolean ativo) {
 	}
 }

@@ -25,14 +25,6 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode(of = "id")
 public class Corretor implements UserDetails {
 
-    public Corretor(String email, String nome, String senha, String telefone, String cpf) {
-        this.email = email;
-        this.nome = nome;
-        this.senha = senha;
-        this.telefone = telefone;
-        this.cpf = cpf;
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -49,6 +41,14 @@ public class Corretor implements UserDetails {
             return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), (new SimpleGrantedAuthority("ROLE_USER")));
         else
             return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+    }
+
+    public Corretor(String email, String nome, String senha, String telefone, String cpf) {
+        this.email = email;
+        this.nome = nome;
+        this.senha = senha;
+        this.telefone = telefone;
+        this.cpf = cpf;
     }
 
     @Override
