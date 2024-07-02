@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
+import br.sc.senac.tcs.model.dto.ClienteDTO;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -47,5 +48,23 @@ public class Cliente {
     @JsonBackReference
     @OneToMany(mappedBy = "cliente")
     private List<Seguro> seguros;
+
+    public Cliente(ClienteDTO clienteDTO) {
+        this.nome = clienteDTO.getNome();
+        this.cpf = clienteDTO.getCpf();
+        this.dtNascimento = clienteDTO.getDtNascimento();
+        this.email = clienteDTO.getEmail();
+        this.cnh = clienteDTO.getCnh();
+        this.telefone = clienteDTO.getTelefone();
+        this.estadoCivil = clienteDTO.getEstadoCivil();
+        this.genero = clienteDTO.getGenero();
+        this.rua = clienteDTO.getRua();
+        this.bairro = clienteDTO.getBairro();
+        this.numero = clienteDTO.getNumero();
+        this.complemento = clienteDTO.getComplemento();
+        this.cidade = clienteDTO.getCidade();
+        this.uf = clienteDTO.getUf();
+        this.cep = clienteDTO.getCep();
+    }
 
 }

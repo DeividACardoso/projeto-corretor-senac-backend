@@ -29,6 +29,7 @@ public class SeguradoraService {
 	}
 
 	private void validarCamposObrigatorios(Seguradora novaSeguradora) throws CampoInvalidoException {
+		novaSeguradora.setTelefone( novaSeguradora.getTelefone().replaceAll("[^0-9]", ""));
 		String mensagemValidacao = "";
 		mensagemValidacao += validarCampoString(novaSeguradora.getNome(), "nome");
 		mensagemValidacao += validarCampoString(novaSeguradora.getCnpj(), "cnpj");

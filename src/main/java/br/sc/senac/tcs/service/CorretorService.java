@@ -71,4 +71,8 @@ public class CorretorService {
 		return "";
 	}
 
+	public Corretor listarPorEmail(String email) {
+		return corretorRepository.getByEmail(email);
+	}
+
 }
