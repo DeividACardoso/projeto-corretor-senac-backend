@@ -19,11 +19,12 @@ import br.sc.senac.tcs.model.entidade.RegisterDTO;
 import br.sc.senac.tcs.model.infra.security.TokenService;
 import br.sc.senac.tcs.model.repository.CorretorRepository;
 import br.sc.senac.tcs.service.AuthorizationService;
+import br.sc.senac.tcs.service.EmailServiceSpring;
 import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/auth")
-@CrossOrigin(origins = { "http://localhost:4200", "http://localhost:5500" }, maxAge = 3600)
+@CrossOrigin(origins = { "http://localhost:4200", "http://localhost:5500", "*" }, maxAge = 3600)
 public class AuthenticationController {
 
 	@Autowired
@@ -34,6 +35,11 @@ public class AuthenticationController {
 
 	@Autowired
 	private TokenService tokenService;
+
+	@Autowired
+	private EmailServiceSpring emailServiceSpring;
+	
+	
 
 	@Autowired
 	private AuthorizationService authService;
@@ -75,14 +81,11 @@ public class AuthenticationController {
 	}
 
 	@PostMapping("/enviar-email")
-	public String recuperarSenha(@RequestParam String email) {
-		boolean sucesso = authService.solicitarRecuperacaoSenha(email);
-
-		if (sucesso) {
-			return "Email de recuperação enviado com sucesso.";
-		} else {
-			return "Corretor não encontrado com o email: " + email;
-		}
+	public String enviarEmail() {
+		System.out.println("AQUI FOII");
+		emailServiceSpring.sendEmail("vitorgarciadevasconcelos@gmail.com", "Assunto", "Teste de envio de email");
+		System.out.println("Passou aqui");
+		return "Email de recuperação enviado com sucesso.";
 
 	}
 

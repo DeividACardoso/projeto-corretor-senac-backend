@@ -32,8 +32,8 @@ public class AuthorizationService implements UserDetailsService {
 	@Autowired
 	CorretorRepository usuarioRepository;
 
-	@Autowired
-	private EmailService emailService;
+	
+//	private EmailService emailService;
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -68,6 +68,8 @@ public class AuthorizationService implements UserDetailsService {
 //	private String remetente;
 	private static final String USERNAME = "vitorgarciabackup@gmail.com";
 	private static final String PASSWORD = "password";
+	
+	
 
 	private Session getSession() {
 		Properties prop = new Properties();
@@ -83,25 +85,28 @@ public class AuthorizationService implements UserDetailsService {
 		});
 	}
 
-	public void enviarEmail(List<String> recipients, String subject, String messageBody) {
-		try {
-			Message message = new MimeMessage(getSession());
-			message.setFrom(new InternetAddress(USERNAME));
+	public void enviarEmail() {
+//		List<String> recipients, String subject, String messageBody
+//		try {
+//			Message message = new MimeMessage(getSession());
+//			message.addRecipients(null, null);
+//			message.setFrom(new InternetAddress(USERNAME));
+//
+//			for (String recipient : recipients) {
+//				message.addRecipient(Message.RecipientType.TO, new InternetAddress(recipient));
+//			}
+//
+//			message.setSubject(subject);
+//			message.setText(messageBody);
+//
+//			Transport.send(message);
+			EmailServiceSpring emailService = new EmailServiceSpring();
+			emailService.sendEmail("vitorgarciadevasconcelos@gmail.com", "Assunto", "Teste de envio de email");
 
-			for (String recipient : recipients) {
-				message.addRecipient(Message.RecipientType.TO, new InternetAddress(recipient));
-			}
 
-			message.setSubject(subject);
-			message.setText(messageBody);
-
-			Transport.send(message);
-
-			System.out.println("Emails enviados com sucesso!");
-
-		} catch (MessagingException e) {
-			e.printStackTrace();
-		}
+//		} catch (MessagingException e) {
+//			e.printStackTrace();
+//		}
 	}
 //	public void solicitarRecuperacaoSenha(String email) {
 ////		Corretor corretores = usuarioRepository.findByEmail(email);
@@ -127,28 +132,27 @@ public class AuthorizationService implements UserDetailsService {
 //		}
 //	}
 	
-	 public boolean solicitarRecuperacaoSenha(String email) {
-	        Corretor corretor = usuarioRepository.findByEmail(email);
-	        if (corretor != null) {
-	            String token = gerarTokenRecuperacaoSenha();  // Implemente este método para gerar um token único
-//	            String resetLink = "http://seu-dominio.com/reset-senha?token=" + token;
-
-	            String subject = "Recuperação de Senha";
-	            String text = "Olá, " + corretor.getNome() + "\n\n" +
-	                          "O seu código de recuperação é: " + token;
-//	            		no link abaixo para redefinir sua senha:\n" + resetLink;
-
-	            emailService.enviarMessagem(token, subject, text);
-
-	            return true; // Email enviado com sucesso
-	        } else {
-	            return false; // Corretor não encontrado
-	        }
-	    }
-
-	private String gerarTokenRecuperacaoSenha() {
-		// Implemente um método para gerar um token único para recuperação de senha
-		return UUID.randomUUID().toString();
-	}
+//	 public boolean solicitarRecuperacaoSenha(String email) {
+//	        Corretor corretor = usuarioRepository.findByEmail(email);
+//	        if (corretor != null) {
+//	            String token = gerarTokenRecuperacaoSenha();  // Implemente este método para gerar um token único
+//
+//	            String subject = "Recuperação de Senha";
+//	            String text = "Olá, " + corretor.getNome() + "\n\n" +
+//	                          "O seu código de recuperação é: " + token;
+////	            		no link abaixo para redefinir sua senha:\n" + resetLink;
+//
+//	            emailService.enviarMessagem(token, subject, text);
+//
+//	            return true; // Email enviado com sucesso
+//	        } else {
+//	            return false; // Corretor não encontrado
+//	        }
+//	    }
+//
+//	private String gerarTokenRecuperacaoSenha() {
+//		// Implemente um método para gerar um token único para recuperação de senha
+//		return UUID.randomUUID().toString();
+//	}
 
 }
