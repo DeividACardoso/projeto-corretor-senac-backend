@@ -61,4 +61,5 @@ public class CorretorController {
 	public Corretor listarPorEmail(@PathVariable String email) {
 		return corretorService.listarPorEmail(email);
 	}
+
 }
