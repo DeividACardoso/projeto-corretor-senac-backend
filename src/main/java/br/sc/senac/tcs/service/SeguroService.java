@@ -22,7 +22,7 @@ public class SeguroService {
 
 	@Transactional
 	public List<Seguro> listarTodos() {
-		return seguroRepository.findAll();
+		return seguroRepository.findAllByOrderByAtivoDescDtFimVigenciaDesc();
 	}
 
 	public Seguro listarPorId(Integer id) {
