@@ -9,6 +9,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import br.sc.senac.tcs.exception.CampoInvalidoException;
+import br.sc.senac.tcs.model.entidade.Seguro;
 import br.sc.senac.tcs.model.entidade.Sinistro;
 import br.sc.senac.tcs.model.repository.SinistroRepository;
 import br.sc.senac.tcs.model.seletor.SinistroSeletor;
@@ -85,5 +86,9 @@ public class SinistroService {
 		}
 		return excluiu;
 	}
+
+    public List<Sinistro> segurosSinsitro(Integer idSeguro) {
+		return sinistroRepository.findAllBySeguroId(idSeguro);
+    }
 
 }
