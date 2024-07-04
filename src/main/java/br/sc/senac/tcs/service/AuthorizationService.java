@@ -2,6 +2,7 @@ package br.sc.senac.tcs.service;
 
 import java.util.Properties;
 import java.util.Random;
+import java.util.UUID;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -11,6 +12,7 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
@@ -30,8 +32,8 @@ public class AuthorizationService implements UserDetailsService {
 	@Autowired
 	CorretorRepository usuarioRepository;
 
-	@Autowired
-	private JavaMailSender javaMailSender;
+	
+//	private EmailService emailService;
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -66,6 +68,8 @@ public class AuthorizationService implements UserDetailsService {
 //	private String remetente;
 	private static final String USERNAME = "vitorgarciabackup@gmail.com";
 	private static final String PASSWORD = "password";
+	
+	
 
 	private Session getSession() {
 		Properties prop = new Properties();
@@ -81,46 +85,74 @@ public class AuthorizationService implements UserDetailsService {
 		});
 	}
 
-	public void sendEmail(List<String> recipients, String subject, String messageBody) {
-		try {
-			Message message = new MimeMessage(getSession());
-			message.setFrom(new InternetAddress(USERNAME));
-
-			for (String recipient : recipients) {
-				message.addRecipient(Message.RecipientType.TO, new InternetAddress(recipient));
-			}
-
-			message.setSubject(subject);
-			message.setText(messageBody);
-
-			Transport.send(message);
-
-			System.out.println("Emails enviados com sucesso!");
-
-		} catch (MessagingException e) {
-			e.printStackTrace();
-		}
-	}
-
-//	public String enviarEmailTexto(String destinatario, String assunto, String mensagem) {
-//
+	public void enviarEmail() {
+//		List<String> recipients, String subject, String messageBody
 //		try {
-//			SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
-//			simpleMailMessage.setFrom(remetente);
-//			simpleMailMessage.setTo(destinatario);
-//			simpleMailMessage.setSubject(assunto);
-//			simpleMailMessage.setText(mensagem);
-//			javaMailSender.send(simpleMailMessage);
-//			return "Email enviado";
-//		} catch (Exception e) {
-//			return "Erro ao enviar email " + e.getLocalizedMessage();
+//			Message message = new MimeMessage(getSession());
+//			message.addRecipients(null, null);
+//			message.setFrom(new InternetAddress(USERNAME));
+//
+//			for (String recipient : recipients) {
+//				message.addRecipient(Message.RecipientType.TO, new InternetAddress(recipient));
+//			}
+//
+//			message.setSubject(subject);
+//			message.setText(messageBody);
+//
+//			Transport.send(message);
+			EmailServiceSpring emailService = new EmailServiceSpring();
+			emailService.sendEmail("vitorgarciadevasconcelos@gmail.com", "Assunto", "Teste de envio de email");
+
+
+//		} catch (MessagingException e) {
+//			e.printStackTrace();
+//		}
+	}
+//	public void solicitarRecuperacaoSenha(String email) {
+////		Corretor corretores = usuarioRepository.findByEmail(email);
+////	        Corretor findByEmail(String email);
+//
+//		Corretor corretor = usuarioRepository.findByEmail(email);
+//
+//		if (corretor != null) {
+//			String token = gerarTokenRecuperacaoSenha(); // Implemente este método para gerar um token único
+//			String resetLink = "http://seu-dominio.com/reset-senha?token=" + token;
+//
+//			String subject = "Recuperação de Senha";
+//			String text = "Olá, " + corretor.getNome() + "\n\n" + "Clique no link abaixo para redefinir sua senha:\n"
+//					+ resetLink;
+//
+//			emailService.enviarMessagem(token, subject, text);
+//
+//			// Salve o token no banco de dados associado ao corretor, se necessário
+//			// corretor.setResetToken(token);
+//			// corretorRepository.save(corretor);
+//		} else {
+//			throw new UsernameNotFoundException("Corretor não encontrado com o email: " + email);
 //		}
 //	}
 	
-//    public String generateRecoveryCode() {
-//        Random random = new Random();
-//        int code = 100000 + random.nextInt(900000);
-//        return String.valueOf(code);
-//    }
+//	 public boolean solicitarRecuperacaoSenha(String email) {
+//	        Corretor corretor = usuarioRepository.findByEmail(email);
+//	        if (corretor != null) {
+//	            String token = gerarTokenRecuperacaoSenha();  // Implemente este método para gerar um token único
+//
+//	            String subject = "Recuperação de Senha";
+//	            String text = "Olá, " + corretor.getNome() + "\n\n" +
+//	                          "O seu código de recuperação é: " + token;
+////	            		no link abaixo para redefinir sua senha:\n" + resetLink;
+//
+//	            emailService.enviarMessagem(token, subject, text);
+//
+//	            return true; // Email enviado com sucesso
+//	        } else {
+//	            return false; // Corretor não encontrado
+//	        }
+//	    }
+//
+//	private String gerarTokenRecuperacaoSenha() {
+//		// Implemente um método para gerar um token único para recuperação de senha
+//		return UUID.randomUUID().toString();
+//	}
 
 }
