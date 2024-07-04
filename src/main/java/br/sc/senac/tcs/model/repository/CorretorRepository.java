@@ -20,6 +20,5 @@ public interface CorretorRepository extends JpaRepository<Corretor, Integer> {
 
 	UserDetails findByEmail(String email);
 
-	Corretor findByEmail(String email);
 	
 }
