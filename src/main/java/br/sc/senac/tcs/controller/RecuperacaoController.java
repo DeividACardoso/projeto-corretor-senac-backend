@@ -26,8 +26,8 @@ public class RecuperacaoController {
     private CorretorRepository corretorRepository;
 
     @PostMapping("/atualizar-senha")
-    public ResponseEntity resetPassword(@RequestBody TrocaDeSenhaDTO data) throws Exception {
-        Corretor corretor = this.corretorRepository.getByEmail(data.email());
+    public ResponseEntity resetPassword(@RequestBody Corretor data) throws Exception {
+        Corretor corretor = this.corretorRepository.getByEmail(data.getEmail());
 
         if (corretor == null) {
             return ResponseEntity.badRequest().body("Email not found.");
