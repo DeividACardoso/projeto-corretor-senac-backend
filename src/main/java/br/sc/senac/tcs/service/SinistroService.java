@@ -9,6 +9,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import br.sc.senac.tcs.exception.CampoInvalidoException;
+import br.sc.senac.tcs.model.entidade.Seguradora;
 import br.sc.senac.tcs.model.entidade.Sinistro;
 import br.sc.senac.tcs.model.repository.SinistroRepository;
 import br.sc.senac.tcs.model.seletor.SinistroSeletor;
@@ -73,7 +74,12 @@ public class SinistroService {
 		return sinistroRepository.findAll(specification);
 	}
 
-	public Sinistro atualizar(Integer id, Sinistro sinistroPAtualizar) {
+	public Sinistro atualizar(Integer id, Sinistro sinistroPAtualizar) throws CampoInvalidoException {
+		Sinistro sinistroAtualizado = listarPorId(id);
+		sinistroAtualizado.setTipo(sinistroPAtualizar.getTipo());
+		sinistroAtualizado.setData(sinistroPAtualizar.getData());
+		sinistroAtualizado.setHorario(sinistroPAtualizar.getHorario());
+		sinistroAtualizado.setDescricao(sinistroPAtualizar.getDescricao());
 		return sinistroRepository.save(sinistroPAtualizar);
 	}
 

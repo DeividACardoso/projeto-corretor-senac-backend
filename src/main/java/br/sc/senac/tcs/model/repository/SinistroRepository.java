@@ -13,7 +13,4 @@ public interface SinistroRepository extends JpaRepository<Sinistro, Integer> {
 
 	List<Sinistro> findAll(Specification<Sinistro> specification);
 
-	Sinistro getReferenceById(Integer id);
-
-
 }

@@ -57,7 +57,7 @@ public class SeguradoraService {
 		return seguradoraRepository.save(seguradoraPAtualizar);
 	}
 
-	public Seguradora findById(Integer id) {
+	private Seguradora findById(Integer id) {
 		return seguradoraRepository.findById(id).get();
 	}
 
