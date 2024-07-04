@@ -55,6 +55,8 @@ public class AuthenticationController {
 
 		var auth = this.authenticationManager.authenticate(usernamePassword);
 
+		var corretor = corretorRepository.getByEmail(data.login());
+		
 		var token = tokenService.GenerateToken((Corretor) auth.getPrincipal());
 
 		return ResponseEntity
