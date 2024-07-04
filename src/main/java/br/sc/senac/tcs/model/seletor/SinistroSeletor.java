@@ -1,6 +1,7 @@
 package br.sc.senac.tcs.model.seletor;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 import jakarta.persistence.Column;
 
@@ -8,80 +9,59 @@ public class SinistroSeletor extends BaseSeletor {
 
 	private Integer id;
 	private String tipo;
-	@Column(name = "DT_HORA")
-	private LocalDateTime dataInicial;
-	@Column(name = "DT_HORA")
-	private LocalDateTime dataFinal;
-	@Column(name = "DT_HORA")
-	private LocalDateTime horario;
-	@Column(name = "DT_HORA")
-	private LocalDateTime horarioInicial;
-	@Column(name = "DT_HORA")
-	private LocalDateTime horarioFinal;
+	@Column(name = "data")
+	private LocalDate dataInicial;
+	@Column(name = "data")
+	private LocalDate dataFinal;
+	@Column(name = "horario")
+	private LocalTime horarioInicial;
+	@Column(name = "horario")
+	private LocalTime horarioFinal;
 	private String descricao;
-
 	public Integer getId() {
 		return id;
 	}
-
 	public void setId(Integer id) {
 		this.id = id;
 	}
-
 	public String getTipo() {
 		return tipo;
 	}
-
 	public void setTipo(String tipo) {
 		this.tipo = tipo;
 	}
-
-	public LocalDateTime getDataInicial() {
+	public LocalDate getDataInicial() {
 		return dataInicial;
 	}
-
-	public void setDataInicial(LocalDateTime dataInicial) {
+	public void setDataInicial(LocalDate dataInicial) {
 		this.dataInicial = dataInicial;
 	}
-
-	public LocalDateTime getDataFinal() {
+	public LocalDate getDataFinal() {
 		return dataFinal;
 	}
-
-	public void setDataFinal(LocalDateTime dataFinal) {
+	public void setDataFinal(LocalDate dataFinal) {
 		this.dataFinal = dataFinal;
 	}
-
-	public LocalDateTime getHorario() {
-		return horario;
-	}
-
-	public void setHorario(LocalDateTime horario) {
-		this.horario = horario;
-	}
-
-	public LocalDateTime getHorarioInicial() {
+	public LocalTime getHorarioInicial() {
 		return horarioInicial;
 	}
-
-	public void setHorarioInicial(LocalDateTime horarioInicial) {
+	public void setHorarioInicial(LocalTime horarioInicial) {
 		this.horarioInicial = horarioInicial;
 	}
-
-	public LocalDateTime getHorarioFinal() {
+	public LocalTime getHorarioFinal() {
 		return horarioFinal;
 	}
-
-	public void setHorarioFinal(LocalDateTime horarioFinal) {
+	public void setHorarioFinal(LocalTime horarioFinal) {
 		this.horarioFinal = horarioFinal;
 	}
-
 	public String getDescricao() {
 		return descricao;
 	}
-
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
+	
+	
+	
 
 }

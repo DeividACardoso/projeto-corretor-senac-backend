@@ -50,12 +50,11 @@ public class VeiculoService {
 	}
 
 	private String validarCamposString(String valorCampo, String nomeCampo) {
-		if (valorCampo == null || valorCampo.trim().isEmpty()) {
+		if (valorCampo != null && valorCampo.isEmpty()) {
 			return "Informe o " + nomeCampo + " \n";
 		}
 		return "";
 	}
-
     public List<Veiculo> listarPorCliente(Integer idCliente) {
 		Cliente cliente = clienteController.listarPorId(idCliente);
 		return veiculoRepository.findByCliente(cliente);

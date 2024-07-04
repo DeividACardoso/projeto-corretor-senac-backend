@@ -30,10 +30,10 @@ public class Veiculo {
 	private String cidade;
 	private String uf;
 	private String cep;
+	private String placa;
 	
 	@ManyToOne
 	@JoinColumn(name = "cliente_id")
 	private Cliente cliente;
 	
 }
-

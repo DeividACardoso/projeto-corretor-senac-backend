@@ -36,7 +36,7 @@ public class SeguradoraController {
 		return seguradoraService.listarPorId(id);
 	}
 
-	@PostMapping
+	@PostMapping(path = "/novo")
 	public Seguradora salvarSeguradora(@RequestBody Seguradora novaSeguradora) throws CampoInvalidoException {
 		return seguradoraService.salvar(novaSeguradora);
 	}

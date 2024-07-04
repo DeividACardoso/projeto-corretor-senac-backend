@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.sc.senac.tcs.exception.CampoInvalidoException;
+import br.sc.senac.tcs.model.entidade.Seguro;
 import br.sc.senac.tcs.model.entidade.Sinistro;
 import br.sc.senac.tcs.model.seletor.SinistroSeletor;
 import br.sc.senac.tcs.service.SinistroService;
@@ -37,12 +38,12 @@ public class SinistroController {
 		return sinistroService.listarPorId(id);
 	}
 
-	@PostMapping
+	@PostMapping(path = "/novo")
 	public Sinistro salvarSinistro(@RequestBody Sinistro novoSinistro) throws CampoInvalidoException {
 		return sinistroService.salvar(novoSinistro);
 	}
 
-	@PostMapping("/filtro")
+	@PostMapping(path = "/filtro")
 	public List<Sinistro> listarComSeletor(@RequestBody SinistroSeletor seletor) {
 		return sinistroService.listarComSeletor(seletor);
 	}
@@ -57,5 +58,5 @@ public class SinistroController {
 		boolean excluiu = sinistroService.excluir(id);
 		return excluiu;
 	}
-
+	
 }

@@ -41,5 +41,4 @@ public class Seguro {
 	private double franquia;
 	private boolean carroReserva;
 	private boolean ativo;
-	
 }

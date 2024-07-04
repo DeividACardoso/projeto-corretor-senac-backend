@@ -31,9 +31,9 @@ public class SeguradoraService {
 	private void validarCamposObrigatorios(Seguradora novaSeguradora) throws CampoInvalidoException {
 		String mensagemValidacao = "";
 		mensagemValidacao += validarCampoString(novaSeguradora.getNome(), "nome");
-		mensagemValidacao += validarCampoString(novaSeguradora.getCnpj(), "cnpj");
-		mensagemValidacao += validarCampoString(novaSeguradora.getTelefone(), "telefone");
-		mensagemValidacao += validarCampoString(novaSeguradora.getEmail(), "email");
+		mensagemValidacao += validarCnpj(novaSeguradora.getCnpj(), "cnpj");
+		mensagemValidacao += validarTelefone(novaSeguradora.getTelefone(), "telefone");
+		mensagemValidacao += validarEmail(novaSeguradora.getEmail(), "email");
 
 		if (!mensagemValidacao.isEmpty()) {
 			throw new CampoInvalidoException(mensagemValidacao);
@@ -87,8 +87,16 @@ public class SeguradoraService {
 	}
 
 	public Seguradora atualizar(Integer id, Seguradora seguradoraPAtualizar) throws CampoInvalidoException {
+		Seguradora seguradoraAtualizada = findById(id);
+		seguradoraAtualizada.setNome(seguradoraPAtualizar.getNome());
+		seguradoraAtualizada.setEmail(seguradoraPAtualizar.getEmail());
+		seguradoraAtualizada.setCnpj(seguradoraPAtualizar.getCnpj());
+		seguradoraAtualizada.setTelefone(seguradoraPAtualizar.getTelefone());
 		return seguradoraRepository.save(seguradoraPAtualizar);
+	}
 
+	public Seguradora findById(Integer id) {
+		return seguradoraRepository.findById(id).get();
 	}
 
 	public boolean excluir(Integer id) {
@@ -99,5 +107,5 @@ public class SeguradoraService {
 		}
 		return excluiu;
 	}
-
+	
 }
