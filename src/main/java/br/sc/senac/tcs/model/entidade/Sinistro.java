@@ -31,7 +31,8 @@ public class Sinistro {
     @JoinColumn(name = "seguro_id", nullable = false)
     private Seguro seguro;
 
-	public Sinistro(Integer id, String tipo, LocalDate data, LocalTime horario, String descricao, Seguro seguro) {
+	public Sinistro(Integer id, String tipo, 
+			LocalDate data, LocalTime horario, String descricao, Seguro seguro) {
 		super();
 		this.id = id;
 		this.tipo = tipo;
