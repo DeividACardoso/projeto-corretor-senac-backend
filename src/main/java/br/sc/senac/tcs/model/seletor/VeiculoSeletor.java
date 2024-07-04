@@ -11,6 +11,7 @@ public class VeiculoSeletor extends BaseSeletor{
 	private LocalDateTime ano;
 	private Double preco;
 	private String cepDePernoite;
+	private String nomeCliente;
 	public Integer getMarca() {
 		return marca;
 	}
@@ -47,6 +48,11 @@ public class VeiculoSeletor extends BaseSeletor{
 	public void setCepDePernoite(String cepDePernoite) {
 		this.cepDePernoite = cepDePernoite;
 	}
-
+	public String getNomeCliente() {
+		return nomeCliente;
+	}
+	public void setNomeCliente(String nomeCliente) {
+		this.nomeCliente = nomeCliente;
+	}
 	
 }
