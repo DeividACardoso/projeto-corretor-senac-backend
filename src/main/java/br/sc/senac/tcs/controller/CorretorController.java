@@ -56,4 +56,10 @@ public class CorretorController {
 		boolean excluiu = corretorService.excluir(id);
 		return excluiu;
 	}
+
+	@GetMapping("/email/{email}")
+	public Corretor listarPorEmail(@PathVariable String email) {
+		return corretorService.listarPorEmail(email);
+	}
+
 }

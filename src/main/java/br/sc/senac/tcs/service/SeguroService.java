@@ -1,5 +1,6 @@
 package br.sc.senac.tcs.service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,7 +22,7 @@ public class SeguroService {
 
 	@Transactional
 	public List<Seguro> listarTodos() {
-		return seguroRepository.findAll();
+		return seguroRepository.findAllByOrderByAtivoDescDtFimVigenciaDesc();
 	}
 
 	public Seguro listarPorId(Integer id) {
@@ -29,10 +30,26 @@ public class SeguroService {
 	}
 
 	public Seguro salvar(Seguro novoSeguro) {
+		validarData(novoSeguro);
 		return seguroRepository.save(novoSeguro);
 	}
 
+	public void validarData(Seguro seguro){
+		LocalDate dataAtual = LocalDate.now();
+		if(seguro.getDtInicioVigencia().isAfter(dataAtual) || seguro.getDtFimVigencia().isBefore(dataAtual)){
+			seguro.setAtivo(false);
+		} else if(seguro.getDtInicioVigencia().isBefore(dataAtual) && seguro.getDtFimVigencia().isAfter(dataAtual)){
+			seguro.setAtivo(true);
+		}
+	}
+
 	public Object atualizar(Seguro seguroPAtualizar) {
+		LocalDate dataAtual = LocalDate.now();
+		if(seguroPAtualizar.getDtInicioVigencia().isAfter(dataAtual) || seguroPAtualizar.getDtFimVigencia().isBefore(dataAtual)){
+			seguroPAtualizar.setAtivo(false);
+		} else if(seguroPAtualizar.getDtInicioVigencia().isBefore(dataAtual) && seguroPAtualizar.getDtFimVigencia().isAfter(dataAtual)){
+			seguroPAtualizar.setAtivo(true);
+		}
 		return seguroRepository.save(seguroPAtualizar);
 	}
 
@@ -50,6 +67,14 @@ public class SeguroService {
 		Specification<Seguro> specification = SeguroSpecification.comFiltros(seletor);
 		return seguroRepository.findAll(specification);
 	}
+
+    public List<Seguro> segurosCliente(Integer idCliente) {
+		return seguroRepository.findAllByClienteId(idCliente);
+    }
+
+    public List<Seguro> segurosVeiculo(Integer idVeiculo) {
+		return seguroRepository.findAllByVeiculoId(idVeiculo);
+    }
 
 
 }

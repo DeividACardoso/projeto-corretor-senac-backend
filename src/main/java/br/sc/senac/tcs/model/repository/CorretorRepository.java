@@ -18,6 +18,8 @@ public interface CorretorRepository extends JpaRepository<Corretor, Integer> {
 
 	Corretor getByEmail(String email);	
 
+	UserDetails findByEmail(String email);
+
 	Corretor findByEmail(String email);
 	
 }
