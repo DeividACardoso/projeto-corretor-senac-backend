@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,30 +18,35 @@ import br.sc.senac.tcs.service.VeiculoService;
 
 @RestController
 @RequestMapping(path = "/api/veiculo")
-@CrossOrigin(origins = {"http://localhost:4200","http://localhost:5500"}, maxAge = 3600)
+@CrossOrigin(origins = { "http://localhost:4200", "http://localhost:5500" }, maxAge = 3600)
 public class VeiculoController {
-		
-		@Autowired
-		private VeiculoService veiculoService;
-		
-		@GetMapping(path = "/todos")
-		public List<Veiculo> listarTodos(){
-			return veiculoService.listarTodos();
-		}
-		
-		@GetMapping(path = "/{id}")
-		public Veiculo listarPorId(@PathVariable Integer id) {
-			return veiculoService.listarPorId(id);
-		}
-		
-		@PostMapping(path = "/novo")
-		public Veiculo salvar(@RequestBody Veiculo novoVeiculo) throws CampoInvalidoException {
-			return veiculoService.salvar(novoVeiculo);
-		}
 
-		 @GetMapping(path = "/cliente/{idCliente}")
-		 public List<Veiculo> listarPorCliente(@PathVariable Integer idCliente) {
-		 	return veiculoService.listarPorCliente(idCliente);
-		 }
-	
+	@Autowired
+	private VeiculoService veiculoService;
+
+	@GetMapping(path = "/todos")
+	public List<Veiculo> listarTodos() {
+		return veiculoService.listarTodos();
+	}
+
+	@GetMapping(path = "/{id}")
+	public Veiculo listarPorId(@PathVariable Integer id) {
+		return veiculoService.listarPorId(id);
+	}
+
+	@PostMapping(path = "/novo")
+	public Veiculo salvar(@RequestBody Veiculo novoVeiculo) throws CampoInvalidoException {
+		return veiculoService.salvar(novoVeiculo);
+	}
+
+	@GetMapping(path = "/cliente/{idCliente}")
+	public List<Veiculo> listarPorCliente(@PathVariable Integer idCliente) {
+		return veiculoService.listarPorCliente(idCliente);
+	}
+
+	@DeleteMapping(path = "/delete/{id}")
+	public boolean delete(@PathVariable Integer id) {
+		return veiculoService.delete(id);
+	}
+
 }
