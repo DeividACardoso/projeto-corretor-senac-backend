@@ -1,29 +1,16 @@
 package br.sc.senac.tcs.service;
 
 import java.util.Properties;
-import java.util.Random;
-import java.util.UUID;
 
-import javax.mail.Message;
-import javax.mail.MessagingException;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
-import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import br.sc.senac.tcs.exception.CampoInvalidoException;
-import br.sc.senac.tcs.model.entidade.Corretor;
 import br.sc.senac.tcs.model.repository.CorretorRepository;
 
 @Service
