@@ -6,7 +6,6 @@ public class SeguradoraSeletor {
 	private String nome;
 	private String cnpj;
 	private String email;
-	private String ddd;
 	private String telefone;
 
 	public Integer getId() {
@@ -39,14 +38,6 @@ public class SeguradoraSeletor {
 
 	public void setEmail(String email) {
 		this.email = email;
-	}
-
-	public String getDdd() {
-		return ddd;
-	}
-
-	public void setDdd(String ddd) {
-		this.ddd = ddd;
 	}
 
 	public String getTelefone() {

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.sc.senac.tcs.model.entidade.AuthenticationDTO;
@@ -17,55 +18,74 @@ import br.sc.senac.tcs.model.entidade.LoginResponseDTO;
 import br.sc.senac.tcs.model.entidade.RegisterDTO;
 import br.sc.senac.tcs.model.infra.security.TokenService;
 import br.sc.senac.tcs.model.repository.CorretorRepository;
+import br.sc.senac.tcs.service.AuthorizationService;
+import br.sc.senac.tcs.service.EmailServiceSpring;
 import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/auth")
-@CrossOrigin(origins = { "http://localhost:4200", "http://localhost:5500" }, maxAge = 3600)
+@CrossOrigin(origins = { "http://localhost:4200", "http://localhost:5500", "*" }, maxAge = 3600)
 public class AuthenticationController {
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
+	@Autowired
+	private AuthenticationManager authenticationManager;
 
-    @Autowired
-    private CorretorRepository corretorRepository;
+	@Autowired
+	private CorretorRepository corretorRepository;
 
-    @Autowired
-    private TokenService tokenService;
+	@Autowired
+	private TokenService tokenService;
 
-    @SuppressWarnings("rawtypes")
-    @PostMapping("/login")
-    public ResponseEntity login(@RequestBody @Valid AuthenticationDTO data) {
-        if (this.corretorRepository.findByEmail(data.login()) == null) {
-            return ResponseEntity.badRequest().body("Login não encontrado.");
-        }
+	@Autowired
+	private EmailServiceSpring emailServiceSpring;
+	
+	
 
-        var usernamePassword = new UsernamePasswordAuthenticationToken(data.login(), data.password());
+	@Autowired
+	private AuthorizationService authService;
 
-        var auth = this.authenticationManager.authenticate(usernamePassword);
+	@SuppressWarnings("rawtypes")
+	@PostMapping("/login")
+	public ResponseEntity login(@RequestBody @Valid AuthenticationDTO data) {
+		if (this.corretorRepository.findByEmail(data.login()) == null) {
+			return ResponseEntity.badRequest().body("Login não encontrado.");
+		}
 
-        System.out.println("Login para token: " + data.login());
-        var corretor = corretorRepository.getByEmail(data.login());
+		var usernamePassword = new UsernamePasswordAuthenticationToken(data.login(), data.password());
 
-        var token = tokenService.GenerateToken((Corretor) auth.getPrincipal());
+		var auth = this.authenticationManager.authenticate(usernamePassword);
 
-        return ResponseEntity.ok(new LoginResponseDTO(token, corretor.getEmail(), corretor.getCpf(), corretor.getRole()));
-    }
+		var corretor = corretorRepository.getByEmail(data.login());
+		
+		var token = tokenService.GenerateToken((Corretor) auth.getPrincipal());
 
-    @SuppressWarnings("rawtypes")
-    @PostMapping("/register")
-    public ResponseEntity register(@RequestBody @Valid RegisterDTO data) {
-        System.out.println("login: " + data.email() + " | Senha: " + data.senha());
-        if (this.corretorRepository.findByEmail(data.email()) != null)
-            return ResponseEntity.badRequest().body("Login já utilizado.");
+		return ResponseEntity
+				.ok(new LoginResponseDTO(token, corretor.getEmail(), corretor.getCpf(), corretor.getRole()));
+	}
 
-        String encryptedPassword = new BCryptPasswordEncoder().encode(data.senha());
+	@SuppressWarnings("rawtypes")
+	@PostMapping("/register")
+	public ResponseEntity register(@RequestBody @Valid RegisterDTO data) {
+		System.out.println("login: " + data.email() + " | Senha: " + data.senha());
+		if (this.corretorRepository.findByEmail(data.email()) != null)
+			return ResponseEntity.badRequest().body("Login já utilizado.");
 
-        Corretor corretor = new Corretor(data.email(), data.nome(), encryptedPassword, data.telefone(), data.cpf());
+		String encryptedPassword = new BCryptPasswordEncoder().encode(data.senha());
 
-        this.corretorRepository.save(corretor);
+		Corretor corretor = new Corretor(data.email(), data.nome(), encryptedPassword, data.telefone(), data.cpf());
 
-        return ResponseEntity.ok().build();
-    }
+		this.corretorRepository.save(corretor);
+
+		return ResponseEntity.ok().build();
+	}
+
+	@PostMapping("/enviar-email")
+	public String enviarEmail() {
+		System.out.println("AQUI FOII");
+		emailServiceSpring.sendEmail("vitorgarciadevasconcelos@gmail.com", "Assunto", "Teste de envio de email");
+		System.out.println("Passou aqui");
+		return "Email de recuperação enviado com sucesso.";
+
+	}
 
 }

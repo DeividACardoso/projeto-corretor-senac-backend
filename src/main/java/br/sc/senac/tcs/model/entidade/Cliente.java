@@ -13,6 +13,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -20,6 +21,7 @@ import lombok.NoArgsConstructor;
 @Table
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 public class Cliente {
 
     @Id
@@ -45,9 +47,6 @@ public class Cliente {
     private String uf;
     private String cep;
     
-    @JsonBackReference
-    @OneToMany(mappedBy = "cliente")
-    private List<Seguro> seguros;
 
     public Cliente(ClienteDTO clienteDTO) {
         this.nome = clienteDTO.getNome();
@@ -67,4 +66,23 @@ public class Cliente {
         this.cep = clienteDTO.getCep();
     }
 
+    public Cliente(String nome, String cpf, LocalDate dtNascimento, String email, String cnh, String telefone,
+            String estadoCivil, String genero, String rua, String bairro, String numero, String complemento, String cidade,
+            String uf, String cep) {
+        this.nome = nome;
+        this.cpf = cpf;
+        this.dtNascimento = dtNascimento;
+        this.email = email;
+        this.cnh = cnh;
+        this.telefone = telefone;
+        this.estadoCivil = estadoCivil;
+        this.genero = genero;
+        this.rua = rua;
+        this.bairro = bairro;
+        this.numero = numero;
+        this.complemento = complemento;
+        this.cidade = cidade;
+        this.uf = uf;
+        this.cep = cep;
+    }
 }

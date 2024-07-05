@@ -14,8 +14,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.sc.senac.tcs.model.entidade.Seguro;
+import br.sc.senac.tcs.model.entidade.Sinistro;
 import br.sc.senac.tcs.model.seletor.SeguroSeletor;
 import br.sc.senac.tcs.service.SeguroService;
+import br.sc.senac.tcs.service.SinistroService;
 
 @RestController
 @RequestMapping(path = "/api/seguros")
@@ -24,6 +26,9 @@ public class SeguroController {
 
 	@Autowired
 	private SeguroService seguroService = new SeguroService();
+
+	@Autowired
+	SinistroService sinistroService;
 
 	@GetMapping(path = "/todos")
 	public List<Seguro> listarTodosSeguros() {
@@ -56,12 +61,17 @@ public class SeguroController {
 	}
 
 	@GetMapping("/seg-cliente/{idCliente}")
-    public Iterable<Seguro> segurosCliente(@PathVariable Integer idCliente) {
+    public List<Seguro> segurosCliente(@PathVariable Integer idCliente) {
         return seguroService.segurosCliente(idCliente);
     }
 
-	@GetMapping("/seg-veiculo/{idCliente}")
-    public Iterable<Seguro> segurosVeiculo(@PathVariable Integer idVeiculo) {
+	@GetMapping("/seg-veiculo/{idVeiculo}")
+    public List<Seguro> segurosVeiculo(@PathVariable Integer idVeiculo) {
         return seguroService.segurosVeiculo(idVeiculo);
+    }
+
+	@GetMapping("/seg-sinistro/{idSeguro}")
+    public List<Sinistro> segurosSinistro(@PathVariable Integer idSeguro) {
+        return sinistroService.segurosSinsitro(idSeguro);
     }
 }

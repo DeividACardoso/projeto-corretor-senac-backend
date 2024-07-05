@@ -28,58 +28,19 @@ public class SeguradoraService {
 		return seguradoraRepository.findById(id).get();
 	}
 
-	private void validarCamposObrigatorios(Seguradora novaSeguradora) throws CampoInvalidoException {
-		novaSeguradora.setTelefone( novaSeguradora.getTelefone().replaceAll("[^0-9]", ""));
-		String mensagemValidacao = "";
-		mensagemValidacao += validarCampoString(novaSeguradora.getNome(), "nome");
-		mensagemValidacao += validarCampoString(novaSeguradora.getCnpj(), "cnpj");
-		mensagemValidacao += validarCampoString(novaSeguradora.getTelefone(), "telefone");
-		mensagemValidacao += validarCampoString(novaSeguradora.getEmail(), "email");
-
-		if (!mensagemValidacao.isEmpty()) {
-			throw new CampoInvalidoException(mensagemValidacao);
-		}
-	}
-
-	private String validarCampoString(String valorCampo, String nomeCampo) {
-		if (valorCampo == null || valorCampo.trim().isEmpty()) {
-			return "Informe o " + nomeCampo + " \n";
-		}
-		return "";
-	}
-
-	private String validarCnpj(String valorCampo, String nomeCampo) {
-		if (valorCampo == null || valorCampo.trim().isEmpty()) {
-			valorCampo.replaceAll(".", "");
-			valorCampo.replaceAll("-", "");
-			return "Informe o " + nomeCampo + " \n";
-		}
-		return "";
-	}
-
-	private String validarEmail(String valorCampo, String nomeCampo) {
-		if (valorCampo == null || valorCampo.trim().isEmpty()) {
-			String emailArroba = "@";
-			valorCampo.contains(emailArroba);
-			return "Informe o " + nomeCampo + " \n";
-		}
-		return "";
-	}
-
-	private String validarTelefone(String valorCampo, String nomeCampo) {
-		if (valorCampo == null || valorCampo.trim().isEmpty()) {
-			valorCampo.replaceAll("-", "");
-			valorCampo.replaceAll("(", "");
-			valorCampo.replaceAll(")", "");
-			valorCampo.replaceAll(" ", "");
-			return "Informe o " + nomeCampo + " \n";
-		}
-		return "";
-	}
-
 	public Seguradora salvar(Seguradora novaSeguradora) throws CampoInvalidoException {
-		validarCamposObrigatorios(novaSeguradora);
+		if (novaSeguradora.getEmail() != null && novaSeguradora.getNome() != null) {
+			removerMascara(novaSeguradora);
+		}
 		return seguradoraRepository.save(novaSeguradora);
+	}
+
+	private void removerMascara(Seguradora novaSeguradora) {
+		String regex = "[\\s.\\-\\(\\)]+";
+		String cnpjSemMascara = novaSeguradora.getCnpj().replaceAll(regex, "");
+		String telefoneSemMascara = novaSeguradora.getTelefone().replaceAll(regex, "");
+		novaSeguradora.setCnpj(cnpjSemMascara);
+		novaSeguradora.setTelefone(telefoneSemMascara);
 	}
 
 	public List<Seguradora> listarComSeletor(SeguradoraSeletor seletor) {
@@ -88,17 +49,24 @@ public class SeguradoraService {
 	}
 
 	public Seguradora atualizar(Integer id, Seguradora seguradoraPAtualizar) throws CampoInvalidoException {
+		Seguradora seguradoraAtualizada = findById(id);
+		seguradoraAtualizada.setNome(seguradoraPAtualizar.getNome());
+		seguradoraAtualizada.setEmail(seguradoraPAtualizar.getEmail());
+		seguradoraAtualizada.setCnpj(seguradoraPAtualizar.getCnpj());
+		seguradoraAtualizada.setTelefone(seguradoraPAtualizar.getTelefone());
 		return seguradoraRepository.save(seguradoraPAtualizar);
+	}
 
+	public Seguradora findById(Integer id) {
+		return seguradoraRepository.findById(id).get();
 	}
 
 	public boolean excluir(Integer id) {
-		boolean excluiu = false;
 		if (seguradoraRepository.existsById(id)) {
 			seguradoraRepository.deleteById(id);
-			excluiu = true;
+			return true;
 		}
-		return excluiu;
+		return false;
 	}
 
 }

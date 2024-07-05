@@ -20,14 +20,15 @@ import br.sc.senac.tcs.service.SeguradoraService;
 
 @RestController
 @RequestMapping(path = "/api/seguradora")
-@CrossOrigin(origins = { "http://localhost:4200", "http://localhost:5500" }, maxAge = 3600)
+@CrossOrigin(origins = { "http://localhost:4200", 
+		"http://localhost:5500" }, maxAge = 3600)
 public class SeguradoraController {
 
 	@Autowired
 	private SeguradoraService seguradoraService;
 
 	@GetMapping(path = "/todos")
-	public List<Seguradora> listarTodosCorretoras() {
+	public List<Seguradora> listarTodosSeguradoras() {
 		return seguradoraService.listarTodos();
 	}
 
@@ -36,18 +37,21 @@ public class SeguradoraController {
 		return seguradoraService.listarPorId(id);
 	}
 
-	@PostMapping
-	public Seguradora salvarSeguradora(@RequestBody Seguradora novaSeguradora) throws CampoInvalidoException {
+	@PostMapping(path = "/novo")
+	public Seguradora salvarSeguradora(@RequestBody Seguradora novaSeguradora)
+			throws CampoInvalidoException {
 		return seguradoraService.salvar(novaSeguradora);
 	}
 
 	@PostMapping("/filtro")
-	public List<Seguradora> listarComSeletor(@RequestBody SeguradoraSeletor seletor) {
+	public List<Seguradora> listarComSeletor(@RequestBody 
+			SeguradoraSeletor seletor) {
 		return seguradoraService.listarComSeletor(seletor);
 	}
 
 	@PutMapping(path = "/atualizar/{id}")
-	public Seguradora atualizar(@PathVariable Integer id, @RequestBody Seguradora seguradoraPAtualizar)
+	public Seguradora atualizar(@PathVariable Integer id, 
+			@RequestBody Seguradora seguradoraPAtualizar)
 			throws CampoInvalidoException {
 		return seguradoraService.atualizar(id, seguradoraPAtualizar);
 	}

@@ -4,11 +4,13 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "seguradora")
+@AllArgsConstructor
 @NoArgsConstructor
 @Data
 public class Seguradora {
@@ -21,9 +23,10 @@ public class Seguradora {
 	private String email;
 	private String telefone;
 
-	public Seguradora(Integer id, String nome, String cnpj, String email, String ddd, String telefone) {
-		super();
-		this.id = id;
+	public Seguradora(String nome, String cnpj, String email, String telefone) {
+}
+	public Seguradora(Integer id, String nome, 
+			String cnpj, String email, String ddd, String telefone) {
 		this.nome = nome;
 		this.cnpj = cnpj;
 		this.email = email;
