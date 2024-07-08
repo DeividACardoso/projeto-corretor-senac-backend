@@ -104,6 +104,8 @@ public class ClienteService {
 
     @SuppressWarnings("deprecation")
     public boolean delete(Integer idCliente) throws CampoInvalidoException {
+        List<Seguro> seguros = seguroRepo.findAllByClienteId(idCliente);
+        seguroRepo.deleteAll(seguros);
         clienteRepository.deleteById(idCliente);
         return true;
     }

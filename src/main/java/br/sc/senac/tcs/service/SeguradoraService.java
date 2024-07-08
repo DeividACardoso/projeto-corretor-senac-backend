@@ -8,65 +8,81 @@ import org.springframework.stereotype.Service;
 
 import br.sc.senac.tcs.exception.CampoInvalidoException;
 import br.sc.senac.tcs.model.entidade.Seguradora;
+import br.sc.senac.tcs.model.entidade.Seguro;
 import br.sc.senac.tcs.model.repository.SeguradoraRepository;
+import br.sc.senac.tcs.model.repository.SeguroRepository;
 import br.sc.senac.tcs.model.seletor.SeguradoraSeletor;
 import br.sc.senac.tcs.model.specification.SeguradoraSpecification;
 import jakarta.transaction.Transactional;
 
 @Service
 public class SeguradoraService {
-	@Autowired
-	private SeguradoraRepository seguradoraRepository;
 
-	@Transactional
-	public List<Seguradora> listarTodos() {
-		return seguradoraRepository.findAll();
-	}
+    @Autowired
+    private SeguradoraRepository seguradoraRepository;
 
-	@Transactional
-	public Seguradora listarPorId(Integer id) {
-		return seguradoraRepository.findById(id).get();
-	}
+    @Autowired
+    private SeguroRepository seguroRepo;
 
-	public Seguradora salvar(Seguradora novaSeguradora) throws CampoInvalidoException {
-		if (novaSeguradora.getEmail() != null && novaSeguradora.getNome() != null) {
-			removerMascara(novaSeguradora);
-		}
-		return seguradoraRepository.save(novaSeguradora);
-	}
+    @Transactional
+    public List<Seguradora> listarTodos() {
+        return seguradoraRepository.findAll();
+    }
 
-	private void removerMascara(Seguradora novaSeguradora) {
-		String regex = "[\\s.\\-\\(\\)]+";
-		String cnpjSemMascara = novaSeguradora.getCnpj().replaceAll(regex, "");
-		String telefoneSemMascara = novaSeguradora.getTelefone().replaceAll(regex, "");
-		novaSeguradora.setCnpj(cnpjSemMascara);
-		novaSeguradora.setTelefone(telefoneSemMascara);
-	}
+    @Transactional
+    public Seguradora listarPorId(Integer id) {
+        return seguradoraRepository.findById(id).get();
+    }
 
-	public List<Seguradora> listarComSeletor(SeguradoraSeletor seletor) {
-		Specification<Seguradora> specification = SeguradoraSpecification.comFiltros(seletor);
-		return seguradoraRepository.findAll(specification);
-	}
+    public Seguradora salvar(Seguradora novaSeguradora) throws CampoInvalidoException {
+        if (novaSeguradora.getEmail() != null && novaSeguradora.getNome() != null) {
+            removerMascara(novaSeguradora);
+        }
+        return seguradoraRepository.save(novaSeguradora);
+    }
 
-	public Seguradora atualizar(Integer id, Seguradora seguradoraPAtualizar) throws CampoInvalidoException {
-		Seguradora seguradoraAtualizada = findById(id);
-		seguradoraAtualizada.setNome(seguradoraPAtualizar.getNome());
-		seguradoraAtualizada.setEmail(seguradoraPAtualizar.getEmail());
-		seguradoraAtualizada.setCnpj(seguradoraPAtualizar.getCnpj());
-		seguradoraAtualizada.setTelefone(seguradoraPAtualizar.getTelefone());
-		return seguradoraRepository.save(seguradoraPAtualizar);
-	}
+    private void removerMascara(Seguradora novaSeguradora) {
+        String regex = "[\\s.\\-\\(\\)]+";
+        String cnpjSemMascara = novaSeguradora.getCnpj().replaceAll(regex, "");
+        String telefoneSemMascara = novaSeguradora.getTelefone().replaceAll(regex, "");
+        novaSeguradora.setCnpj(cnpjSemMascara);
+        novaSeguradora.setTelefone(telefoneSemMascara);
+    }
 
-	public Seguradora findById(Integer id) {
-		return seguradoraRepository.findById(id).get();
-	}
+    public List<Seguradora> listarComSeletor(SeguradoraSeletor seletor) {
+        Specification<Seguradora> specification = SeguradoraSpecification.comFiltros(seletor);
+        return seguradoraRepository.findAll(specification);
+    }
 
-	public boolean excluir(Integer id) {
-		if (seguradoraRepository.existsById(id)) {
-			seguradoraRepository.deleteById(id);
-			return true;
-		}
-		return false;
-	}
+    public Seguradora atualizar(Integer id, Seguradora seguradoraPAtualizar) throws CampoInvalidoException {
+        Seguradora seguradoraAtualizada = findById(id);
+        seguradoraAtualizada.setNome(seguradoraPAtualizar.getNome());
+        seguradoraAtualizada.setEmail(seguradoraPAtualizar.getEmail());
+        seguradoraAtualizada.setCnpj(seguradoraPAtualizar.getCnpj());
+        seguradoraAtualizada.setTelefone(seguradoraPAtualizar.getTelefone());
+        return seguradoraRepository.save(seguradoraPAtualizar);
+    }
+
+    public Seguradora findById(Integer id) {
+        return seguradoraRepository.findById(id).get();
+    }
+
+    public boolean excluir(Integer id) {
+        if (seguradoraRepository.existsById(id)) {
+            seguradoraRepository.deleteById(id);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean verificarSeguros(Integer idSeguradora) {
+        boolean retorno = false;
+        List<Seguro> segurosDaSeguradora = seguroRepo.findBySeguradoraId(idSeguradora);
+		System.out.println(segurosDaSeguradora);
+        if (!segurosDaSeguradora.isEmpty()) {
+			retorno = true;
+        }
+        return retorno;
+    }
 
 }
