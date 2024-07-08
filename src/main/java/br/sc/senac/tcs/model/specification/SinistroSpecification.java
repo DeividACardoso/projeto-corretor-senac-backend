@@ -40,6 +40,15 @@ public class SinistroSpecification {
 				predicates.add(cb.like(cb.lower(root.get("descricao")),
 						"%" + seletor.getDescricao().trim().toLowerCase() + "%"));
 			}
+			
+			if (seletor.getCpf() != null && !seletor.getCpf().trim().isEmpty()) {
+	            predicates.add(cb.equal(root.get("cpf"), seletor.getCpf().trim()));
+	        }
+
+			if (seletor.getNumApolice() != null && !seletor.getNumApolice().trim().isEmpty()) {
+				predicates.add(cb.like(cb.lower(root.get("numApolice")),
+						"%" + seletor.getNumApolice().trim().toLowerCase() + "%"));
+			}
 
 			return cb.and(predicates.toArray(new Predicate[0]));
 
