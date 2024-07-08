@@ -64,6 +64,11 @@ public class ClienteController {
         return clienteService.verificarSeguros(idCliente);
     }
 
+    @GetMapping("/verificar-seg-ativo/{idCliente}")
+    public boolean verificarSegurosAtivos(@PathVariable Integer idCliente) {
+        return clienteService.verificarSegurosAtivos(idCliente);
+    }
+
     @PostMapping("/importar")
     public void importarPlanilha(@RequestParam("file") MultipartFile file) throws IOException {
         if (!file.isEmpty()) {
