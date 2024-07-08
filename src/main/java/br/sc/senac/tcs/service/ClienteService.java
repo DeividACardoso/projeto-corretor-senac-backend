@@ -1,9 +1,11 @@
 package br.sc.senac.tcs.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -13,7 +15,10 @@ import br.sc.senac.tcs.model.entidade.Cliente;
 import br.sc.senac.tcs.model.entidade.Seguro;
 import br.sc.senac.tcs.model.repository.ClienteRepository;
 import br.sc.senac.tcs.model.repository.SeguroRepository;
+import br.sc.senac.tcs.model.seletor.ClienteSeletor;
 import br.sc.senac.tcs.model.seletor.SeguroSeletor;
+import br.sc.senac.tcs.model.specification.ClienteSpecification;
+import br.sc.senac.tcs.model.specification.SeguroSpecification;
 
 @Service
 public class ClienteService {
@@ -48,14 +53,20 @@ public class ClienteService {
     }
 
     private void validarCamposRepetidos(Cliente cliente) throws CampoInvalidoException {
+        List<String> errorMessages = new ArrayList<>();
         List<Cliente> clientes = clienteRepository.findAll();
+
         for (Cliente c : clientes) {
             if (c.getCpf().equals(cliente.getCpf())) {
-                throw new CampoInvalidoException("CPF já cadastrado.");
+                errorMessages.add("CPF já cadastrado");
             }
             if (c.getEmail().equals(cliente.getEmail())) {
-                throw new CampoInvalidoException("Email já cadastrado.");
+                errorMessages.add("Email já cadastrado");
             }
+        }
+
+        if (!errorMessages.isEmpty()) {
+            throw new CampoInvalidoException(errorMessages);
         }
     }
 
@@ -93,16 +104,8 @@ public class ClienteService {
 
     @SuppressWarnings("deprecation")
     public boolean delete(Integer idCliente) throws CampoInvalidoException {
-        boolean retorno = false;
-        Cliente c = clienteRepository.getById(idCliente);
-        List<Seguro> segurosDoCliente = seguroRepo.findByCliente(c);
-        if (segurosDoCliente.isEmpty()) {
-            clienteRepository.deleteById(idCliente);
-        } else {
-            throw new CampoInvalidoException(
-                    "O cliente selecionado possui seguros associados, logo não pode ser excluído.");
-        }
-        return retorno;
+        clienteRepository.deleteById(idCliente);
+        return true;
     }
 
     @SuppressWarnings("deprecation")
@@ -141,10 +144,15 @@ public class ClienteService {
     }
 
     public void importarPlanilha() {
-        
+
     }
 
     public Optional<Cliente> listarPorEmail(String email) {
         return clienteRepository.findByEmail(email);
+    }
+
+    public List<Cliente> comFiltros(ClienteSeletor seletor) {
+        Specification<Cliente> specification = ClienteSpecification.comFiltros(seletor);
+        return clienteRepository.findAll(specification);
     }
 }
