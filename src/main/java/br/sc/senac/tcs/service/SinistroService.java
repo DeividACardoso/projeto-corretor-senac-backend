@@ -91,4 +91,9 @@ public class SinistroService {
 		return sinistroRepository.findAllBySeguroId(idSeguro);
     }
 
+
+    List<Sinistro> findAllBySeguroId(Integer id) {
+		return sinistroRepository.findAllBySeguroId(id);
+    }
+
 }

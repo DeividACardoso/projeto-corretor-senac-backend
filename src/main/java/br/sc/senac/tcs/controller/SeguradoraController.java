@@ -62,4 +62,9 @@ public class SeguradoraController {
 		return excluiu;
 	}
 
+	@GetMapping(path = "/verificarSeguro/{idSeguradora}")
+	public boolean verificarSeguros(@PathVariable Integer idSeguradora) {
+		return seguradoraService.verificarSeguros(idSeguradora);
+	}
+
 }
