@@ -1,17 +1,12 @@
 package br.sc.senac.tcs.model.entidade;
 
 import java.time.LocalDate;
-import java.util.List;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
 import br.sc.senac.tcs.model.dto.ClienteDTO;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -26,11 +21,11 @@ public class Cliente {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id; 
+    private Integer id;
 
     private String nome;
     private String cpf;
-    
+
     @Column(name = "dt_nascimento")
     private LocalDate dtNascimento;
     private String email;
@@ -46,7 +41,6 @@ public class Cliente {
     private String cidade;
     private String uf;
     private String cep;
-    
 
     public Cliente(ClienteDTO clienteDTO) {
         this.nome = clienteDTO.getNome();

@@ -1,5 +1,6 @@
 package br.sc.senac.tcs.model.entidade;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
