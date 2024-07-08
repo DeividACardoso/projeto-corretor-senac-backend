@@ -1,10 +1,9 @@
 package br.sc.senac.tcs.model.repository;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import java.time.LocalDate;
 import java.util.Optional;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +35,6 @@ public class ClienteRepositoryTest {
         this.criarCliente(data);
 
         Optional<Cliente> result = this.clienteRepository.findByEmail(email);
-        System.out.println(result);
 
         assertThat(result.isPresent()).isTrue();
     }
@@ -47,8 +45,6 @@ public class ClienteRepositoryTest {
         String email = "teste@gmail.com";
 
         Optional<Cliente> result = this.clienteRepository.findByEmail(email);
-        System.out.println(result);
-
         assertThat(result.isEmpty()).isTrue();
     }
 

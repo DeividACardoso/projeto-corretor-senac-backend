@@ -27,7 +27,6 @@ public class EmailService {
     public void mandarEmailComNovaSenha(Corretor corretor, String senhaNova) throws Exception {
         Email remetente = new Email("floripasafe@gmail.com", "Floripa SAFE");
         Email para = new Email(corretor.getEmail());
-        System.out.println("Email: " + corretor.getEmail() + " | Senha: " + senhaNova);
 
         Mail mail = new Mail();
 

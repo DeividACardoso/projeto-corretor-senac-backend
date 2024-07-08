@@ -1,4 +1,4 @@
-package br.sc.senac.tcs.model.infra.security.email;
+package br.sc.senac.tcs.model.infra.email;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -14,7 +14,6 @@ public class SendGridConfig {
 
     @Bean
     public SendGrid sendGrid() {
-        System.out.println("apiKey: " + apiKey);
         return new SendGrid(apiKey);
     }
 }

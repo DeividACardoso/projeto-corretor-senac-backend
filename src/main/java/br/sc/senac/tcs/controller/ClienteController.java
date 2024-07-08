@@ -2,6 +2,7 @@ package br.sc.senac.tcs.controller;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import br.sc.senac.tcs.exception.CampoInvalidoException;
 import br.sc.senac.tcs.model.entidade.Cliente;
+import br.sc.senac.tcs.model.entidade.Seguro;
+import br.sc.senac.tcs.model.seletor.ClienteSeletor;
+import br.sc.senac.tcs.model.seletor.SeguroSeletor;
 import br.sc.senac.tcs.service.ClienteService;
 import br.sc.senac.tcs.util.ImportadorPlanilha;
 
@@ -37,6 +41,12 @@ public class ClienteController {
     public Iterable<Cliente> list() {
         return clienteService.findAll();
     }
+
+    
+	@PostMapping("/filtro")
+	public List<Cliente> listarComSeletor(@RequestBody ClienteSeletor seletor) {
+		return clienteService.comFiltros(seletor);
+	}
 
     @GetMapping("{id}")
     public Cliente listarPorId(@PathVariable Integer id) {

@@ -59,7 +59,7 @@ public class SeguroService {
 			seguroRepository.deleteById(id);
 			return true;
 		} else {
-			throw new IllegalArgumentException("Seguro with ID " + id + " does not exist.");
+			throw new IllegalArgumentException("Seguro com id " + id + " não encontrado.");
 		}
 	}
 

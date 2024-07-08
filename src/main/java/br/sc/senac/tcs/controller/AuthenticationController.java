@@ -1,5 +1,7 @@
 package br.sc.senac.tcs.controller;
 
+import java.util.Collections;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -38,8 +40,6 @@ public class AuthenticationController {
 
 	@Autowired
 	private EmailServiceSpring emailServiceSpring;
-	
-	
 
 	@Autowired
 	private AuthorizationService authService;
@@ -56,7 +56,7 @@ public class AuthenticationController {
 		var auth = this.authenticationManager.authenticate(usernamePassword);
 
 		var corretor = corretorRepository.getByEmail(data.login());
-		
+
 		var token = tokenService.GenerateToken((Corretor) auth.getPrincipal());
 
 		return ResponseEntity
@@ -66,9 +66,9 @@ public class AuthenticationController {
 	@SuppressWarnings("rawtypes")
 	@PostMapping("/register")
 	public ResponseEntity register(@RequestBody @Valid RegisterDTO data) {
-		System.out.println("login: " + data.email() + " | Senha: " + data.senha());
-		if (this.corretorRepository.findByEmail(data.email()) != null)
-			return ResponseEntity.badRequest().body("Login já utilizado.");
+		if (this.corretorRepository.findByEmail(data.email()) != null) {
+			return ResponseEntity.badRequest().body(Collections.singletonMap("message", "Login já utilizado."));
+		}
 
 		String encryptedPassword = new BCryptPasswordEncoder().encode(data.senha());
 
@@ -77,15 +77,6 @@ public class AuthenticationController {
 		this.corretorRepository.save(corretor);
 
 		return ResponseEntity.ok().build();
-	}
-
-	@PostMapping("/enviar-email")
-	public String enviarEmail() {
-		System.out.println("AQUI FOII");
-		emailServiceSpring.sendEmail("vitorgarciadevasconcelos@gmail.com", "Assunto", "Teste de envio de email");
-		System.out.println("Passou aqui");
-		return "Email de recuperação enviado com sucesso.";
-
 	}
 
 }
