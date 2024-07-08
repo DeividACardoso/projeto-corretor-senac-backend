@@ -119,6 +119,19 @@ public class ClienteService {
         return retorno;
     }
 
+    @SuppressWarnings("deprecation")
+    public boolean verificarSegurosAtivos(Integer idCliente) {
+        boolean retorno = false;
+        Cliente cliente = clienteRepository.getById(idCliente);
+        List<Seguro> segurosDOCliente = seguroRepo.findAllByClienteAndAtivoIsTrue(cliente);
+        if (!segurosDOCliente.isEmpty()) {
+            for (Seguro seguro : segurosDOCliente) {
+                retorno = seguro.isAtivo();
+            }
+        }
+        return retorno;
+    }
+
     private void removerMascara(Cliente novoCliente) {
         String regex = "[\\s.\\-\\(\\)]+";
         String cpfSemMascara = novoCliente.getCpf().replaceAll(regex, "");
