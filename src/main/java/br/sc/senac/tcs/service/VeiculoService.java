@@ -6,10 +6,10 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.sc.senac.tcs.controller.ClienteController;
 import br.sc.senac.tcs.exception.CampoInvalidoException;
 import br.sc.senac.tcs.model.entidade.Cliente;
 import br.sc.senac.tcs.model.entidade.Veiculo;
+import br.sc.senac.tcs.model.repository.ClienteRepository;
 import br.sc.senac.tcs.model.repository.VeiculoRepository;
 import jakarta.transaction.Transactional;
 
@@ -20,7 +20,7 @@ public class VeiculoService {
 	private VeiculoRepository veiculoRepository;
 
 	@Autowired
-	private ClienteController clienteController;
+	private ClienteRepository clienteController;
 
 	@Transactional
 	public List<Veiculo> listarTodos() {
@@ -57,11 +57,6 @@ public class VeiculoService {
 		return "";
 	}
 
-	public List<Veiculo> listarPorCliente(Integer idCliente) {
-		Cliente cliente = clienteController.listarPorId(idCliente);
-		return veiculoRepository.findByCliente(cliente);
-	}
-
 	public boolean delete(Integer id) {
 		Optional<Veiculo> veiculoOptional = veiculoRepository.findById(id);
 		if (veiculoOptional.isPresent()) {
@@ -71,4 +66,10 @@ public class VeiculoService {
 			throw new IllegalArgumentException("Veiculo with ID " + id + " does not exist.");
 		}
 	}
+
+	public List<Veiculo> listarPorCliente(Integer idCliente) {
+		Optional<Cliente> cliente = clienteController.findById(idCliente);
+		return veiculoRepository.findByCliente(cliente.get());
+	}
+
 }

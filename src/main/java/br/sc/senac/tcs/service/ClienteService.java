@@ -1,7 +1,7 @@
 package br.sc.senac.tcs.service;
 
-import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,11 +39,24 @@ public class ClienteService {
     }
 
     public Cliente create(Cliente cliente) throws CampoInvalidoException {
-        validarCamposObrigatorios(cliente);
         if (cliente.getCpf() != null) {
             removerMascara(cliente);
         }
+        validarCamposObrigatorios(cliente);
+        validarCamposRepetidos(cliente);
         return clienteRepository.save(cliente);
+    }
+
+    private void validarCamposRepetidos(Cliente cliente) throws CampoInvalidoException {
+        List<Cliente> clientes = clienteRepository.findAll();
+        for (Cliente c : clientes) {
+            if (c.getCpf().equals(cliente.getCpf())) {
+                throw new CampoInvalidoException("CPF já cadastrado.");
+            }
+            if (c.getEmail().equals(cliente.getEmail())) {
+                throw new CampoInvalidoException("Email já cadastrado.");
+            }
+        }
     }
 
     private void validarCamposObrigatorios(Cliente cliente) throws CampoInvalidoException {
@@ -58,7 +71,6 @@ public class ClienteService {
         mensagemValidacao += validarCampoString(cliente.getCep(), "cep");
         mensagemValidacao += validarCampoString(cliente.getUf(), "uf");
         mensagemValidacao += validarCampoString(cliente.getCidade(), "cidade");
-        mensagemValidacao += validarCampoString(cliente.getComplemento(), "complemento");
         mensagemValidacao += validarCampoString(cliente.getRua(), "rua");
         mensagemValidacao += validarCampoString(cliente.getNumero(), "numero");
 
@@ -116,6 +128,10 @@ public class ClienteService {
     }
 
     public void importarPlanilha() {
+        
+    }
 
+    public Optional<Cliente> listarPorEmail(String email) {
+        return clienteRepository.findByEmail(email);
     }
 }

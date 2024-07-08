@@ -36,8 +36,7 @@ public class SecurityConfigurations {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(HttpMethod.POST, "/api/auth/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/auth/register").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/api/auth/recuperar").permitAll()
-                        .requestMatchers(HttpMethod.PUT, "/api/auth/codigo").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/recuperacao/atualizar-senha").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/*").authenticated()
                         .anyRequest().authenticated())
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
