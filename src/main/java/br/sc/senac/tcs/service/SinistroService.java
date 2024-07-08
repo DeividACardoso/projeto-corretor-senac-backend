@@ -1,7 +1,6 @@
 package br.sc.senac.tcs.service;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 
@@ -10,6 +9,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import br.sc.senac.tcs.exception.CampoInvalidoException;
+import br.sc.senac.tcs.model.entidade.Seguradora;
 import br.sc.senac.tcs.model.entidade.Sinistro;
 import br.sc.senac.tcs.model.repository.SinistroRepository;
 import br.sc.senac.tcs.model.seletor.SinistroSeletor;
@@ -42,9 +42,7 @@ public class SinistroService {
 		mensagemValidacao += validarCampoString(novoSinistro.getTipo(), "tipo");
 		mensagemValidacao += validarCampoData(novoSinistro.getData(), "data");
 		mensagemValidacao += validarCampoHora(novoSinistro.getHorario(), "horario");
-//		mensagemValidacao += validarCampoDataHora(novoSinistro.getDataHora(), "dt_hora");
 		mensagemValidacao += validarCampoString(novoSinistro.getDescricao(), "descricao");
-
 		if (!mensagemValidacao.isEmpty()) {
 			throw new CampoInvalidoException(mensagemValidacao);
 		}
@@ -56,7 +54,7 @@ public class SinistroService {
 		}
 		return "";
 	}
-	
+
 	private String validarCampoData(LocalDate valorCampo, String nomeCampo) {
 		if (valorCampo == null) {
 			return "Informe o " + nomeCampo + " \n";
@@ -76,7 +74,12 @@ public class SinistroService {
 		return sinistroRepository.findAll(specification);
 	}
 
-	public Sinistro atualizar(Integer id, Sinistro sinistroPAtualizar) {
+	public Sinistro atualizar(Integer id, Sinistro sinistroPAtualizar) throws CampoInvalidoException {
+		Sinistro sinistroAtualizado = listarPorId(id);
+		sinistroAtualizado.setTipo(sinistroPAtualizar.getTipo());
+		sinistroAtualizado.setData(sinistroPAtualizar.getData());
+		sinistroAtualizado.setHorario(sinistroPAtualizar.getHorario());
+		sinistroAtualizado.setDescricao(sinistroPAtualizar.getDescricao());
 		return sinistroRepository.save(sinistroPAtualizar);
 	}
 

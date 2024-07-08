@@ -28,57 +28,19 @@ public class SeguradoraService {
 		return seguradoraRepository.findById(id).get();
 	}
 
-	private void validarCamposObrigatorios(Seguradora novaSeguradora) throws CampoInvalidoException {
-		String mensagemValidacao = "";
-		mensagemValidacao += validarCampoString(novaSeguradora.getNome(), "nome");
-		mensagemValidacao += validarCnpj(novaSeguradora.getCnpj(), "cnpj");
-		mensagemValidacao += validarTelefone(novaSeguradora.getTelefone(), "telefone");
-		mensagemValidacao += validarEmail(novaSeguradora.getEmail(), "email");
-
-		if (!mensagemValidacao.isEmpty()) {
-			throw new CampoInvalidoException(mensagemValidacao);
-		}
-	}
-
-	private String validarCampoString(String valorCampo, String nomeCampo) {
-		if (valorCampo == null || valorCampo.trim().isEmpty()) {
-			return "Informe o " + nomeCampo + " \n";
-		}
-		return "";
-	}
-
-	private String validarCnpj(String valorCampo, String nomeCampo) {
-		if (valorCampo == null || valorCampo.trim().isEmpty()) {
-			valorCampo.replaceAll(".", "");
-			valorCampo.replaceAll("-", "");
-			return "Informe o " + nomeCampo + " \n";
-		}
-		return "";
-	}
-
-	private String validarEmail(String valorCampo, String nomeCampo) {
-		if (valorCampo == null || valorCampo.trim().isEmpty()) {
-			String emailArroba = "@";
-			valorCampo.contains(emailArroba);
-			return "Informe o " + nomeCampo + " \n";
-		}
-		return "";
-	}
-
-	private String validarTelefone(String valorCampo, String nomeCampo) {
-		if (valorCampo == null || valorCampo.trim().isEmpty()) {
-			valorCampo.replaceAll("-", "");
-			valorCampo.replaceAll("(", "");
-			valorCampo.replaceAll(")", "");
-			valorCampo.replaceAll(" ", "");
-			return "Informe o " + nomeCampo + " \n";
-		}
-		return "";
-	}
-
 	public Seguradora salvar(Seguradora novaSeguradora) throws CampoInvalidoException {
-		validarCamposObrigatorios(novaSeguradora);
+		if (novaSeguradora.getEmail() != null && novaSeguradora.getNome() != null) {
+			removerMascara(novaSeguradora);
+		}
 		return seguradoraRepository.save(novaSeguradora);
+	}
+
+	private void removerMascara(Seguradora novaSeguradora) {
+		String regex = "[\\s.\\-\\(\\)]+";
+		String cnpjSemMascara = novaSeguradora.getCnpj().replaceAll(regex, "");
+		String telefoneSemMascara = novaSeguradora.getTelefone().replaceAll(regex, "");
+		novaSeguradora.setCnpj(cnpjSemMascara);
+		novaSeguradora.setTelefone(telefoneSemMascara);
 	}
 
 	public List<Seguradora> listarComSeletor(SeguradoraSeletor seletor) {
@@ -95,17 +57,16 @@ public class SeguradoraService {
 		return seguradoraRepository.save(seguradoraPAtualizar);
 	}
 
-	public Seguradora findById(Integer id) {
+	private Seguradora findById(Integer id) {
 		return seguradoraRepository.findById(id).get();
 	}
 
 	public boolean excluir(Integer id) {
-		boolean excluiu = false;
 		if (seguradoraRepository.existsById(id)) {
 			seguradoraRepository.deleteById(id);
-			excluiu = true;
+			return true;
 		}
-		return excluiu;
+		return false;
 	}
-	
+
 }

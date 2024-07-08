@@ -18,6 +18,7 @@ public class SinistroSeletor extends BaseSeletor {
 	@Column(name = "horario")
 	private LocalTime horarioFinal;
 	private String descricao;
+	
 	public Integer getId() {
 		return id;
 	}
