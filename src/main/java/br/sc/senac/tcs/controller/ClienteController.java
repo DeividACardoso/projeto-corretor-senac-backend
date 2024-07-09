@@ -53,10 +53,9 @@ public class ClienteController {
         return clienteService.update(cliente);
     }
 
-    @DeleteMapping("/delete-id/{id}")
+    @DeleteMapping("/delete/{id}")
     public boolean delete(@PathVariable Integer id) throws CampoInvalidoException {
-        clienteService.delete(id);
-        return true;
+        return clienteService.delete(id);
     }
 
     @GetMapping("/verificar-seg/{idCliente}")

@@ -88,6 +88,7 @@ public class ClienteService {
     }
 
     public Cliente update(Cliente cliente) {
+    	removerMascara(cliente);
         return clienteRepository.save(cliente);
     }
 
