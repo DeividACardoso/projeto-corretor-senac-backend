@@ -8,15 +8,21 @@ import org.springframework.stereotype.Service;
 
 import br.sc.senac.tcs.exception.CampoInvalidoException;
 import br.sc.senac.tcs.model.entidade.Seguradora;
+import br.sc.senac.tcs.model.entidade.Seguro;
 import br.sc.senac.tcs.model.repository.SeguradoraRepository;
+import br.sc.senac.tcs.model.repository.SeguroRepository;
 import br.sc.senac.tcs.model.seletor.SeguradoraSeletor;
 import br.sc.senac.tcs.model.specification.SeguradoraSpecification;
 import jakarta.transaction.Transactional;
 
 @Service
 public class SeguradoraService {
+
 	@Autowired
 	private SeguradoraRepository seguradoraRepository;
+
+	@Autowired
+	private SeguroRepository seguroRepo;
 
 	@Transactional
 	public List<Seguradora> listarTodos() {
@@ -43,6 +49,10 @@ public class SeguradoraService {
 		novaSeguradora.setTelefone(telefoneSemMascara);
 	}
 
+	private Seguradora findById(Integer id) {
+		return seguradoraRepository.findById(id).get();
+	}
+
 	public List<Seguradora> listarComSeletor(SeguradoraSeletor seletor) {
 		Specification<Seguradora> specification = SeguradoraSpecification.comFiltros(seletor);
 		return seguradoraRepository.findAll(specification);
@@ -57,16 +67,22 @@ public class SeguradoraService {
 		return seguradoraRepository.save(seguradoraPAtualizar);
 	}
 
-	private Seguradora findById(Integer id) {
-		return seguradoraRepository.findById(id).get();
-	}
-
 	public boolean excluir(Integer id) {
 		if (seguradoraRepository.existsById(id)) {
 			seguradoraRepository.deleteById(id);
 			return true;
 		}
 		return false;
+	}
+
+	public boolean verificarSeguros(Integer idSeguradora) {
+		boolean retorno = false;
+		List<Seguro> segurosDaSeguradora = seguroRepo.findBySeguradoraId(idSeguradora);
+		System.out.println(segurosDaSeguradora);
+		if (!segurosDaSeguradora.isEmpty()) {
+			retorno = true;
+		}
+		return retorno;
 	}
 
 }

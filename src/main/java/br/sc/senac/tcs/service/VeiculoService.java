@@ -1,16 +1,19 @@
 package br.sc.senac.tcs.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.sc.senac.tcs.controller.ClienteController;
 import br.sc.senac.tcs.exception.CampoInvalidoException;
+import br.sc.senac.tcs.model.entidade.Cliente;
+import br.sc.senac.tcs.model.entidade.Seguro;
 import br.sc.senac.tcs.model.entidade.Veiculo;
+import br.sc.senac.tcs.model.repository.ClienteRepository;
+import br.sc.senac.tcs.model.repository.SeguroRepository;
 import br.sc.senac.tcs.model.repository.VeiculoRepository;
 import jakarta.transaction.Transactional;
-import br.sc.senac.tcs.model.entidade.Cliente;
 
 @Service
 public class VeiculoService {
@@ -19,7 +22,10 @@ public class VeiculoService {
 	private VeiculoRepository veiculoRepository;
 
 	@Autowired
-	private ClienteController clienteController;
+	private ClienteRepository clienteController;
+
+	@Autowired
+	private SeguroRepository seguroRepository;
 
 	@Transactional
 	public List<Veiculo> listarTodos() {
@@ -48,6 +54,7 @@ public class VeiculoService {
 			throw new CampoInvalidoException(mensagemValidacao);
 		}
 	}
+	
 
 	private String validarCamposString(String valorCampo, String nomeCampo) {
 		if (valorCampo != null && valorCampo.isEmpty()) {
@@ -56,8 +63,23 @@ public class VeiculoService {
 		return "";
 	}
     public List<Veiculo> listarPorCliente(Integer idCliente) {
-		Cliente cliente = clienteController.listarPorId(idCliente);
-		return veiculoRepository.findByCliente(cliente);
+		Optional<Cliente> cliente = clienteController.findById(idCliente);
+		return veiculoRepository.findByCliente(cliente.get());
     }
+
+	public boolean delete(Integer id) {
+		Optional<Veiculo> veiculoOptional = veiculoRepository.findById(id);
+		if (veiculoOptional.isPresent()) {
+			veiculoRepository.deleteById(id);
+			return true;
+		} else {
+			throw new IllegalArgumentException("Veiculo with ID " + id + " does not exist.");
+		}
+	}
+
+	public boolean verificarSeguro(Integer idVeiculo) {
+		List<Seguro> seguros = seguroRepository.findAllByVeiculoId(idVeiculo);
+		return seguros != null && !seguros.isEmpty();
+	}
 	
 }

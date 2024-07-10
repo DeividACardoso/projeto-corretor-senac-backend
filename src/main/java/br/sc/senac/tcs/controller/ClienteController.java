@@ -1,6 +1,9 @@
 package br.sc.senac.tcs.controller;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -17,6 +20,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import br.sc.senac.tcs.exception.CampoInvalidoException;
 import br.sc.senac.tcs.model.entidade.Cliente;
+import br.sc.senac.tcs.model.entidade.Seguro;
+import br.sc.senac.tcs.model.seletor.ClienteSeletor;
+import br.sc.senac.tcs.model.seletor.SeguroSeletor;
 import br.sc.senac.tcs.service.ClienteService;
 import br.sc.senac.tcs.util.ImportadorPlanilha;
 
@@ -35,6 +41,12 @@ public class ClienteController {
     public Iterable<Cliente> list() {
         return clienteService.findAll();
     }
+
+    
+	@PostMapping("/filtro")
+	public List<Cliente> listarComSeletor(@RequestBody ClienteSeletor seletor) {
+		return clienteService.comFiltros(seletor);
+	}
 
     @GetMapping("{id}")
     public Cliente listarPorId(@PathVariable Integer id) {
@@ -62,15 +74,27 @@ public class ClienteController {
         return clienteService.verificarSeguros(idCliente);
     }
 
+    @GetMapping("/verificar-seg-ativo/{idCliente}")
+    public boolean verificarSegurosAtivos(@PathVariable Integer idCliente) {
+        return clienteService.verificarSegurosAtivos(idCliente);
+    }
+
     @PostMapping("/importar")
-    public void importarPlanilha(@RequestParam("file") MultipartFile planilha) throws CampoInvalidoException {
-        System.out.println(planilha);
-        try {
-            importadorPlanilha.importar(planilha.getInputStream());
-        } catch (CampoInvalidoException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+    public void importarPlanilha(@RequestParam("file") MultipartFile file) throws IOException {
+        if (!file.isEmpty()) {
+            try (InputStream fis = file.getInputStream()) {
+                importadorPlanilha.importar(fis);
+            } catch (IOException | CampoInvalidoException e) {
+                throw new IOException("Falha ao importar arquivo: " + e.getMessage());
+            }
+        } else {
+            throw new IOException("Falha ao importar arquivo: Arquivo vazio");
         }
     }
+
+    @GetMapping("/email/{email}")
+    public Optional<Cliente> listarPorEmail(@PathVariable String email) {
+        return clienteService.listarPorEmail(email);
+    }
+
 }

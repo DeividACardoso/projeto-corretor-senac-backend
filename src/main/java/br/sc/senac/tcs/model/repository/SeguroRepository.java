@@ -11,11 +11,19 @@ import br.sc.senac.tcs.model.entidade.Seguro;
 
 @Repository
 public interface SeguroRepository extends JpaRepository<Seguro, Integer> {
-	
+
 	List<Seguro> findAll(Specification<Seguro> specification);
+
+	List<Seguro> findAllByOrderByAtivoDescDtFimVigenciaDesc();
 
 	List<Seguro> findByCliente(Cliente cliente);
 
-// 	@Query(" SELECT new br.sc.senac.tcs.model.dto.SeguroDTO(s.id, c.nome) FROM Seguro s JOIN Cliente c ON s.idCliente = c.id ")
-//     List<SeguroDTO> findAllBySpecification(Specification<Seguro> specification);
+	List<Seguro> findAllByClienteAndAtivoIsTrue(Cliente cliente);
+
+	List<Seguro> findAllByClienteId(Integer idCliente);
+
+	List<Seguro> findAllByVeiculoId(Integer idVeiculo);
+
+    public List<Seguro> findBySeguradoraId(Integer idSeguradora);
+
 }

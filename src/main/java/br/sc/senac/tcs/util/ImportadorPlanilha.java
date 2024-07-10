@@ -1,16 +1,19 @@
 package br.sc.senac.tcs.util;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.Iterator;
 
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,37 +25,34 @@ import br.sc.senac.tcs.service.ClienteService;
 public class ImportadorPlanilha {
 
 	@Autowired
-	ClienteService clienteService = new ClienteService();
+	ClienteService clienteService;
 
-	public void importar(InputStream fis) throws CampoInvalidoException {
-		try {
-			try (HSSFWorkbook planilha = new HSSFWorkbook(fis)) {
-				HSSFSheet abaPlanilha = planilha.getSheetAt(0);
+public void importar(InputStream fis) throws CampoInvalidoException, IOException {
+    try {
+        Workbook workbook = WorkbookFactory.create(fis);
+        
+        Sheet sheet = workbook.getSheetAt(0);
+        Iterator<Row> iteradorLinha = sheet.iterator();
+        
+        iteradorLinha.next();
+        
+        while (iteradorLinha.hasNext()) {
+            Row linhaAtual = iteradorLinha.next();
+            
+            Cliente cliente = criarCliente(linhaAtual);
+            
+            if (cliente != null) {
+                clienteService.create(cliente);
+            }
+        }
+        
+        workbook.close();
+    } catch (IOException e) {
+        throw new IOException(e.getMessage());
+    }
+}
 
-				Iterator<Row> iteradorLinha = abaPlanilha.iterator();
-
-				iteradorLinha.next();
-
-				while (iteradorLinha.hasNext()) {
-					Row linhaAtual = iteradorLinha.next();
-
-					Cliente cliente = criarCliente(linhaAtual);
-
-					if (cliente != null) {
-
-						clienteService.create(cliente);
-					}
-				}
-			}
-		} catch (FileNotFoundException e) {
-			throw new CampoInvalidoException("Arquivo não encontrado ou sem permissão de acesso.");
-		} catch (IOException e) {
-			throw new CampoInvalidoException("Erro ao fazer upload de arquivo.");
-		}
-
-	}
-
-	private Cliente criarCliente(Row linhaAtual) {
+	private Cliente criarCliente(Row linhaAtual) throws CampoInvalidoException {
 		Cliente c = null;
 		
 		if (linhaAtual.getCell(0) != null && linhaAtual.getCell(1) != null) {
@@ -64,50 +64,68 @@ public class ImportadorPlanilha {
 			Cell celulaDtNascimento = linhaAtual.getCell(2);
 			//E-MAIL
 			Cell celulaEmail = linhaAtual.getCell(3);
-			//TELEFONE
+			// //TELEFONE
 			Cell celulaTelefone = linhaAtual.getCell(4);
-			//CNH
+			// //CNH
 			Cell celulaCnh = linhaAtual.getCell(5);
-			//ESTADO_CIVIL
+			// //ESTADO_CIVIL
 			Cell celulaEstadoCivil = linhaAtual.getCell(6);
-			//GENERO
+			// //GENERO
 			Cell celulaGenero = linhaAtual.getCell(7);
-			//CEP
-			Cell celulaCep = linhaAtual.getCell(7);
-			//RUA
-			Cell celulaRua = linhaAtual.getCell(8);
-			//BAIRRO
-			Cell celulaBairro = linhaAtual.getCell(9);
-			//NUMERO
-			Cell celulaNumero = linhaAtual.getCell(10);
-			//COMPLEMENTO
-			Cell celulaComplemento = linhaAtual.getCell(11);
-			//CIDADE
-			Cell celulaCidade = linhaAtual.getCell(12);
-			//UF
-			Cell celulaUf = linhaAtual.getCell(13);
+			// //CEP
+			Cell celulaCep = linhaAtual.getCell(8);
+			// //RUA
+			Cell celulaRua = linhaAtual.getCell(9);
+			// //BAIRRO
+			Cell celulaBairro = linhaAtual.getCell(10);
+			// //NUMERO
+			Cell celulaNumero = linhaAtual.getCell(11);
+			// //COMPLEMENTO
+			Cell celulaComplemento = linhaAtual.getCell(12);
+			// //CIDADE
+			Cell celulaCidade = linhaAtual.getCell(13);
+			// //UF
+			Cell celulaUf = linhaAtual.getCell(14);
 
-			System.out.println(celulaDtNascimento);
+			Date date;
+			if (celulaDtNascimento.getCellType() == CellType.NUMERIC) {
+				date = celulaDtNascimento.getDateCellValue();
+			} else {
+				String dateString = celulaDtNascimento.getStringCellValue();
+				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+				LocalDate localDate = LocalDate.parse(dateString, formatter);
+				date = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+			}
+			LocalDate dateString = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 
-			// LocalDate dtNascimento = LocalDate.parse(celulaDtNascimento.toString(),
-			// DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-
+			String telefoneSemMascara = celulaTelefone.toString().replaceAll("[^0-9]", "");
+			String cepSemMascara = celulaCep.toString().replaceAll("[^0-9]", "");
+			
+			
 			c = new Cliente();
-			c.setNome(celulaNome.toString());
-			c.setCpf(celulaCpf.toString());
-			// c.setDtNascimento(celulaDtNascimento);
-			c.setEmail(celulaEmail.toString());
-			c.setTelefone(celulaTelefone.toString());
-			c.setCep(celulaCep.toString());
-			c.setRua(celulaRua.toString());
-			c.setBairro(celulaBairro.toString());
-			c.setNumero(celulaNumero.toString());
-			c.setComplemento(celulaComplemento.toString());
-			c.setCidade(celulaCidade.toString());
-			c.setUf(celulaUf.toString());
-			c.setCnh(celulaCnh.toString());
-			c.setEstadoCivil(celulaEstadoCivil.toString());
-			c.setGenero(celulaGenero.toString());
+			try{
+				c.setNome(celulaNome.getStringCellValue());
+				c.setCpf(celulaCpf.getStringCellValue());
+				c.setDtNascimento(dateString);
+				c.setEmail(celulaEmail.getStringCellValue());
+				c.setTelefone(telefoneSemMascara);
+				c.setCep(cepSemMascara);
+				c.setRua(celulaRua.getStringCellValue());
+				c.setBairro(celulaBairro.getStringCellValue());
+				c.setNumero(celulaNumero.getStringCellValue());
+				if(celulaComplemento != null){
+					c.setComplemento(celulaComplemento.getStringCellValue());
+				} else {
+					c.setComplemento("");
+				}
+				c.setCidade(celulaCidade.getStringCellValue());
+				c.setUf(celulaUf.getStringCellValue());
+				c.setCnh(celulaCnh.getStringCellValue());
+				c.setEstadoCivil(celulaEstadoCivil.getStringCellValue());
+				c.setGenero(celulaGenero.getStringCellValue());
+			} catch (Exception e) {
+				throw new CampoInvalidoException("Campo inválido");
+			}
 		}
 		return c;
 	}
