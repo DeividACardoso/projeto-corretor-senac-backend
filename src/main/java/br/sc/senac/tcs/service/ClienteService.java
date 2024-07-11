@@ -18,7 +18,6 @@ import br.sc.senac.tcs.model.repository.SeguroRepository;
 import br.sc.senac.tcs.model.seletor.ClienteSeletor;
 import br.sc.senac.tcs.model.seletor.SeguroSeletor;
 import br.sc.senac.tcs.model.specification.ClienteSpecification;
-import br.sc.senac.tcs.model.specification.SeguroSpecification;
 
 @Service
 public class ClienteService {
@@ -49,6 +48,7 @@ public class ClienteService {
         }
         validarCamposObrigatorios(cliente);
         validarCamposRepetidos(cliente);
+        System.out.println(cliente);
         return clienteRepository.save(cliente);
     }
 

@@ -20,9 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import br.sc.senac.tcs.exception.CampoInvalidoException;
 import br.sc.senac.tcs.model.entidade.Cliente;
-import br.sc.senac.tcs.model.entidade.Seguro;
 import br.sc.senac.tcs.model.seletor.ClienteSeletor;
-import br.sc.senac.tcs.model.seletor.SeguroSeletor;
 import br.sc.senac.tcs.service.ClienteService;
 import br.sc.senac.tcs.util.ImportadorPlanilha;
 
@@ -84,7 +82,7 @@ public class ClienteController {
         if (!file.isEmpty()) {
             try (InputStream fis = file.getInputStream()) {
                 importadorPlanilha.importar(fis);
-            } catch (IOException | CampoInvalidoException e) {
+            } catch (IOException e) {
                 throw new IOException("Falha ao importar arquivo: " + e.getMessage());
             }
         } else {
