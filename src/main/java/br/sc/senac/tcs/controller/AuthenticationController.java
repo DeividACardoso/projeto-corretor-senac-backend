@@ -72,7 +72,7 @@ public class AuthenticationController {
 
 		String encryptedPassword = new BCryptPasswordEncoder().encode(data.senha());
 
-		Corretor corretor = new Corretor(data.email(), data.nome(), encryptedPassword, data.telefone(), data.cpf());
+		Corretor corretor = new Corretor(data.email(), data.nome(), encryptedPassword, data.telefone(), data.cpf(), data.role());
 
 		this.corretorRepository.save(corretor);
 
